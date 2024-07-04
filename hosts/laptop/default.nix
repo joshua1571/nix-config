@@ -102,7 +102,6 @@
       "hammerspoon"
     ];
     brews = [
-      #"font-hack-nerd-font"
       "mas"
     ];
     masApps = {
@@ -160,11 +159,11 @@ system = {
       trackpad = {
         ActuationStrength = 0;
         Clicking = true;
-	    Dragging = false;
-	    TrackpadThreeFingerDrag = true;
-		FirstClickThreshold = 0;
-		SecondClickThreshold = 1;
-		TrackpadRightClick = true;
+	      Dragging = false;
+	      TrackpadThreeFingerDrag = true;
+		    FirstClickThreshold = 0;
+		    SecondClickThreshold = 1;
+		    TrackpadRightClick = true;
       };
       dock = {
         autohide = false;
@@ -180,49 +179,48 @@ system = {
         wvous-br-corner = 1;
         wvous-tl-corner = 1;
         wvous-tr-corner = 1;
-	persistent-apps = [
-          "/System/Library/coreServices/Finder.app"
-	  "/Applications/Launchpad.app"
-	  "/Applications/Messages.app"
-	  "/Applications/Mail.app"
-	  "/Applications/Maps.app"
-	  "/Applications/Photos.app"
-	  "/Applications/FaceTime.app"
-	  "/Applications/Contacts.app"
-	  "/Applications/Calendar.app"
-	  "/Applications/Notes.app"
-	  "/Applications/Podcasts.app"
-	  "/Applications/Home.app"
-	  "/Applications/Shortcuts.app"
-	  "/Applications/System Settings.app"
-	  "/Applications/Brave.app"
-	  "/Applications/iTerm.app"
-	  "/Applications/TickTick.app"
-	  "/Applications/Notion.app"
-	  "/Applications/WhatsApp.app"
-	];
-      };
+	    persistent-apps = [
+        "/System/Library/coreServices/Finder.app"
+	      "/Applications/Launchpad.app"
+	      "/Applications/Messages.app"
+	      "/Applications/Mail.app"
+	      "/Applications/Maps.app"
+	      "/Applications/Photos.app"
+	      "/Applications/FaceTime.app"
+	      "/Applications/Contacts.app"
+	      "/Applications/Calendar.app"
+	      "/Applications/Notes.app"
+	      "/Applications/Podcasts.app"
+	      "/Applications/Home.app"
+	      "/Applications/Shortcuts.app"
+	      "/Applications/System Settings.app"
+	      "/Applications/Brave.app"
+	      "/Applications/iTerm.app"
+	      "/Applications/TickTick.app"
+	      "/Applications/Notion.app"
+	      "/Applications/WhatsApp.app"
+	    ];
+    };
 
       smb = {
         NetBIOSName = "laptop";
-	ServerDescription = "laptop";
+	      ServerDescription = "laptop";
       };
       loginwindow = {
         GuestEnabled = false;
       };
       menuExtraClock = {
         ShowAMPM = true;
-	ShowDate = 1;
-	ShowDayOfWeek= true;
+	      ShowDate = 1;
+	      ShowDayOfWeek= true;
         ShowSeconds = false;
       };
       universalaccess = {
         mouseDriverCursorSize = 1.3;
-	reduceMotion = true;
-	reduceTransparency = false;
+	      reduceMotion = true;
+	      reduceTransparency = false;
       };
     };
   };
     
 }
-
