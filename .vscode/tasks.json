@@ -17,6 +17,23 @@
 				"kind": "build",
 				"isDefault": true
 			}
+		},
+		{
+		        "label": "update flakes",
+		        "type": "shell",
+		        "command": "nix",
+		        "args": [
+		        	"flake",
+		        	"update"
+		        ]
 		}
-	]
+		{
+		        "label": "restart dock",
+		        "type": "shell",
+		        "command": "killall",
+		        "args": [
+		        	"Dock"
+		        ]
+		}
+		]
 }

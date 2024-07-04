@@ -29,6 +29,12 @@
   users.users.jrh = {
     name = "jrh";
     home = "/Users/jrh";
+    packages = [
+      pkgs.neovim
+      pkgs.tmux
+      pkgs.git
+      pkgs.nmap
+    ];
   };
 
   programs.zsh = {
@@ -39,13 +45,17 @@
     #fzfHistory.enable = true;
   };
 
+  fonts.packages = with pkgs; [
+   (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
+  ];
+
   programs = {
     info.enable = true;
     man.enable = true;
     gnupg = {
       agent = {
         enable = true;
-		enableSSHSupport = true;
+		  enableSSHSupport = true;
       };
     };
   };
@@ -126,13 +136,13 @@
     info.enable = true;
   };
 
-system = {
+  system = {
     keyboard = {
       enableKeyMapping = true;
       remapCapsLockToEscape = true;
     };
     defaults = {
-      SoftwareUpdate.AutomaticallyInstallMacOSUpdates = false;
+      SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
       alf.loggingenabled = 1;
       NSGlobalDomain = {
         AppleInterfaceStyle = "Dark";
@@ -143,9 +153,9 @@ system = {
         KeyRepeat = 2;
         NSAutomaticWindowAnimationsEnabled = false;
         NSWindowResizeTime = 0.1;
-        "com.apple.mouse.tapBehavior" = 1;
-        "com.apple.sound.beep.feedback" = 0;
-        "com.apple.swipescrolldirection" = false;
+          "com.apple.mouse.tapBehavior" = 1;
+          "com.apple.sound.beep.feedback" = 0;
+          "com.apple.swipescrolldirection" = false;
       };
       finder = {
         AppleShowAllFiles = true;
@@ -159,11 +169,11 @@ system = {
       trackpad = {
         ActuationStrength = 0;
         Clicking = true;
-	      Dragging = false;
-	      TrackpadThreeFingerDrag = true;
-		    FirstClickThreshold = 0;
-		    SecondClickThreshold = 1;
-		    TrackpadRightClick = true;
+  	      Dragging = false;
+  	      TrackpadThreeFingerDrag = true;
+  		    FirstClickThreshold = 0;
+  		    SecondClickThreshold = 1;
+  		    TrackpadRightClick = true;
       };
       dock = {
         autohide = false;
@@ -179,48 +189,53 @@ system = {
         wvous-br-corner = 1;
         wvous-tl-corner = 1;
         wvous-tr-corner = 1;
-	    persistent-apps = [
-        "/System/Library/coreServices/Finder.app"
-	      "/Applications/Launchpad.app"
-	      "/Applications/Messages.app"
-	      "/Applications/Mail.app"
-	      "/Applications/Maps.app"
-	      "/Applications/Photos.app"
-	      "/Applications/FaceTime.app"
-	      "/Applications/Contacts.app"
-	      "/Applications/Calendar.app"
-	      "/Applications/Notes.app"
-	      "/Applications/Podcasts.app"
-	      "/Applications/Home.app"
-	      "/Applications/Shortcuts.app"
-	      "/Applications/System Settings.app"
-	      "/Applications/Brave.app"
-	      "/Applications/iTerm.app"
-	      "/Applications/TickTick.app"
-	      "/Applications/Notion.app"
-	      "/Applications/WhatsApp.app"
-	    ];
+        minimize-to-application = true;
+  	    persistent-apps = [
+  	      "/System/Applications/Launchpad.app/"
+  	      "/System/Applications/Messages.app/"
+  	      "/System/Applications/Mail.app/"
+  	       "/System/Applications/Maps.app/"
+  	       "/System/Applications/Photos.app/"
+  	       "/System/Applications/FaceTime.app/"
+  	       "/System/Applications/Calendar.app/"
+  	       "/System/Applications/Contacts.app/"
+           "/System/Applications/Reminders.app/"
+  	       "/System/Applications/Notes.app/"
+  	       "/System/Applications/Podcasts.app/"
+  	       "/System/Applications/Home.app/"
+  	       "/System/Applications/Shortcuts.app/"
+  	       "/System/Applications/System Settings.app/"
+  	       "/Applications/Brave Browser.app"
+  	       "/Applications/TickTick.app"
+  	       "/Applications/Notion.app"
+  	       "/Applications/WhatsApp.app"
+           "/Applications/Visual Studio Code.app"
+  	    ];
+        persistent-others = [
+         "/Users/jrh/Documents"
+         "/Users/jrh/Downloads"
+         "/Volumes/share"
+        ];
     };
-
-      smb = {
-        NetBIOSName = "laptop";
-	      ServerDescription = "laptop";
-      };
-      loginwindow = {
-        GuestEnabled = false;
-      };
-      menuExtraClock = {
-        ShowAMPM = true;
-	      ShowDate = 1;
-	      ShowDayOfWeek= true;
-        ShowSeconds = false;
-      };
-      universalaccess = {
-        mouseDriverCursorSize = 1.3;
-	      reduceMotion = true;
-	      reduceTransparency = false;
-      };
+    smb = {
+      NetBIOSName = "laptop";
+	    ServerDescription = "laptop";
+    };
+    loginwindow = {
+      GuestEnabled = false;
+    };
+    menuExtraClock = {
+      ShowAMPM = true;
+	    ShowDate = 1;
+	    ShowDayOfWeek= true;
+      ShowSeconds = false;
+    };
+    universalaccess = {
+      mouseDriverCursorSize = 1.3;
+	    reduceMotion = true;
+	    reduceTransparency = false;
     };
   };
+};
     
 }
