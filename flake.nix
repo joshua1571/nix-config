@@ -1,5 +1,5 @@
 {
-  description = "JRH flake";
+  description = "JRH NixOS Flake";
 
   inputs = {
     # Nixpkgs
@@ -57,7 +57,7 @@
         specialArgs = {inherit inputs outputs;};
         modules = [
           # > Our main nixos configuration file <
-          ./nixos/configuration.nix
+          ./hosts/nixos/default.nix
         ];
       };
     };

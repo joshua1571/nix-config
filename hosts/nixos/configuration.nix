@@ -8,13 +8,13 @@
 
 {
   #imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  #  [ # Include the results of the hardware scan.
+  #    ./hardware-configuration.nix
+  #  ];
 
   nix = {
     gc.automatic = true;
-    nix.gc.dates = "04:00";
+    gc.dates = "04:00";
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -388,11 +388,6 @@
   services.udev.packages           = [ pkgs.openrgb ];
   services.hardware.openrgb.enable = true;
   services.hardware.openrgb.motherboard = "amd";
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  system.copySystemConfiguration = true;
 
   # Automatic upgrades
   system.autoUpgrade.enable = true;
