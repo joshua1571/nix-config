@@ -7,13 +7,14 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
+  #imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
   nix = {
-    package = pkgs.nixFlakes;
+    gc.automatic = true;
+    nix.gc.dates = "04:00";
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
