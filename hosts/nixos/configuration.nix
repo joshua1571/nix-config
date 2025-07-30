@@ -13,6 +13,7 @@
   #  ];
 
   nix = {
+    #settings.download-buffer-size = 524288000;
     gc.automatic = true;
     gc.dates = "04:00";
     extraOptions = ''
@@ -99,9 +100,6 @@
     powerOnBoot = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.jrh = {
     isNormalUser = true;
@@ -140,6 +138,7 @@
       #networkmanagerapplet
       ## fabric #https://github.com/Fabric-Development/fabric
       ## astal #https://github.com/aylur/astal
+      ## quickshell
 
       # General Packages
       #qalculate-qt
@@ -162,7 +161,6 @@
       openrgb
       freecad-wayland
       drawio
-      birdtray
       deskflow
 
       #Development
@@ -213,12 +211,12 @@
       #mosh
       dive
       #restic
-      #cheat
+      cheat
       #calcurse
       #mutt
       #newsboat
       #age
-      #beets
+      file
      
       #Not sure I want these yet
       digikam
@@ -226,10 +224,9 @@
       opensnitch-ui
       blender
       inkscape
-      projectlibre
       #waydroid
       #borgbackup
-      #czkawka
+      czkawka
     ];
   };
 
@@ -317,6 +314,7 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
      lm_sensors
+     cifs-utils
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -330,8 +328,17 @@
   ### Services
   services.tailscale.enable = true;
   networking.firewall.checkReversePath = "loose";
-  services.flatpak.enable = false;
-  services.syncthing.enable = false;
+  services.syncthing.enable = true;
+  fileSystems."/home/jrh/Share" = {
+    device = "//storage-ts/share";
+    fsType = "cifs";
+    options = let
+
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,uid=1000,gid=100,iocharset=utf8,x-systemd.requires=tailscaled.service";
+
+    in ["${automount_opts},credentials=/home/jrh/.samba/credentials"];
+  };
+  services.opensnitch.enable = true;
   # Supporting flatpak service
   #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   #xdg.portal.config.common.default = "gtk";
