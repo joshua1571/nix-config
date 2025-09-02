@@ -140,28 +140,33 @@
       ## astal #https://github.com/aylur/astal
       ## quickshell
 
-      # General Packages
-      #qalculate-qt
+      # General Applications
       spotify
       discord
       obsidian
       ticktick
       dropbox
-      kicad
+      ktailctl
       brave
       bitwarden-desktop
-      whatsie
-      moonlight-qt
-      calibre
       github-desktop
-      wireshark
-      #gimp
       libreoffice-qt6
       activitywatch
       openrgb
-      freecad-wayland
-      drawio
       deskflow
+
+      # Extra Applications
+      opensnitch
+      opensnitch-ui
+      calibre
+      #drawio
+      #freecad-wayland
+      #wireshark
+      #gimp
+      #whatsie
+      #moonlight-qt
+      #kicad
+      #qalculate-qt
 
       #Development
       vscode
@@ -198,7 +203,7 @@
       fzf
       yazi
       mpv
-      cmus
+      #cmus
       beets
       #nchat
       #bitwarden-cli
@@ -219,14 +224,12 @@
       file
      
       #Not sure I want these yet
-      digikam
-      opensnitch
-      opensnitch-ui
-      blender
-      inkscape
+      czkawka
+      #digikam
+      #blender
+      #inkscape
       #waydroid
       #borgbackup
-      czkawka
     ];
   };
 
@@ -279,7 +282,13 @@
     ll = "exa --color=auto -l --git --git-repos -o -g -a";
     grep = "rg --color=auto";
     cat = "bat";
-    ya = "yazi";
+    #function yy() {
+	#  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	#  yazi "$@" --cwd-file="$tmp"
+	#  IFS= read -r -d '' cwd < "$tmp"
+	#  [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	#  rm -f -- "$tmp"
+    #}
   };
 
 #  virtualisation.containers.enable = true;
