@@ -7,13 +7,12 @@
 { config, lib, pkgs, ... }:
 
 {
-  #imports =
-  #  [ # Include the results of the hardware scan.
-  #    ./hardware-configuration.nix
-  #  ];
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+    ];
 
   nix = {
-    #settings.download-buffer-size = 524288000;
     gc.automatic = true;
     gc.dates = "04:00";
     extraOptions = ''
@@ -21,23 +20,15 @@
     '';
   };
 
-  # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.hostName = "nixos"; # Define hostname
+  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     font = "Lat2-Terminus16";
@@ -45,41 +36,35 @@
     #useXkbConfig = true; # use xkb.options in tty.
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.enable = true;
+  fileSystems."/home/jrh/Share" = {
+    device = "//storage-ts/share"; #Need tailscale to be running on storage for mount to work properly
+    fsType = "cifs";
+    options = let
 
-  # KDE Plasma Desktop Environment
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6 = {
-    enable = true;
-    #excludePackages = with pkgs.libsForQt5; [
-    #elisa
-    #];
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,uid=1000,gid=100,iocharset=utf8,x-systemd.requires=tailscaled.service";
+
+    in ["${automount_opts},credentials=/home/jrh/.samba/credentials"];
   };
 
-#  programs.hyprland = {
-#    enable = true;
-#    xwayland.enable = true;
-#  };
-#  services.hypridle.enable = true;
-#  programs.hyprlock.enable = true;
+  hardware.graphics.enable = true;
+  #hardware.graphics.extraPackages = with pkgs; [
+  #  amdvlk
+  #];
 
-  # Configure keymap in X11
-  #services.xserver.xkb = {
-  #  layout = "us";
-  #  variant = "";
-  #};
+  # TODO: Enable RGB keyboard support
+  boot.kernelModules               = [ "i2c-dev" "i2c-piix4" ];
+  hardware.i2c.enable              = true;
+  services.udev.packages           = [ pkgs.openrgb ];
+  services.hardware.openrgb.enable = true;
+  services.hardware.openrgb.motherboard = "amd";
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.libinput.enable = true;
 
-  # Enable NerdFonts
-  fonts.packages = with pkgs; [ #https://github.com/NixOS/nixpkgs/blob/nixos-24.11/pkgs/data/fonts/nerdfonts/shas.nix
-    nerd-fonts.sauce-code-pro
-    nerd-fonts.hack
-  ];
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
 
-  # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -95,11 +80,48 @@
     #media-session.enable = true;
   };
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-  };
+###############################################################################
+### Services
+###############################################################################
+  services.tailscale.enable = true;
+  networking.firewall.checkReversePath = "loose";
 
+  services.syncthing.enable = false;
+
+  services.opensnitch.enable = true;
+
+  # services.openssh.enable = true;
+
+  services.fwupd.enable = true;
+
+  services.power-profiles-daemon.enable = true;
+
+  # KDE Plasma Desktop Environment
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
+  environment.plasma6.excludePackages = with pkgs; [
+    kdePackages.elisa
+  ];
+
+  #programs.hyprland = {
+  #  enable = true;
+  #  xwayland.enable = true;
+  #};
+  #services.hypridle.enable = true;
+  #programs.hyprlock.enable = true;
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
+  # Enable NerdFonts
+  fonts.packages = with pkgs; [ #https://github.com/NixOS/nixpkgs/blob/nixos-24.11/pkgs/data/fonts/nerdfonts/shas.nix
+    nerd-fonts.sauce-code-pro
+    nerd-fonts.hack
+  ];
+
+###############################################################################
+### User
+###############################################################################
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.jrh = {
     isNormalUser = true;
@@ -108,8 +130,8 @@
     packages = with pkgs; [
       # KDE Specific Packages
       kdePackages.yakuake
-      kdePackages.partitionmanager
-      kdePackages.kdenlive
+      #kdePackages.partitionmanager
+      #kdePackages.kdenlive
       #kdePackages.kamoso #Error: Marked broken in nixpkgs
       kdePackages.filelight
       kdePackages.kcalc
@@ -120,8 +142,12 @@
       kdePackages.xdg-desktop-portal-kde
       kdePackages.sddm-kcm
       #kdePackages.wayland
-      haruna
-      krita
+      #kdePackages.kontact
+      #kdePackages.kmail
+      #kdePackages.kaddressbook
+      #kdePackages.korganizer
+      #haruna
+      #krita
 
       ##Hyprland Specific Packages
       #kitty # Required terminal
@@ -174,54 +200,37 @@
       #vscode-with-extensions
       pass
       xdg-utils
-#      vscode-extensions.asvetliakov.vscode-neovim
-#      vscode-extensions.ms-python.vscode-pylance
-#      vscode-extensions.ms-python.python
-#      vscode-extensions.mkhl.direnv
-#      vscode-extensions.ms-vscode-remote.remote-containers
-#      vscode-extensions.ms-vscode-remote.vscode-remote-extensionpack
-#      vscode-extensions.ms-vscode-remote.remote-ssh-edit
-#      vscode-extensions.ms-vscode-remote.remote-ssh
-#      vscode-extensions.redhat.ansible
-#      vscode-extensions.ms-toolsai.jupyter
-#      vscode-extensions.ms-toolsai.datawrangler
-#      vscode-extensions.ms-toolsai.jupyter-renderers
-#      vscode-extensions.ms-toolsai.jupyter-keymap
-#      vscode-extensions.ms-azuretools.vscode-docker
 
       # Command Line Applications
-      direnv
-      eza
-      bat
-      ripgrep
+      mpv
       curl
       nmap
       aria2
-      wget
       tmux
-      nil # Nix LSP server
-      fzf
       yazi
-      mpv
-      #cmus
+      ncspot
+      file
+
+      cheat
+      fzf
+      eza
+      bat
+      ripgrep
+      direnv
+      wget
       beets
+      yt-dlp 
+      rclone
+      ffmpeg
+      #age
+      #restic
+      #calcurse
+      #cmus
       #nchat
       #bitwarden-cli
       #pass-wayland
-      yt-dlp 
-      rclone
-      #xplr
-      ncspot
-      ffmpeg
-      #mosh
-      dive
-      #restic
-      cheat
-      #calcurse
       #mutt
       #newsboat
-      #age
-      file
      
       #Not sure I want these yet
       czkawka
@@ -233,12 +242,28 @@
     ];
   };
 
+###############################################################################
+### Programs
+###############################################################################
+  nixpkgs.config.allowUnfree = true;
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+     lm_sensors
+     cifs-utils
+  ];
+
   programs.firefox.enable = true;
-  #fonts.fontconfig.useEmbeddedBitmaps = true; #Noto Color Emoji doesn't render on Firefox
+
   programs.git.enable = true;
   programs.git.prompt.enable = true;
+
   programs.mosh.enable = true;
+
   programs.htop.enable = true;
+
   programs.neovim = {
     enable = true;
     viAlias = true;
@@ -246,25 +271,26 @@
     defaultEditor = true;
     configure = {
       customRC = ''
-	    set showmatch               " show matching 
+	    set showmatch               " show matching
         set ignorecase              " case insensitive
-	    set hlsearch                " highlight search 
+	    set hlsearch                " highlight search
         set incsearch               " incremental search
-        set tabstop=4               " number of columns occupied by a tab 
+        set tabstop=4               " number of columns occupied by a tab
         set softtabstop=4           " see multiple spaces as tabstops so <BS> does the right thing
         set expandtab               " converts tabs to white space
         set shiftwidth=4            " width for autoindents
         set autoindent              " indent a new line the same amount as the line just typed
-        set number    		    " add line numbers
+        set number    		        " add line numbers
 	    set wildmode=longest,list   " get bash-like tab completions
-        set cc=80                  " set an 80 column border for good coding style
-        filetype plugin indent on   "allow auto-indenting depending on file type
+        set cc=80                   " set an 80 column border for good coding style
+        filetype plugin indent on   " allow auto-indenting depending on file type
         syntax on                   " syntax highlighting
         set mouse=a                 " enable mouse click
 	    set clipboard=unnamedplus   " using system clipboard
         set cursorline              " highlight current cursorline
         set ttyfast                 " Speed up scrolling in Vim
         filetype plugin on
+        let mapleader = " "         " Change leader key to spacebar
       '';
       packages.myVimPackage = with pkgs.vimPlugins; {
         # loaded on launch
@@ -274,20 +300,23 @@
       };
     };
   };
+
   programs.partition-manager.enable = true;
+
   programs.steam.enable = true;
+
   programs.thunderbird.enable = true;
+
   programs.bash.completion.enable = true;
   programs.bash.shellAliases = { 
     ll = "exa --color=auto -l --git --git-repos -o -g -a";
     grep = "rg --color=auto";
-    cat = "bat";
-    #function yy() {
-	#  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	#  yazi "$@" --cwd-file="$tmp"
-	#  IFS= read -r -d '' cwd < "$tmp"
-	#  [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-	#  rm -f -- "$tmp"
+    #function y() {
+    #	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    #	yazi "$@" --cwd-file="$tmp"
+    #	IFS= read -r -d '' cwd < "$tmp"
+    #	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+    #	rm -f -- "$tmp"
     #}
   };
 
@@ -314,18 +343,6 @@
     };
   };
 
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     lm_sensors
-     cifs-utils
-  ];
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
@@ -333,77 +350,6 @@
     enable = true;
     enableSSHSupport = true;
   };
-
-  ### Services
-  services.tailscale.enable = true;
-  networking.firewall.checkReversePath = "loose";
-  services.syncthing.enable = true;
-  fileSystems."/home/jrh/Share" = {
-    device = "//storage-ts/share";
-    fsType = "cifs";
-    options = let
-
-      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,uid=1000,gid=100,iocharset=utf8,x-systemd.requires=tailscaled.service";
-
-    in ["${automount_opts},credentials=/home/jrh/.samba/credentials"];
-  };
-  services.opensnitch.enable = true;
-  # Supporting flatpak service
-  #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  #xdg.portal.config.common.default = "gtk";
-  #systemd.services.flatpak-repo = {
-  #  wantedBy = [ "multi-user.target" ];
-  #  path = [ pkgs.flatpak ];
-  #  #script = ''
-  #  #  flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-  #  #'';
-  #};
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  ### Hardware
-  hardware.graphics.enable = true;
-  hardware.graphics.extraPackages = with pkgs; [
-    amdvlk
-  ];
-
-  services.fwupd.enable = true;
-
-  services.power-profiles-daemon.enable = true;
- # services.auto-cpufreq = {
- #   enable = true;
- #   settings = {
- #     battery = {
- #       governor = "powersave";
- #       turbo = "never";
- #     };
- #     charger = {
- #       governor = "performance";
- #       turbo = "auto";
- #     };
- #   };
- # };
-
-  # Limit battery charging to 80%
-  #hardware.asus.battery =
-  #{
-  #  chargeUpto             = 80;   # Maximum level of charge for your battery, as a percentage.
-  #  enableChargeUptoScript = true; # Whether to add charge-upto to environment.systemPackages. `charge-upto 85` temporarily sets the charge limit to 85%.
-  #};
-
-  # Enable RGB keyboard support
-  boot.kernelModules               = [ "i2c-dev" "i2c-piix4" ];
-  hardware.i2c.enable              = true;
-  services.udev.packages           = [ pkgs.openrgb ];
-  services.hardware.openrgb.enable = true;
-  services.hardware.openrgb.motherboard = "amd";
 
   # Automatic upgrades
   system.autoUpgrade.enable = true;
