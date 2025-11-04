@@ -10,7 +10,7 @@
   home.packages = with pkgs; [
     # KDE Specific Packages
     kdePackages.yakuake
-    kdePackages.partitionmanager
+    #kdePackages.partitionmanager #system package instead
     #kdePackages.kamoso #Error: Marked broken in nixpkgs
     kdePackages.filelight
     kdePackages.kcalc
@@ -36,6 +36,7 @@
     github-desktop
     libreoffice-qt6
     deskflow
+    opensnitch
 
     #Development
     #vscode
@@ -63,44 +64,44 @@
   # Programs
   programs.git = {
     enable = true;
-    userName = "Joshua Hernandez";
-    userEmail = "joshua1571@users.noreply.github.com";
-    delta.enable = true;
+    settings.user.name = "Joshua Hernandez";
+    settings.user.email = "joshua1571@users.noreply.github.com";
   };
 
   programs.bash = {
     enable = true;
     enableCompletion = true;
-    bashrcExtra = ''
-      export PATH="$PATH:$HOME/.local/bin"
-      function y() {
-        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-        yazi "$@" --cwd-file="$tmp"
-        IFS= read -r -d '' cwd < "$tmp"
-        [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-        rm -f -- "$tmp"
-      }
-    '';
 
-    # set some aliases, feel free to add more or remove some
     shellAliases = {
-      alias ll='exa --color=auto -l --git --git-repos -o -g ';
-      alias l='ll';
-      alias lla='exa --color=auto -l --git --git-repos -o -g -a';
-      alias grep='rg --color=auto';
+      ll = "eza -l -o -g";
+      lla = "eza -l -o -g -a";
+      grep = "rg --color=auto";
+      gits = "git status";
+      gitd = "git diff";
+      rm = "echo 'Use trash-put instead...'; false";
+      tput = "trash-put";
+      tlist = "trash-list";
+      trestore = "trash-restore";
     };
   };
+
   programs.bat.enable = true;
   programs.firefox.enable = true;
   programs.aerc.enable = true;
   programs.zathura.enable = true;
   programs.fzf.enable = true;
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+  };
+
   programs.eza = {
     enable = true;
-    colors = auto;
+    colors = "auto";
     git = true;
-    icons = auto;
+    icons = "auto";
   };
+
   programs.ripgrep.enable = true;
   programs.direnv = {
     enable = true;
@@ -108,24 +109,26 @@
 
   };
   programs.ncspot.enable = true;
-  #programs.beets.enable = true;
-  #programs.mpd.enable = true;
   programs.mpv.enable = true;
   programs.aria2.enable = true;
   programs.aria2.settings = {
-    dir=${HOME}/Downloads
+    dir = "/home/jrh/Downloads";
   };
   programs.yazi.enable = true;
-  programs.yazi.initlua = {
-    [mgr]
-    show_hidden = false
-    sort_dir_first = true
-    show_symlink = true
+  programs.yazi.settings = {
+    log = {
+      enabled = false;
+    };
+    mgr = {
+      show_hidden = false;
+      sort_by = "mtime";
+      sort_dir_first = true;
+      sort_reverse = true;
+      show_symlink = true;
+    };
   };
   programs.wezterm.enable = true;
   programs.wezterm.extraConfig = ''
-    -- Pull in the wezterm API
-    local wezterm = require 'wezterm'
     -- Fonts and Colors
     config.font_size = 10
     config.font = wezterm.font 'Fira Code'
@@ -147,21 +150,46 @@
       top = 0,
       bottom = 0,
     }
-
+    return config
   '';
-  
+
   programs.tmux = {
     enable = true;
     baseIndex = 1;
-    keyMode = vi;
+    keyMode = "vi";
     mouse = true;
     prefix = "C-a";
     #TODO
     #extraConfig = ''
-    #  
+    #
     #'';
   };
 
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    extraLuaConfig = ''
+      -- Basic settings
+      vim.o.number = true -- Enable line numbers
+      vim.o.relativenumber = true -- Enable relative line numbers
+      vim.o.tabstop = 4 -- Number of spaces a tab represents
+      vim.o.shiftwidth = 4 -- Number of spaces for each indentation
+      vim.o.expandtab = true -- Convert tabs to spaces
+      vim.o.smartindent = true -- Automatically indent new lines
+      vim.o.wrap = false -- Disable line wrapping
+      vim.o.cursorline = true -- Highlight the current line
+      vim.o.termguicolors = true -- Enable 24-bit RGB colors
+
+      -- Syntax highlighting and filetype plugins
+      vim.cmd('syntax enable')
+      vim.cmd('filetype plugin indent on')
+
+      -- Leader key
+      vim.g.mapleader = ' ' -- Space as the leader key
+    '';
+  };
 
   # Services
   services.dropbox.enable = true;

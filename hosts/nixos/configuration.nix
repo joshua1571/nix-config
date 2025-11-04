@@ -78,10 +78,7 @@
   services.tailscale.enable = true;
   networking.firewall.checkReversePath = "loose";
 
-  # TODO: Configure syncthing
-  ###services.syncthing.enable = false;
-  ###services.opensnitch.enable = true;
-  # services.openssh.enable = true;
+  services.opensnitch.enable = true;
   services.fwupd.enable = true;
   services.power-profiles-daemon.enable = true;
 
@@ -119,80 +116,9 @@
       "input"
     ];
   };
-  ###  packages = with pkgs; [
-  ###    # KDE Specific Packages
-  ###    kdePackages.yakuake
-  ###    kdePackages.partitionmanager
-  ###    #kdePackages.kamoso #Error: Marked broken in nixpkgs
-  ###    kdePackages.filelight
-  ###    kdePackages.kcalc
-  ###    kdePackages.koko
-  ###    kdePackages.ksshaskpass
-  ###    kdePackages.kwallet
-  ###    kdePackages.kwallet-pam
-  ###    kdePackages.plasma-disks
-  ###    kdePackages.plasma-browser-integration
-  ###    kdePackages.xdg-desktop-portal-kde
-  ###    kdePackages.sddm-kcm
-  ###    kdePackages.wayland
-  ###    kdePackages.wayland-protocols
-
-  ###    # General Applications
-  ###    wezterm
-  ###    spotify
-  ###    discord
-  ###    obsidian
-  ###    ticktick
-  ###    dropbox
-  ###    ktailctl
-  ###    brave
-  ###    bitwarden-desktop
-  ###    github-desktop
-  ###    libreoffice-qt6
-  ###    deskflow
-
-  ###    # Extra Applications
-  ###    opensnitch
-  ###    opensnitch-ui
-
-  ###    #Development
-  ###    vscode
-  ###    pass
-
-  ###    # Command Line Applications
-  ###    xdg-utils
-  ###    curl
-  ###    nmap
-  ###    aria2
-  ###    yazi
-  ###    tmux
-  ###    ncspot
-  ###    fzf
-  ###    eza
-  ###    bat
-  ###    ripgrep
-  ###    cheat
-  ###    direnv
-  ###    wget
-  ###    ffmpeg
-  ###    gh
-  ###    aerc
-  ###    mpv
-  ###    trash-cli
-  ###    ddgr
-  ###    chezmoi
-
-  ###    nixfmt # better in a dev shell
-  ###    zathura
-  ###    rclone
-  ###    yt-dlp
-  ###    beets
-  ###    buku
-  ###  ];
-
 
   ###############################################################################
-  ### Programs
+  ### System Programs
   ###############################################################################
   nixpkgs.config.allowUnfree = true;
 
@@ -206,66 +132,11 @@
     usbutils
   ];
 
-  ###programs.firefox.enable = true;
-  ###programs.git.enable = true;
-  ###programs.git.prompt.enable = true;
-  ###programs.mosh.enable = true;
-  ###programs.neovim = {
-  ###  enable = true;
-  ###  viAlias = true;
-  ###  vimAlias = true;
-  ###  defaultEditor = true;
-  ###  configure = {
-  ###    customRC = ''
-  ###      	    set showmatch               " show matching
-  ###              set ignorecase              " case insensitive
-  ###      	    set hlsearch                " highlight search
-  ###              set incsearch               " incremental search
-  ###              set tabstop=4               " number of columns occupied by a tab
-  ###              set softtabstop=4           " see multiple spaces as tabstops so <BS> does the right thing
-  ###              set expandtab               " converts tabs to white space
-  ###              set shiftwidth=4            " width for autoindents
-  ###              set autoindent              " indent a new line the same amount as the line just typed
-  ###              set number    		        " add line numbers
-  ###              set relativenumber          " add relative line numbers
-  ###      	    set wildmode=longest,list   " get bash-like tab completions
-  ###              set cc=80                   " set an 80 column border for good coding style
-  ###              filetype plugin indent on   " allow auto-indenting depending on file type
-  ###              syntax on                   " syntax highlighting
-  ###              set mouse=a                 " enable mouse click
-  ###      	    set clipboard=unnamedplus   " using system clipboard
-  ###              set cursorline              " highlight current cursorline
-  ###              set ttyfast                 " Speed up scrolling in Vim
-  ###              filetype plugin on
-  ###              let mapleader = " "         " Change leader key to spacebar
-  ###              highlight Normal guibg=none
-  ###              highlight NonText guibg=none
-  ###              highlight Normal ctermbg=none
-  ###              highlight NonText ctermbg=none
-  ###    '';
-  ###    packages.myVimPackage = with pkgs.vimPlugins; {
-  ###      # loaded on launch
-  ###      start = [
-  ###        fugitive
-  ###        nerdtree
-  ###        vim-devicons
-  ###      ];
-  ###      # manually loadable by calling `:packadd $plugin-name`
-  ###      opt = [ ];
-  ###    };
-  ###  };
-  ###};
-
-  ###programs.partition-manager.enable = true;
-  ###programs.bash.completion.enable = true;
+  programs.partition-manager.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   ###programs.mtr.enable = true;
-  ###programs.gnupg.agent = {
-  ###  enable = true;
-  ###  enableSSHSupport = true;
-  ###};
 
   # Automatic upgrades
   #system.autoUpgrade.enable = true;
