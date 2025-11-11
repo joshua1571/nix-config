@@ -8,16 +8,16 @@
 
   imports = [
     # What is the best way to separate modules?
-    ../../homeManagerModules/bash.nix
-    ../../homeManagerModules/browser.nix
-    ../../homeManagerModules/cli_applications.nix
-    ../../homeManagerModules/git.nix
-    ../../homeManagerModules/graphical_applications.nix
-    ../../homeManagerModules/kde_packages.nix
-    ../../homeManagerModules/neovim.nix
-    ../../homeManagerModules/services.nix
-    ../../homeManagerModules/terminal.nix
-    ../../homeManagerModules/tmux.nix
+    ../../modules/home-manager/bash.nix
+    ../../modules/home-manager/browser.nix
+    ../../modules/home-manager/cli_applications.nix
+    ../../modules/home-manager/git.nix
+    ../../modules/home-manager/graphical_applications.nix
+    ../../modules/home-manager/kde_packages.nix
+    ../../modules/home-manager/neovim.nix
+    ../../modules/home-manager/services.nix
+    ../../modules/home-manager/terminal.nix
+    ../../modules/home-manager/tmux.nix
   ];
 
   # This value determines the Home Manager release that your

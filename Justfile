@@ -18,7 +18,8 @@ history:
 # Open a nix shell with the flake
 [group('nix')]
 repl:
-  nix repl -f flake:nixpkgs
+  #nix repl -f flake:nixpkgs
+  nix repl .
 
 # Remove all system generations older than 7 days
 [group('nix')]

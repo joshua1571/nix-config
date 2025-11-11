@@ -2,15 +2,19 @@
 
 {
   imports = [
-    ../../nixosModules/common.nix
-    ../../nixosModules/kde.nix
-    ../../nixosModules/gnupg.nix
-    ../../nixosModules/openssh.nix
-    ../../nixosModules/smb_share.nix
+    ../../modules/nixos/common.nix
+    ../../modules/nixos/kde.nix
+    ../../modules/nixos/gnupg.nix
+    ../../modules/nixos/openssh.nix
+    ../../modules/nixos/smb_share.nix
+    ../../modules/nixos/steam.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
+
+  # TODO: Mount btrfs ssd
+  environment.systemPackages = with pkgs; [ btrfs-progs ];
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
