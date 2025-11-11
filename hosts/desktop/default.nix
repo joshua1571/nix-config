@@ -16,7 +16,6 @@
     kernelPackages = pkgs.linuxPackages_latest;
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    # this entry seems to be a duplicate of an entry in hardware-configuration.nix
     #initrd.luks.devices."luks-ef62d097-c68e-4ef9-82e5-e77d4e21cf61".device =
     #  "/dev/disk/by-uuid/ef62d097-c68e-4ef9-82e5-e77d4e21cf61";
     extraModprobeConfig = ''
@@ -25,7 +24,7 @@
   };
 
   networking = {
-    hostName = "laptop";
+    hostName = "desktop";
     networkmanager.enable = true;
     firewall.checkReversePath = "loose"; # tailscale dns fix
   };
@@ -35,8 +34,6 @@
     enable = true;
     powerOnBoot = true;
   };
-
-  services.libinput.enable = true; # enable touchpad
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

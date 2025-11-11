@@ -11,65 +11,85 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    #TODO: Modularize flake
+    #flake-parts = {
+    #  url = "github:hercules-ci/flake-parts";
+    #  inputs.nixpkgs-lib.follows = "nixpkgs";
+    #};
+
+    #TODO: replace neovim with nixvim
     # nixvim (unstable)
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    #nixvim = {
+    #  url = "github:nix-community/nixvim";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    #};
+
+    #TODO: add secrets using age
+    #agenix = {
+    #  url = "github:ryantm/agenix";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    #};
+
+    #TODO: Replace regular pkgs plasma with plasma manager
+    #plasma-manager = {
+    #  url = "github:nix-community/plasma-manager";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    #  inputs.home-manager.follows = "home-manager";
+    #};
+
+    #TODO: Configure disks in nix config
+    #disko = {
+    #  url = "github:nix-community/disko";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    #};
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
-    let
-      inherit (self) outputs;
-      # Supported systems for your flake packages, shell, etc.
-      systems = [
-        #"aarch64-linux"
-        #"i686-linux"
-        "x86_64-linux"
-        #"aarch64-darwin"
-        "x86_64-darwin"
-      ];
-      # This is a function that generates an attribute by calling a function you
-      # pass to it, with each system as an argument
-      forAllSystems = nixpkgs.lib.genAttrs systems;
-    in {
-      # NixOS configuration entrypoint
-      # Available through 'nixos-rebuild --flake .#your-hostname'
-      nixosConfigurations = {
-        nixos = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
+  outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
+    nixosConfigurations = {
+      laptop = let
+        username = "jrh";
+        specialArgs = { inherit username; };
+      in nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        system = "x86_64_linux";
 
-            ./hosts/nixos/default.nix
+        modules = [
+          ./hosts/laptop/default.nix
 
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.jrh = import ./users/jrh/home.nix;
-              };
-            }
-          ];
-        };
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = inputs // specialArgs;
+              users.${username} = import ./users/${username}/home.nix;
+            };
+          }
+        ];
       };
 
-      nixosConfigurations = {
-        denim = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./hosts/denim/default.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.jrh = import ./users/jrh/gaming_home.nix;
-              };
-            }
-          ];
-        };
+      desktop = let
+        username = "jrh";
+        specialArgs = { inherit username; };
+      in nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        system = "x86_64-linux";
+
+        modules = [
+          ./hosts/desktop/default.nix
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = inputs // specialArgs;
+              users.${username} = import ./users/${username}/home.nix;
+            };
+          }
+        ];
       };
 
     };
+  };
 }
