@@ -14,7 +14,7 @@
     ../../modules/home-manager/git.nix
     ../../modules/home-manager/graphical_applications.nix
     ../../modules/home-manager/kde_packages.nix
-    ../../modules/home-manager/neovim.nix
+    ../../modules/home-manager/nixvim.nix
     ../../modules/home-manager/services.nix
     ../../modules/home-manager/terminal.nix
     ../../modules/home-manager/tmux.nix

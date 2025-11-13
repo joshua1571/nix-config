@@ -1,6 +1,5 @@
 { pkgs, ... }: {
   programs = {
-    # TODO: Replace with nixvim
     neovim = {
       enable = true;
       defaultEditor = true;

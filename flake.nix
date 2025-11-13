@@ -19,10 +19,10 @@
 
     # TODO: Replace neovim with nixvim
     # nixvim (unstable)
-    #nixvim = {
-    #  url = "github:nix-community/nixvim";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    #};
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # TODO: Add secrets using age
     # TODO: Add ssh keys to user
@@ -47,10 +47,13 @@
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
     nixosConfigurations = {
-      # TODO: Rebuild to change hostname: sudo nixos-rebuild switch --flake .#laptop
       laptop = let
         username = "jrh";
-        specialArgs = { inherit username; };
+        emulation = false;
+        specialArgs = {
+          inherit username;
+          inherit emulation;
+        };
       in nixpkgs.lib.nixosSystem {
         inherit specialArgs;
         system = "x86_64_linux";
@@ -67,6 +70,7 @@
               users.${username} = import ./users/${username}/home.nix;
             };
           }
+
         ];
       };
 

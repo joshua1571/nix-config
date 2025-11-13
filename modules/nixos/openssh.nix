@@ -6,7 +6,7 @@
       X11Forwarding = true;
       PermitRootLogin = "no"; # disable root login
       PasswordAuthentication = false; # disable password login
-      Port 2228
+      Port = "2228";
     };
     openFirewall = true;
   };
