@@ -8,13 +8,12 @@
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/smb_share.nix
     ../../modules/nixos/steam.nix
+    ../../modules/nixos/games_disk.nix
+    ../../modules/nixos/openrgb.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
-
-  # TODO: Mount btrfs ssd
-  environment.systemPackages = with pkgs; [ btrfs-progs ];
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
