@@ -1,15 +1,19 @@
-{ pkgs, nixvim, ... }: {
+{ nixvim, ... }:
+{
   imports = [
     nixvim.homeModules.nixvim
+
     ./nixvim_plugins/gitsigns.nix
     ./nixvim_plugins/lsp.nix
     ./nixvim_plugins/lualine.nix
-    # TODO: ./nixvim_plugins/telescope.nix
     ./nixvim_plugins/treesitter.nix
     ./nixvim_plugins/neo-tree.nix
+    # TODO: Add keymaps for telescope ./nixvim_plugins/telescope.nix
     ./nixvim_keymaps.nix
-    # TODO: ./nixvim_options.nix
-    # TODO: ./nixvim_completions.nix
+    ./nixvim_completions.nix
+
+    # Ideas from: https://github.com/Ahwxorg/nixvim-config/blob/master/config/plugins.nix
+    # TODO: debugger https://github.com/mfussenegger/nvim-dap
   ];
 
   programs.nixvim = {
@@ -18,6 +22,12 @@
     defaultEditor = true;
 
     colorschemes.gruvbox.enable = true;
+    highlightOverride = {
+      Normal.bg = "NONE";
+      NonText.bg = "NONE";
+      NormalFloat.bg = "NONE";
+      Signcolumn.bg = "NONE";
+    };
 
     opts = {
       updatetime = 100; # Faster completion
@@ -28,7 +38,7 @@
       cursorline = true;
       cursorcolumn = true;
       signcolumn = "yes";
-      colorcolumn = "100";
+      #colorcolumn = "100";
       tabstop = 2;
       softtabstop = 2;
       shiftwidth = 2;
@@ -48,10 +58,11 @@
       fileencoding = "utf-8";
     };
 
-    dependencies = { gcc.enable = false; };
+    dependencies = {
+      gcc.enable = false;
+    };
 
     # https://mattsturgeon.github.io/nixvim/plugins/actions-preview/index.html
-    # TODO: Configure plugins
     plugins = {
       lz-n.enable = true; # Lazy loading
       which-key.enable = true;
@@ -60,13 +71,37 @@
 
       cmp = {
         autoEnableSources = true;
-        settings.sources =
-          [ { name = "nvim_lsp"; } { name = "path"; } { name = "buffer"; } ];
+        settings.sources = [
+          { name = "nvim_lsp"; }
+          { name = "path"; }
+          { name = "buffer"; }
+        ];
       };
 
       colorizer = {
         enable = true;
         settings.user_default_options.names = false;
+      };
+
+      telescope = {
+        enable = true;
+        extensions = {
+          fzf-native = {
+            enable = true;
+          };
+        };
+      };
+
+      illuminate = {
+        enable = true;
+        settings = {
+          under_cursor = false;
+          filetypes_denylist = [ "TelescopePrompt" ];
+        };
+      };
+
+      hardtime = {
+        enable = true;
       };
     };
 

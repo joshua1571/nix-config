@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     # Command Line Applications
     gh
@@ -38,21 +39,27 @@
 
     aria2 = {
       enable = true;
-      settings = { dir = "/home/jrh/Downloads"; };
+      settings = {
+        dir = "/home/jrh/Downloads";
+      };
     };
 
     yazi = {
       enable = true;
       settings = {
-        log = { enabled = false; };
+        log = {
+          enabled = false;
+        };
         mgr = {
           show_hidden = false;
           sort_by = "natural";
           sort_dir_first = true;
-          sort_reverse = true;
+          sort_reverse = false;
           show_symlink = true;
         };
-        preview = { image_delay = 200; };
+        preview = {
+          image_delay = 100;
+        };
       };
     };
   };

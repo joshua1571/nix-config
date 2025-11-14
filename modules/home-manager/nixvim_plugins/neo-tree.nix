@@ -9,8 +9,9 @@
 
     plugins.neo-tree = {
       enable = true;
-
       settings = {
+        enable_git_status = true;
+				enable_diagnostics = true;
         close_if_last_window = true;
         window = {
           width = 30;

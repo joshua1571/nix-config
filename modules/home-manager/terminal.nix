@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ ... }:
+{
   programs = {
     wezterm = {
       enable = true;
@@ -33,21 +34,26 @@
     foot = {
       enable = true;
       settings = {
-        main = { font = "SauceCodePro Nerd Font:size=10"; };
+        main = {
+          font = "SauceCodePro Nerd Font:size=10";
+        };
         cursor = {
           style = "Block";
           blink = "yes";
           blink-rate = 500;
         };
-        mouse = { hide-when-typing = "yes"; };
+        mouse = {
+          hide-when-typing = "yes";
+        };
         csd = {
-          preferred = "none";
+          preferred = "RESIZE";
           size = "0";
           color = "00000000";
         };
         colors = {
           alpha = "0.8";
-          background = "282828";
+          #background = "282828";
+          background = "000000";
           foreground = "ebdbb2";
           regular0 = "282828";
           regular1 = "cc241d";

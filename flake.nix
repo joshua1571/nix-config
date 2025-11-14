@@ -3,7 +3,9 @@
 
   inputs = {
     # Nixpkgs (unstable)
-    nixpkgs = { url = "github:nixos/nixpkgs/nixos-unstable"; };
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixos-unstable";
+    };
 
     # Home manager (unstable)
     home-manager = {
@@ -32,6 +34,7 @@
     #};
 
     # TODO: Replace regular nixpkgs plasma with plasma manager
+    # TODO: Try niri first
     #plasma-manager = {
     #  url = "github:nix-community/plasma-manager";
     #  inputs.nixpkgs.follows = "nixpkgs";
@@ -45,63 +48,74 @@
     #};
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
-    nixosConfigurations = {
-      laptop = let
-        username = "jrh";
-        emulation = false;
-        specialArgs = {
-          inherit username;
-          inherit emulation;
-        };
-      in nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64_linux";
-
-        modules = [
-          ./hosts/laptop/default.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = inputs // specialArgs;
-              users.${username} = import ./users/${username}/home.nix;
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }:
+    {
+      nixosConfigurations = {
+        laptop =
+          let
+            username = "jrh";
+            emulation = false;
+            specialArgs = {
+              inherit username;
+              inherit emulation;
             };
-          }
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit specialArgs;
+            system = "x86_64_linux";
 
-        ];
-      };
+            modules = [
+              ./hosts/laptop/default.nix
 
-      desktop = let
-        username = "jrh";
-        emulation = true;
-        specialArgs = {
-          inherit username;
-          inherit emulation;
-        };
-      in nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
+              home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  extraSpecialArgs = inputs // specialArgs;
+                  users.${username} = import ./users/${username}/home.nix;
+                };
+              }
 
-        modules = [
-          ./hosts/desktop/default.nix
-          # TODO: Add openrgb support: https://github.com/Misterio77/nix-config/blob/main/modules/nixos/openrgb.nix
-          # TODO: Add emulation support
+            ];
+          };
 
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = inputs // specialArgs;
-              users.${username} = import ./users/${username}/home.nix;
+        desktop =
+          let
+            username = "jrh";
+            emulation = true;
+            specialArgs = {
+              inherit username;
+              inherit emulation;
             };
-          }
-        ];
-      };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit specialArgs;
+            system = "x86_64-linux";
 
+            modules = [
+              ./hosts/desktop/default.nix
+              # TODO: Add openrgb support: https://github.com/Misterio77/nix-config/blob/main/modules/nixos/openrgb.nix
+              # TODO: Add emulation support
+
+              home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  extraSpecialArgs = inputs // specialArgs;
+                  users.${username} = import ./users/${username}/home.nix;
+                };
+              }
+            ];
+          };
+
+      };
     };
-  };
 }
