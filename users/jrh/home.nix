@@ -1,7 +1,8 @@
 {
-  config,
-  pkgs,
+  lib,
   username,
+  game-streaming-server,
+  game-streaming-client,
   ...
 }:
 
@@ -25,6 +26,12 @@
     ../../modules/home-manager/tmux.nix
     #../../modules/home-manager/ai.nix
   ];
+  #++ lib.optionals game-streaming-server [
+  #  ../../modules/home-manager/game-streaming-server.nix
+  #]
+  #++ lib.optionals game-streaming-client [
+  #  ../../modules/home-manager/game-streaming-client.nix
+  #];
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

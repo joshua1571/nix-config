@@ -1,6 +1,14 @@
 # Not sure I like this very specific flag here
-{ pkgs, config, lib, emulation, ... }: {
-  home.packages = with pkgs;
+{
+  pkgs,
+  lib,
+  emulation,
+  game-streaming-client,
+  ...
+}:
+{
+  home.packages =
+    with pkgs;
     [
       # GUI Applications
       spotify
@@ -14,7 +22,15 @@
       libreoffice-qt6
       deskflow
       opensnitch # Requires opensnitch service
-    ] ++ lib.optionals emulation [ ryubing ];
+      zapzap
+    ]
+    ++ lib.optionals emulation [
+      ryubing
+    ]
+    ++ lib.optionals game-streaming-client [
+      moonlight-qt
+    ];
+
   programs = {
     mpv.enable = true;
     zathura.enable = true;

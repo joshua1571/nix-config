@@ -33,7 +33,7 @@
     #};
 
     # TODO: Replace regular nixpkgs plasma with plasma manager
-    # TODO: Try niri first
+    # TODO: Try hyprland again first
     #plasma-manager = {
     #  url = "github:nix-community/plasma-manager";
     #  inputs.nixpkgs.follows = "nixpkgs";
@@ -60,9 +60,13 @@
           let
             username = "jrh";
             emulation = false;
+            game-streaming-server = false;
+            game-streaming-client = true;
             specialArgs = {
               inherit username;
               inherit emulation;
+              inherit game-streaming-server;
+              inherit game-streaming-client;
             };
           in
           nixpkgs.lib.nixosSystem {
@@ -89,9 +93,13 @@
           let
             username = "jrh";
             emulation = true;
+            game-streaming-client = false;
+            game-streaming-server = true;
             specialArgs = {
               inherit username;
               inherit emulation;
+              inherit game-streaming-server;
+              inherit game-streaming-client;
             };
           in
           nixpkgs.lib.nixosSystem {
@@ -101,7 +109,6 @@
             modules = [
               ./hosts/desktop/default.nix
               # TODO: Add openrgb support: https://github.com/Misterio77/nix-config/blob/main/modules/nixos/openrgb.nix
-              # TODO: Add emulation support
 
               home-manager.nixosModules.home-manager
               {

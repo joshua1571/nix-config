@@ -9,6 +9,7 @@
     ./nixvim_plugins/treesitter.nix
     ./nixvim_plugins/neo-tree.nix
     # TODO: Add keymaps for telescope ./nixvim_plugins/telescope.nix
+    # TODO: Fix hints for this plugin ./nixvim_plugins/hardtime.nix
     ./nixvim_keymaps.nix
     ./nixvim_completions.nix
 
@@ -97,37 +98,6 @@
         settings = {
           under_cursor = false;
           filetypes_denylist = [ "TelescopePrompt" ];
-        };
-      };
-
-      hardtime = {
-        enable = true;
-        settings = {
-          disableMouse = true;
-          enabled = true;
-          #disabledFiletypes = [ "Oil" ];
-          restrictionMode = "hint";
-          hint = true;
-          maxCount = 40;
-          maxTime = 1000;
-          restrictedKeys = {
-            #"h" = [
-            #  "n"
-            #  "x"
-            #];
-            "j" = [
-              "n"
-              "x"
-            ];
-            "k" = [
-              "n"
-              "x"
-            ];
-            #"l" = [
-            #  "n"
-            #  "x"
-            #];
-          };
         };
       };
     };
