@@ -1,4 +1,9 @@
-{ config, pkgs, username, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 
 {
   home = {
@@ -18,6 +23,7 @@
     ../../modules/home-manager/services.nix
     ../../modules/home-manager/terminal.nix
     ../../modules/home-manager/tmux.nix
+    #../../modules/home-manager/ai.nix
   ];
 
   # This value determines the Home Manager release that your

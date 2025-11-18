@@ -10,6 +10,7 @@
     ../../modules/nixos/steam.nix
     ../../modules/nixos/games_disk.nix
     ../../modules/nixos/openrgb.nix
+		# TODO: GPU Acceleration https://hydra.nixos.org/build/124333142/download/2/nixos/index.html#sec-gpu-accel
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix

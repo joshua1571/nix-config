@@ -19,7 +19,6 @@
     #  inputs.nixpkgs-lib.follows = "nixpkgs";
     #};
 
-    # TODO: Replace neovim with nixvim
     # nixvim (unstable)
     nixvim = {
       url = "github:nix-community/nixvim";

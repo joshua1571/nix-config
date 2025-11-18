@@ -102,6 +102,33 @@
 
       hardtime = {
         enable = true;
+        settings = {
+          disableMouse = true;
+          enabled = true;
+          #disabledFiletypes = [ "Oil" ];
+          restrictionMode = "hint";
+          hint = true;
+          maxCount = 40;
+          maxTime = 1000;
+          restrictedKeys = {
+            #"h" = [
+            #  "n"
+            #  "x"
+            #];
+            "j" = [
+              "n"
+              "x"
+            ];
+            "k" = [
+              "n"
+              "x"
+            ];
+            #"l" = [
+            #  "n"
+            #  "x"
+            #];
+          };
+        };
       };
     };
 

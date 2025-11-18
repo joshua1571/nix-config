@@ -2,6 +2,7 @@
 # Adds a settings option, for declarative config
 { pkgs, lib, config, ... }:
 
+# Doesn't seem to be working on desktop host
 let
   cfg = config.services.hardware.openrgb;
   settingsFormat = pkgs.formats.json { };

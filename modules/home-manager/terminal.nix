@@ -46,9 +46,10 @@
           hide-when-typing = "yes";
         };
         csd = {
-          preferred = "RESIZE";
-          size = "0";
-          color = "00000000";
+          preferred = "server";
+          size = "12";
+          color = "00282828";
+          hide-when-maximized = "yes";
         };
         colors = {
           alpha = "0.8";
