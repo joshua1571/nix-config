@@ -1,8 +1,10 @@
 {
   lib,
+  config,
   username,
   game-streaming-server,
   game-streaming-client,
+  desktop-environment,
   ...
 }:
 
@@ -15,22 +17,27 @@
   imports = [
     # What is the best way to separate modules?
     ../../modules/home-manager/bash.nix
-    ../../modules/home-manager/browser.nix
     ../../modules/home-manager/cli_applications.nix
     ../../modules/home-manager/git.nix
-    ../../modules/home-manager/graphical_applications.nix
-    ../../modules/home-manager/kde_packages.nix
     ../../modules/home-manager/nixvim.nix
     ../../modules/home-manager/services.nix
-    ../../modules/home-manager/terminal.nix
     ../../modules/home-manager/tmux.nix
-    #../../modules/home-manager/ai.nix
+  ]
+  ++ lib.optionals desktop-environment [
+    ../../modules/home-manager/browser.nix
+    ../../modules/home-manager/graphical_applications.nix
+    ../../modules/home-manager/kde_packages.nix
+    ../../modules/home-manager/terminal.nix
   ];
+  #++ lib.optionals game-streaming-client [
   #++ lib.optionals game-streaming-server [
   #  ../../modules/home-manager/game-streaming-server.nix
   #]
   #++ lib.optionals game-streaming-client [
   #  ../../modules/home-manager/game-streaming-client.nix
+  #];
+  #++ lib.optionals ai_host [
+  #  ../../modules/home-manager/ai.nix
   #];
 
   # This value determines the Home Manager release that your

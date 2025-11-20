@@ -13,11 +13,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # TODO: Modularize flake using flake-parts
-    #flake-parts = {
-    #  url = "github:hercules-ci/flake-parts";
-    #  inputs.nixpkgs-lib.follows = "nixpkgs";
-    #};
+    # Used for raspberry pi
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+    };
 
     # nixvim (unstable)
     nixvim = {
@@ -25,11 +24,23 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # TODO: Add secrets using age
+    # HIGH PRIORITY TODO: Add secrets using age
     # TODO: Add ssh keys to user
-    #agenix = {
-    #  url = "github:ryantm/agenix";
-    #  inputs.nixpkgs.follows = "nixpkgs";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # HIGH PRIORITY TODO: Configure disks declaratively in nix config
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # TODO: Modularize flake using flake-parts
+    #flake-parts = {
+    #  url = "github:hercules-ci/flake-parts";
+    #  inputs.nixpkgs-lib.follows = "nixpkgs";
     #};
 
     # TODO: Replace regular nixpkgs plasma with plasma manager
@@ -39,12 +50,6 @@
     #  inputs.nixpkgs.follows = "nixpkgs";
     #  inputs.home-manager.follows = "home-manager";
     #};
-
-    # TODO: Configure disks declaratively in nix config
-    #disko = {
-    #  url = "github:nix-community/disko";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    #};
   };
 
   outputs =
@@ -52,6 +57,7 @@
       self,
       nixpkgs,
       home-manager,
+      nixos-hardware,
       ...
     }:
     {
@@ -60,13 +66,15 @@
           let
             username = "jrh";
             emulation = false;
-            game-streaming-server = false;
+            desktop-environment = true;
             game-streaming-client = true;
+            game-streaming-server = false;
             specialArgs = {
               inherit username;
               inherit emulation;
-              inherit game-streaming-server;
+              inherit desktop-environment;
               inherit game-streaming-client;
+              inherit game-streaming-server;
             };
           in
           nixpkgs.lib.nixosSystem {
@@ -93,13 +101,15 @@
           let
             username = "jrh";
             emulation = true;
+            desktop-environment = true;
             game-streaming-client = false;
             game-streaming-server = true;
             specialArgs = {
               inherit username;
               inherit emulation;
-              inherit game-streaming-server;
+              inherit desktop-environment;
               inherit game-streaming-client;
+              inherit game-streaming-server;
             };
           in
           nixpkgs.lib.nixosSystem {
@@ -109,6 +119,41 @@
             modules = [
               ./hosts/desktop/default.nix
               # TODO: Add openrgb support: https://github.com/Misterio77/nix-config/blob/main/modules/nixos/openrgb.nix
+
+              home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  extraSpecialArgs = inputs // specialArgs;
+                  users.${username} = import ./users/${username}/home.nix;
+                };
+              }
+            ];
+          };
+
+        server =
+          let
+            username = "jrh";
+            emulation = false;
+            game-streaming-client = false;
+            game-streaming-server = false;
+            desktop-environment = false;
+            specialArgs = {
+              inherit username;
+              inherit emulation;
+              inherit desktop-environment;
+              inherit game-streaming-client;
+              inherit game-streaming-server;
+            };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit specialArgs;
+            system = "aarch64-linux";
+
+            modules = [
+              nixos-hardware.nixosModules.raspberry-pi-4
+              ./hosts/server/default.nix
 
               home-manager.nixosModules.home-manager
               {

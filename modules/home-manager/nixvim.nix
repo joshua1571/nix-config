@@ -8,11 +8,10 @@
     ./nixvim_plugins/lualine.nix
     ./nixvim_plugins/treesitter.nix
     ./nixvim_plugins/neo-tree.nix
-    # TODO: Add keymaps for telescope ./nixvim_plugins/telescope.nix
     # TODO: Fix hints for this plugin ./nixvim_plugins/hardtime.nix
     ./nixvim_keymaps.nix
     ./nixvim_completions.nix
-
+    ./nixvim_plugins/fzf-lua.nix
     # Ideas from: https://github.com/Ahwxorg/nixvim-config/blob/master/config/plugins.nix
     # TODO: debugger https://github.com/mfussenegger/nvim-dap
   ];
@@ -59,9 +58,9 @@
       fileencoding = "utf-8";
     };
 
-    dependencies = {
-      gcc.enable = false;
-    };
+    #dependencies = {
+    #  gcc.enable = false;
+    #};
 
     # https://mattsturgeon.github.io/nixvim/plugins/actions-preview/index.html
     plugins = {
@@ -84,20 +83,10 @@
         settings.user_default_options.names = false;
       };
 
-      telescope = {
-        enable = true;
-        extensions = {
-          fzf-native = {
-            enable = true;
-          };
-        };
-      };
-
       illuminate = {
         enable = true;
         settings = {
           under_cursor = false;
-          filetypes_denylist = [ "TelescopePrompt" ];
         };
       };
     };
