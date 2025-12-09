@@ -1,4 +1,3 @@
-# HIGH PRIORITY TODO: Change to support Raspberry Pi 4
 {
   config,
   lib,
@@ -9,37 +8,49 @@
 {
   imports = [
     ../../modules/nixos/common.nix
-    ../../modules/nixos/kde.nix
     ../../modules/nixos/gnupg.nix
     ../../modules/nixos/openssh.nix
-    ../../modules/nixos/smb_share.nix
-    ../../modules/nixos/steam.nix
-    ../../modules/nixos/games_disk.nix
-    ../../modules/nixos/openrgb.nix
-    # TODO: GPU Acceleration https://hydra.nixos.org/build/124333142/download/2/nixos/index.html#sec-gpu-accel
+    #../../modules/nixos/smb_share.nix
+		../../modules/
 
     # Include the results of the hardware scan.
-    ./hardware-configuration.nix
+    #./hardware-configuration.nix
   ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-    #initrd.luks.devices."luks-ef62d097-c68e-4ef9-82e5-e77d4e21cf61".device =
-    #  "/dev/disk/by-uuid/ef62d097-c68e-4ef9-82e5-e77d4e21cf61";
-    extraModprobeConfig = ''
-      options mt7921e disable_aspm=1
-    '';
+    kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "usbhid"
+      "usb_storage"
+    ];
+    loader.generic-extlinux-compatible.enable = true;
+    loader.grub.enable = false;
+  };
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
+      fsType = "ext4";
+    };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/2178-694E";
+      fsType = "vfat";
+      options = [
+        "fmask=0077"
+        "dmask=0077"
+      ];
+    };
   };
 
   networking = {
-    hostName = "desktop";
+    hostName = "server";
     networkmanager.enable = true;
     firewall.checkReversePath = "loose"; # tailscale dns fix
   };
 
   hardware.graphics.enable = true;
+  hardware.enableRedistributableFirmware = true;
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;

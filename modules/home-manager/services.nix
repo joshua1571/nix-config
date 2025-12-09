@@ -1,6 +1,6 @@
-{ pkgs, ... }: {
+{ pkgs, desktop-environment, ... }: {
   services = {
-    dropbox.enable = true;
+    dropbox.enable = desktop-environment;
     opensnitch-ui.enable = true;
     gpg-agent.enable = true;
   };
