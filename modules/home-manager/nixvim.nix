@@ -5,7 +5,7 @@
 
     ./nixvim_plugins/gitsigns.nix
     ./nixvim_plugins/lsp.nix
-    ./nixvim_plugins/lualine.nix
+		#./nixvim_plugins/lualine.nix
     ./nixvim_plugins/treesitter.nix
     ./nixvim_plugins/neo-tree.nix
     # TODO: Fix hints for this plugin ./nixvim_plugins/hardtime.nix
