@@ -11,26 +11,25 @@
       availableKernelModules =
         [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
       kernelModules = [ ];
-      luks.devices."luks-b6e55782-7295-4b12-bbe7-1d0a79b8425e".device =
-        "/dev/disk/by-uuid/b6e55782-7295-4b12-bbe7-1d0a79b8425e";
+      luks.devices."luks-2e1c4bf6-4de3-4f3c-b55e-4ca4fe37d233".device = "/dev/disk/by-uuid/2e1c4bf6-4de3-4f3c-b55e-4ca4fe37d233";
     };
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
   };
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/10256601-96df-472a-a3c9-e78376fd0b08";
+    device = "/dev/disk/by-uuid/e4782331-cd52-4a51-8415-337d88cff06f";
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/1D0A-9CC4";
+    device = "/dev/disk/by-uuid/1E33-16CC";
     fsType = "vfat";
     options = [ "fmask=0077" "dmask=0077" ];
   };
 
   swapDevices =
-    [{ device = "/dev/disk/by-uuid/3e3ea4ea-49d8-453b-8f54-6479b70fd79b"; }];
+    [{ device = "/dev/disk/by-uuid/e764cf85-ad13-414b-99bb-0dc73d92274f"; }];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

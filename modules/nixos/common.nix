@@ -50,7 +50,7 @@ pkgs, lib, username, ... }: {
       pulse.enable = true;
     };
     tailscale.enable = true;
-		#opensnitch.enable = true;
+    opensnitch.enable = false;
     fwupd.enable = true;
   };
 

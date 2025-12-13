@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -6,11 +11,11 @@
     ../../modules/nixos/kde.nix
     ../../modules/nixos/gnupg.nix
     ../../modules/nixos/openssh.nix
-    ../../modules/nixos/smb_share.nix
+    #../../modules/nixos/smb_share.nix
     ../../modules/nixos/steam.nix
     ../../modules/nixos/games_disk.nix
-    ../../modules/nixos/openrgb.nix
-		# TODO: GPU Acceleration https://hydra.nixos.org/build/124333142/download/2/nixos/index.html#sec-gpu-accel
+    #../../modules/nixos/openrgb.nix
+    # TODO: GPU Acceleration https://hydra.nixos.org/build/124333142/download/2/nixos/index.html#sec-gpu-accel
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -20,8 +25,6 @@
     kernelPackages = pkgs.linuxPackages_latest;
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    #initrd.luks.devices."luks-ef62d097-c68e-4ef9-82e5-e77d4e21cf61".device =
-    #  "/dev/disk/by-uuid/ef62d097-c68e-4ef9-82e5-e77d4e21cf61";
     extraModprobeConfig = ''
       options mt7921e disable_aspm=1
     '';

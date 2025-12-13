@@ -20,7 +20,7 @@
     ../../modules/home-manager/cli_applications.nix
     ../../modules/home-manager/git.nix
     ../../modules/home-manager/nixvim.nix
-    ../../modules/home-manager/services.nix
+    #../../modules/home-manager/services.nix
     ../../modules/home-manager/tmux.nix
   ]
   ++ lib.optionals desktop-environment [
