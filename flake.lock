@@ -52,11 +52,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1765326679,
-        "narHash": "sha256-fTLX9kDwLr9Y0rH/nG+h1XG5UU+jBcy0PFYn5eneRX8=",
+        "lastModified": 1765794845,
+        "narHash": "sha256-YD5QWlGnusNbZCqR3pxG8tRxx9yUXayLZfAJRWspq2s=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "d64e5cdca35b5fad7c504f615357a7afe6d9c49e",
+        "rev": "7194cfe5b7a3660726b0fe7296070eaef601cae9",
         "type": "github"
       },
       "original": {
@@ -74,6 +74,7 @@
       },
       "locked": {
 <<<<<<< HEAD
+<<<<<<< HEAD
         "lastModified": 1765495779,
         "narHash": "sha256-MhA7wmo/7uogLxiewwRRmIax70g6q1U/YemqTGoFHlM=",
         "owner": "hercules-ci",
@@ -86,6 +87,13 @@
         "repo": "flake-parts",
         "rev": "2cccadc7357c0ba201788ae99c4dfa90728ef5e0",
 >>>>>>> c3909fc67a700c48014a0c1731e581ec1fec402c
+=======
+        "lastModified": 1765835352,
+        "narHash": "sha256-XswHlK/Qtjasvhd1nOa1e8MgZ8GS//jBoTqWtrS1Giw=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "a34fae9c08a15ad73f295041fec82323541400a9",
+>>>>>>> f73a3cc (Removed old smb share from laptop)
         "type": "github"
       },
       "original": {
@@ -123,6 +131,7 @@
       },
       "locked": {
 <<<<<<< HEAD
+<<<<<<< HEAD
         "lastModified": 1765606130,
         "narHash": "sha256-KOP4QnkiRwiD5KEOr6ceF67rfTP1OqPmCCft6xDC3k4=",
         "owner": "nix-community",
@@ -135,6 +144,13 @@
         "repo": "home-manager",
         "rev": "13cc1efd78b943b98c08d74c9060a5b59bf86921",
 >>>>>>> c3909fc67a700c48014a0c1731e581ec1fec402c
+=======
+        "lastModified": 1765860045,
+        "narHash": "sha256-7Lxp/PfOy4h3QIDtmWG/EgycaswqRSkDX4DGtet14NE=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "09de9577d47d8bffb11c449b6a3d24e32ac16c99",
+>>>>>>> f73a3cc (Removed old smb share from laptop)
         "type": "github"
       },
       "original": {
@@ -161,6 +177,7 @@
     "nixpkgs": {
       "locked": {
 <<<<<<< HEAD
+<<<<<<< HEAD
         "lastModified": 1765472234,
         "narHash": "sha256-9VvC20PJPsleGMewwcWYKGzDIyjckEz8uWmT0vCDYK0=",
         "owner": "nixos",
@@ -173,6 +190,13 @@
         "repo": "nixpkgs",
         "rev": "addf7cf5f383a3101ecfba091b98d0a1263dc9b8",
 >>>>>>> c3909fc67a700c48014a0c1731e581ec1fec402c
+=======
+        "lastModified": 1765779637,
+        "narHash": "sha256-KJ2wa/BLSrTqDjbfyNx70ov/HdgNBCBBSQP3BIzKnv4=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "1306659b587dc277866c7b69eb97e5f07864d8c4",
+>>>>>>> f73a3cc (Removed old smb share from laptop)
         "type": "github"
       },
       "original": {
@@ -192,6 +216,7 @@
       },
       "locked": {
 <<<<<<< HEAD
+<<<<<<< HEAD
         "lastModified": 1765646394,
         "narHash": "sha256-yqeB023/s/SOxhpm4SFKBDHagzn5L/KF7bCA10ZH/Q4=",
         "owner": "nix-community",
@@ -204,6 +229,13 @@
         "repo": "nixvim",
         "rev": "c50d50b1688672a9ca567c9f884adb76654bda9c",
 >>>>>>> c3909fc67a700c48014a0c1731e581ec1fec402c
+=======
+        "lastModified": 1765894186,
+        "narHash": "sha256-tB+fg8patWema9dmVUjgD/twHBLQUjs3bhmdm1buAXk=",
+        "owner": "nix-community",
+        "repo": "nixvim",
+        "rev": "771cb3c8520caa0c51c749bfe14d16212c241d12",
+>>>>>>> f73a3cc (Removed old smb share from laptop)
         "type": "github"
       },
       "original": {
