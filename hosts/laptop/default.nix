@@ -6,7 +6,7 @@
     ../../modules/nixos/kde.nix
     ../../modules/nixos/gnupg.nix
     ../../modules/nixos/openssh.nix
-    ../../modules/nixos/smb_share.nix
+		#../../modules/nixos/smb_share.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
