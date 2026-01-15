@@ -23,6 +23,7 @@
       deskflow
       #opensnitch # Requires opensnitch service
       zapzap
+			fastmail-desktop
     ]
     ++ lib.optionals emulation [
       ryubing
