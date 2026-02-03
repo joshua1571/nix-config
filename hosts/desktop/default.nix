@@ -1,6 +1,4 @@
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
@@ -12,6 +10,7 @@
     ../../modules/nixos/gnupg.nix
     ../../modules/nixos/openssh.nix
     #../../modules/nixos/smb_share.nix
+    ../../modules/nixos/ai.nix
     ../../modules/nixos/steam.nix
     ../../modules/nixos/games_disk.nix
     #../../modules/nixos/openrgb.nix

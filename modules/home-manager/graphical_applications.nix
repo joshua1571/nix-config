@@ -9,8 +9,8 @@
   home.packages =
     with pkgs;
     [
-      brave
       # GUI Applications
+      brave
       spotify
       discord
       obsidian
@@ -23,7 +23,8 @@
       deskflow
       #opensnitch # Requires opensnitch service
       zapzap
-			fastmail-desktop
+      fastmail-desktop
+      localsend
     ]
     ++ lib.optionals emulation [
       ryubing
