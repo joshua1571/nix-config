@@ -1,17 +1,29 @@
 {
-#config,
-pkgs, lib, username, ... }: {
+  #config,
+  pkgs,
+  lib,
+  username,
+  ...
+}:
+{
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = [ "networkmanager" "wheel" "input" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "input"
+    ];
   };
 
   # customise /etc/nix/nix.conf declaratively via `nix.settings`
   nix.settings = {
     # enable flakes globally
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 
   # do garbage collection weekly to keep disk usage low
@@ -52,6 +64,7 @@ pkgs, lib, username, ... }: {
     tailscale.enable = true;
     opensnitch.enable = false;
     fwupd.enable = true;
+    usbmuxd.enable = true; # iphone filesystem access
   };
 
   fonts = {
