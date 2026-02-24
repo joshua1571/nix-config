@@ -13,6 +13,7 @@
     ../../modules/nixos/ai.nix
     ../../modules/nixos/steam.nix
     ../../modules/nixos/games_disk.nix
+		../../modules/nixos/obs-studio.nix
     #../../modules/nixos/openrgb.nix
     # TODO: GPU Acceleration https://hydra.nixos.org/build/124333142/download/2/nixos/index.html#sec-gpu-accel
 
