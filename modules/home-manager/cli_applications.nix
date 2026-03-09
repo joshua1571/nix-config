@@ -17,6 +17,8 @@
     fzf.enable = true;
     fd.enable = true;
     ripgrep.enable = true;
+		mpv.enable = true;
+		zathura.enable = true;
 
     delta = {
       enable = true;

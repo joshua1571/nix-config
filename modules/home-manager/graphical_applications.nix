@@ -25,6 +25,8 @@
       zapzap
       fastmail-desktop
       localsend
+      thunderbird
+      activitywatch
     ]
     ++ lib.optionals emulation [
       ryubing
@@ -32,9 +34,4 @@
     ++ lib.optionals game-streaming-client [
       moonlight-qt
     ];
-
-  programs = {
-    mpv.enable = true;
-    zathura.enable = false;
-  };
 }

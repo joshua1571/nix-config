@@ -14,5 +14,6 @@
     kdePackages.sddm-kcm
     kdePackages.wayland
     kdePackages.wayland-protocols
+		haruna
   ];
 }
