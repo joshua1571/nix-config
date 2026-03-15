@@ -24,6 +24,7 @@
       "nix-command"
       "flakes"
     ];
+		download-buffer-size = 524288000;
   };
 
   # do garbage collection weekly to keep disk usage low
