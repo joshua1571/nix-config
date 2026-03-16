@@ -1,4 +1,4 @@
-{ _ }:
+{ username, ... }:
 {
   services.navidrome = {
     enable = true;

@@ -1,4 +1,4 @@
-{ _ }:
+{ username, ... }:
 {
   services.immich = {
     enable = true;

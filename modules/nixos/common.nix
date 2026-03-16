@@ -19,6 +19,7 @@
 
   # customise /etc/nix/nix.conf declaratively via `nix.settings`
   nix.settings = {
+    trusted-users = [ "@wheel" ];
     # enable flakes globally
     experimental-features = [
       "nix-command"

@@ -21,8 +21,8 @@
         "sd_mod"
       ];
       kernelModules = [ "kvm-intel" ];
-      extraModulePackages = [ ];
     };
+    extraModulePackages = [ ];
   };
 
   fileSystems."/" = {
@@ -44,13 +44,13 @@
     fsType = "zfs";
   };
 
-  fileSystems."/fasttank/test_dataset" = {
-    device = "fasttank/test_dataset";
+  fileSystems."/fasttank/containers" = {
+    device = "fasttank/containers";
     fsType = "zfs";
   };
 
-  fileSystems."/fasttank/containers" = {
-    device = "fasttank/containers";
+  fileSystems."/fasttank/test_dataset" = {
+    device = "fasttank/test_dataset";
     fsType = "zfs";
   };
 
@@ -59,33 +59,8 @@
     fsType = "zfs";
   };
 
-  fileSystems."/fasttank/containers/immich/immich_db" = {
-    device = "fasttank/containers/immich/immich_db";
-    fsType = "zfs";
-  };
-
   fileSystems."/fasttank/containers/jellyfin" = {
     device = "fasttank/containers/jellyfin";
-    fsType = "zfs";
-  };
-
-  fileSystems."/fasttank/containers/jellyfin/jellyfin_cache" = {
-    device = "fasttank/containers/jellyfin/jellyfin_cache";
-    fsType = "zfs";
-  };
-
-  fileSystems."/fasttank/containers/jellyfin/jellyfin_config" = {
-    device = "fasttank/containers/jellyfin/jellyfin_config";
-    fsType = "zfs";
-  };
-
-  fileSystems."/fasttank/containers/navidrome" = {
-    device = "fasttank/containers/navidrome";
-    fsType = "zfs";
-  };
-
-  fileSystems."/fasttank/containers/navidrome/navidrome_data" = {
-    device = "fasttank/containers/navidrome/navidrome_data";
     fsType = "zfs";
   };
 
@@ -94,8 +69,33 @@
     fsType = "zfs";
   };
 
+  fileSystems."/fasttank/containers/navidrome" = {
+    device = "fasttank/containers/navidrome";
+    fsType = "zfs";
+  };
+
+  fileSystems."/fasttank/containers/immich/immich_db" = {
+    device = "fasttank/containers/immich/immich_db";
+    fsType = "zfs";
+  };
+
+  fileSystems."/fasttank/containers/jellyfin/jellyfin_cache" = {
+    device = "fasttank/containers/jellyfin/jellyfin_cache";
+    fsType = "zfs";
+  };
+
   fileSystems."/fasttank/containers/homepage/homepage_config" = {
     device = "fasttank/containers/homepage/homepage_config";
+    fsType = "zfs";
+  };
+
+  fileSystems."/fasttank/containers/jellyfin/jellyfin_config" = {
+    device = "fasttank/containers/jellyfin/jellyfin_config";
+    fsType = "zfs";
+  };
+
+  fileSystems."/fasttank/containers/navidrome/navidrome_data" = {
+    device = "fasttank/containers/navidrome/navidrome_data";
     fsType = "zfs";
   };
 
@@ -104,73 +104,13 @@
     fsType = "zfs";
   };
 
-  fileSystems."/tank/appdata" = {
-    device = "tank/appdata";
-    fsType = "zfs";
-  };
-
-  fileSystems."/tank/appdata/immich" = {
-    device = "tank/appdata/immich";
-    fsType = "zfs";
-  };
-
-  fileSystems."/tank/appdata/immich/immich_data" = {
-    device = "tank/appdata/immich/immich_data";
-    fsType = "zfs";
-  };
-
   fileSystems."/tank/backups" = {
     device = "tank/backups";
     fsType = "zfs";
   };
 
-  fileSystems."/tank/users" = {
-    device = "tank/users";
-    fsType = "zfs";
-  };
-
-  fileSystems."/tank/videos" = {
-    device = "tank/videos";
-    fsType = "zfs";
-  };
-
-  fileSystems."/tank/music" = {
-    device = "tank/music";
-    fsType = "zfs";
-  };
-
-  fileSystems."/tank/projects" = {
-    device = "tank/projects";
-    fsType = "zfs";
-  };
-
-  fileSystems."/tank/books" = {
-    device = "tank/books";
-    fsType = "zfs";
-  };
-
-  fileSystems."/tank/dropbox" = {
-    device = "tank/dropbox";
-    fsType = "zfs";
-  };
-
-  fileSystems."/tank/games" = {
-    device = "tank/games";
-    fsType = "zfs";
-  };
-
-  fileSystems."/tank/documents" = {
-    device = "tank/documents";
-    fsType = "zfs";
-  };
-
-  fileSystems."/tank/photos" = {
-    device = "tank/photos";
-    fsType = "zfs";
-  };
-
-  fileSystems."/tank/backups/desktop" = {
-    device = "tank/backups/desktop";
+  fileSystems."/tank/appdata" = {
+    device = "tank/appdata";
     fsType = "zfs";
   };
 
@@ -179,8 +119,48 @@
     fsType = "zfs";
   };
 
-  fileSystems."/tank/backups/macbookpro" = {
-    device = "tank/backups/macbookpro";
+  fileSystems."/tank/projects" = {
+    device = "tank/projects";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/dropbox" = {
+    device = "tank/dropbox";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/documents" = {
+    device = "tank/documents";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/users" = {
+    device = "tank/users";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/music" = {
+    device = "tank/music";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/games" = {
+    device = "tank/games";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/books" = {
+    device = "tank/books";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/photos" = {
+    device = "tank/photos";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/videos" = {
+    device = "tank/videos";
     fsType = "zfs";
   };
 
@@ -189,8 +169,23 @@
     fsType = "zfs";
   };
 
-  fileSystems."/tank/users/jrh" = {
-    device = "tank/users/jrh";
+  fileSystems."/tank/appdata/immich" = {
+    device = "tank/appdata/immich";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/backups/macbookpro" = {
+    device = "tank/backups/macbookpro";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/backups/desktop" = {
+    device = "tank/backups/desktop";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/photos/immich_backup_postgres_data" = {
+    device = "tank/photos/immich_backup_postgres_data";
     fsType = "zfs";
   };
 
@@ -199,8 +194,13 @@
     fsType = "zfs";
   };
 
-  fileSystems."/tank/photos/immich_backup_postgres_data" = {
-    device = "tank/photos/immich_backup_postgres_data";
+  fileSystems."/tank/users/jrh" = {
+    device = "tank/users/jrh";
+    fsType = "zfs";
+  };
+
+  fileSystems."/tank/appdata/immich/immich_data" = {
+    device = "tank/appdata/immich/immich_data";
     fsType = "zfs";
   };
 
