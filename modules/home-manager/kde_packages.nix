@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     kdePackages.yakuake
     #kdePackages.kamoso #Error: Marked broken in nixpkgs
@@ -14,6 +15,6 @@
     kdePackages.sddm-kcm
     kdePackages.wayland
     kdePackages.wayland-protocols
-		haruna
+    haruna
   ];
 }

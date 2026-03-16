@@ -1,5 +1,6 @@
 # All LSP related configs
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     pyright
     nil

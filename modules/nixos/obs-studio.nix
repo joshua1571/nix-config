@@ -12,7 +12,7 @@
     ];
   };
 
-  services.usbmuxd.enable = true; #iPhone filesystem access
+  services.usbmuxd.enable = true; # iPhone filesystem access
 
   environment.systemPackages = with pkgs; [
     v4l-utils

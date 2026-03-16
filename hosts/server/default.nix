@@ -7,16 +7,16 @@
     # Common
     ../../modules/nixos/common.nix
     ../../modules/nixos/gnupg.nix
-    ../../modules/nixos/openssh.nix
+    ../../modules/nixos/openssh_server.nix
 
     # Server
     ../../modules/nixos/zfs.nix
 
     # Self Hosted Services
-    #../../modules/homepage-dashboard.nix
-    #../../modules/nixos/jellyfin.nix
-    #../../modules/nixos/navidrome.nix
-    #../../modules/immich.nix
+    ../../modules/nixos/homepage-dashboard.nix
+    ../../modules/nixos/jellyfin.nix
+    ../../modules/nixos/navidrome.nix
+    ../../modules/nixos/immich.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -27,7 +27,7 @@
     networkmanager.enable = true;
   };
 
-   hardware.graphics.enable = true;
+  hardware.graphics.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

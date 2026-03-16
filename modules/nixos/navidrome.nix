@@ -1,9 +1,8 @@
-{ ... }:
+{ _ }:
 {
   services.navidrome = {
     enable = true;
-    settings =
-    {
+    settings = {
       MusicFolder = "/tank/music";
       #Address = "0.0.0.0";
       Address = "10.0.0.126";

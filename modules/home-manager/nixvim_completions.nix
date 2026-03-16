@@ -3,7 +3,9 @@
     cmp-nvim-lsp = {
       enable = true; # LSP
     };
-    cmp-buffer = { enable = true; };
+    cmp-buffer = {
+      enable = true;
+    };
     cmp-path = {
       enable = true; # file system paths
     };
@@ -16,22 +18,32 @@
     cmp = {
       enable = true;
       settings = {
-        completion = { completeopt = "menu,menuone,noinsert"; };
+        completion = {
+          completeopt = "menu,menuone,noinsert";
+        };
         autoEnableSources = true;
-        experimental = { ghost_text = true; };
+        experimental = {
+          ghost_text = true;
+        };
         performance = {
           debounce = 60;
           fetchingTimeout = 200;
           maxViewEntries = 30;
         };
-        #snippet = { 
+        #snippet = {
         #  expand = ''
         #    function(args)
         #      require('luasnip').lsp_expand(args.body)
         #    end
         #  '';
         #};
-        formatting = { fields = [ "kind" "abbr" "menu" ]; };
+        formatting = {
+          fields = [
+            "kind"
+            "abbr"
+            "menu"
+          ];
+        };
         sources = [
           {
             name = "nvim_lsp";

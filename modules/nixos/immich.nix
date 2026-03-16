@@ -1,4 +1,4 @@
-{ ... }:
+{ _ }:
 {
   services.immich = {
     enable = true;
@@ -9,5 +9,9 @@
     accelerationDevices = null;
   };
 
-  users.users.immich.extraGroups = [ "video" "render" "users" ];
+  users.users.immich.extraGroups = [
+    "video"
+    "render"
+    "users"
+  ];
 }

@@ -19,9 +19,11 @@
   };
 
   systemd.services.jellyfin.environment.LIBVA_DRIVER_NAME = "i965"; # or i965 for older GPUs
-  environment.sessionVariables = { LIBVA_DRIVER_NAME = "i965"; };
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "i965";
+  };
 
-   hardware.graphics = {
+  hardware.graphics = {
     extraPackages = with pkgs; [
       intel-ocl # Generic OpenCL support
 
@@ -43,6 +45,6 @@
 
       # GPU Monitoring
       intel-gpu-tools
-      ];
+    ];
   };
 }

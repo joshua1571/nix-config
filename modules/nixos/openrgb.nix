@@ -1,13 +1,19 @@
 # https://github.com/Misterio77/nix-config/blob/main/modules/nixos/openrgb.nix
 # Adds a settings option, for declarative config
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 # Doesn't seem to be working on desktop host
 let
   cfg = config.services.hardware.openrgb;
   settingsFormat = pkgs.formats.json { };
   settingsFile = settingsFormat.generate "OpenRGB" cfg.settings;
-in {
+in
+{
   disabledModules = [ "services/hardware/openrgb.nix" ];
 
   options.services.hardware.openrgb = {
@@ -21,20 +27,25 @@ in {
     };
 
     motherboard = lib.mkOption {
-      type = lib.types.nullOr (lib.types.enum [ "amd" "intel" ]);
-      default = if config.hardware.cpu.intel.updateMicrocode then
-        "intel"
-      else if config.hardware.cpu.amd.updateMicrocode then
-        "amd"
-      else
-        null;
+      type = lib.types.nullOr (
+        lib.types.enum [
+          "amd"
+          "intel"
+        ]
+      );
+      default =
+        if config.hardware.cpu.intel.updateMicrocode then
+          "intel"
+        else if config.hardware.cpu.amd.updateMicrocode then
+          "amd"
+        else
+          null;
       defaultText = lib.literalMD ''
         if config.hardware.cpu.intel.updateMicrocode then "intel"
         else if config.hardware.cpu.amd.updateMicrocode then "amd"
         else null;
       '';
-      description =
-        "CPU family of motherboard. Allows for addition motherboard i2c support.";
+      description = "CPU family of motherboard. Allows for addition motherboard i2c support.";
     };
 
     server.port = lib.mkOption {
@@ -49,9 +60,11 @@ in {
     environment.systemPackages = [ cfg.package ];
     services.udev.packages = [ cfg.package ];
 
-    boot.kernelModules = [ "i2c-dev" ]
-      ++ lib.optionals (cfg.motherboard == "amd") [ "i2c-piix4" ]
-      ++ lib.optionals (cfg.motherboard == "intel") [ "i2c-i801" ];
+    boot.kernelModules = [
+      "i2c-dev"
+    ]
+    ++ lib.optionals (cfg.motherboard == "amd") [ "i2c-piix4" ]
+    ++ lib.optionals (cfg.motherboard == "intel") [ "i2c-i801" ];
 
     systemd.services.openrgb = {
       description = "OpenRGB server daemon";
@@ -59,13 +72,10 @@ in {
       serviceConfig = {
         StateDirectory = "OpenRGB";
         WorkingDirectory = "/var/lib/OpenRGB";
-        ExecStartPre = lib.optionalString (cfg.settings != { }) "${
-            lib.getExe' pkgs.coreutils "cp"
-          } --dereference ${settingsFile} /var/lib/OpenRGB/OpenRGB.json";
-        ExecStart =
-          "${lib.getExe cfg.package} --verbose --server --server-port ${
-            toString cfg.server.port
-          } --config /var/lib/OpenRGB";
+        ExecStartPre = lib.optionalString (
+          cfg.settings != { }
+        ) "${lib.getExe' pkgs.coreutils "cp"} --dereference ${settingsFile} /var/lib/OpenRGB/OpenRGB.json";
+        ExecStart = "${lib.getExe cfg.package} --verbose --server --server-port ${toString cfg.server.port} --config /var/lib/OpenRGB";
         Restart = "always";
       };
     };

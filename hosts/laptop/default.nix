@@ -8,7 +8,7 @@
     # Common
     ../../modules/nixos/common.nix
     ../../modules/nixos/gnupg.nix
-    ../../modules/nixos/openssh.nix
+    ../../modules/nixos/openssh_server.nix
 
     # Graphical Client
     ../../modules/nixos/kde.nix

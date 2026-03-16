@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs = {
     git = {
       enable = true;
@@ -11,10 +12,18 @@
           editor = "nvim";
           autoclrf = "true";
         };
-        color = { ui = "auto"; };
-        init = { defaultBranch = "main"; };
-        web = { browser = "firefox"; };
-        github = { user = "joshua1571"; };
+        color = {
+          ui = "auto";
+        };
+        init = {
+          defaultBranch = "main";
+        };
+        web = {
+          browser = "firefox";
+        };
+        github = {
+          user = "joshua1571";
+        };
       };
       ignores = [
         "*.bak"
@@ -335,4 +344,3 @@
 
   };
 }
-

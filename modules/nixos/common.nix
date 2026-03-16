@@ -24,7 +24,7 @@
       "nix-command"
       "flakes"
     ];
-		download-buffer-size = 524288000;
+    download-buffer-size = 524288000;
   };
 
   # do garbage collection weekly to keep disk usage low
@@ -40,7 +40,7 @@
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-  }
+  };
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -60,22 +60,22 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-
-  services.printing.enable = true;
-
   services = {
+    # Configure keymap in X11
+    xserver.xkb = {
+      layout = "us";
+      variant = "";
+    };
+
+    printing.enable = true;
+
     pipewire = {
       enable = true;
       pulse.enable = true;
     };
-    tailscale.enable = true;
-    opensnitch.enable = false;
+
+    tailscale.enable = true; # TODO: tailscale should probably be its own tailscale.nix file
+    opensnitch.enable = false; # TODO: Opensnitch service probably doesn't belong here
     fwupd.enable = true;
   };
 
