@@ -5,15 +5,18 @@
 
 {
   imports = [
+    # Common
     ../../modules/nixos/common.nix
-    ../../modules/nixos/kde.nix
     ../../modules/nixos/gnupg.nix
     ../../modules/nixos/openssh.nix
-    #../../modules/nixos/smb_share.nix
+
+    # Graphical Client
+    ../../modules/nixos/kde.nix
     ../../modules/nixos/ai.nix
     ../../modules/nixos/steam.nix
     ../../modules/nixos/games_disk.nix
-		../../modules/nixos/obs-studio.nix
+    ../../modules/nixos/obs-studio.nix
+    #../../modules/nixos/smb_share.nix
     #../../modules/nixos/openrgb.nix
     # TODO: GPU Acceleration https://hydra.nixos.org/build/124333142/download/2/nixos/index.html#sec-gpu-accel
 
@@ -23,8 +26,6 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
     extraModprobeConfig = ''
       options mt7921e disable_aspm=1
     '';
@@ -33,14 +34,14 @@
   networking = {
     hostName = "desktop";
     networkmanager.enable = true;
-    firewall.checkReversePath = "loose"; # tailscale dns fix
   };
 
-  hardware.graphics.enable = true;
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
   };
+
+  hardware.graphics.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -1,7 +1,7 @@
-{ pkgs, ... }: {
+{ ... }: {
   fileSystems."/home/jrh/Share" = {
     device =
-      "//storage-ts/share"; # Need tailscale to be running on storage for mount to work properly, storage-ts won't reply
+      "//server-ts/share"; # Need tailscale to be running on storage for mount to work properly, storage-ts won't reply
     fsType = "cifs";
     options = let
 

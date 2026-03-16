@@ -12,7 +12,7 @@
     ];
   };
 
-	services.usbmuxd.enable = true;
+  services.usbmuxd.enable = true; #iPhone filesystem access
 
   environment.systemPackages = with pkgs; [
     v4l-utils
@@ -29,7 +29,7 @@
       # Virtual camera.
       "v4l2loopback"
       # Virtual Microphone. Custom DroidCam v4l2loopback driver needed for audio.
-      #    "snd-aloop"
+      "snd-aloop"
     ];
   };
 

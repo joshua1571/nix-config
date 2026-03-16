@@ -149,10 +149,9 @@
           in
           nixpkgs.lib.nixosSystem {
             inherit specialArgs;
-            system = "aarch64-linux";
+            system = "x86_64-linux";
 
             modules = [
-              nixos-hardware.nixosModules.raspberry-pi-4
               ./hosts/server/default.nix
 
               home-manager.nixosModules.home-manager

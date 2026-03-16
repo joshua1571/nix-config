@@ -37,6 +37,11 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+  }
+
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
@@ -55,6 +60,13 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
+
   services.printing.enable = true;
 
   services = {
@@ -65,7 +77,6 @@
     tailscale.enable = true;
     opensnitch.enable = false;
     fwupd.enable = true;
-    usbmuxd.enable = true; # iphone filesystem access
   };
 
   fonts = {
@@ -87,6 +98,7 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
+  networking.firewall.checkReversePath = "loose";
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -104,6 +116,7 @@
     file
     pciutils
     usbutils
+    glances
   ];
 
 }

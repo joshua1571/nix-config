@@ -1,3 +1,4 @@
+# The Games disk is a 4TB SSD installed in desktop using the btrfs filesystem
 { pkgs, username, ... }: {
 
   environment.systemPackages = with pkgs; [ btrfs-progs ];
@@ -8,5 +9,4 @@
     options = [ "rw" "relatime" "ssd" "discard=async" "space_cache=v2" ];
     neededForBoot = false;
   };
-
 }

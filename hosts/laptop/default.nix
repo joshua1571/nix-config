@@ -1,13 +1,17 @@
 {
-  pkgs,...
+  pkgs,
+  ...
 }:
 
 {
   imports = [
+    # Common
     ../../modules/nixos/common.nix
-    ../../modules/nixos/kde.nix
     ../../modules/nixos/gnupg.nix
     ../../modules/nixos/openssh.nix
+
+    # Graphical Client
+    ../../modules/nixos/kde.nix
     ../../modules/nixos/obs-studio.nix
     #../../modules/nixos/smb_share.nix
 
@@ -17,11 +21,6 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-    # this entry seems to be a duplicate of an entry in hardware-configuration.nix
-    #initrd.luks.devices."luks-ef62d097-c68e-4ef9-82e5-e77d4e21cf61".device =
-    #  "/dev/disk/by-uuid/ef62d097-c68e-4ef9-82e5-e77d4e21cf61";
     extraModprobeConfig = ''
       options mt7921e disable_aspm=1
     '';
@@ -30,14 +29,14 @@
   networking = {
     hostName = "laptop";
     networkmanager.enable = true;
-    firewall.checkReversePath = "loose"; # tailscale dns fix
   };
 
-  hardware.graphics.enable = true;
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
   };
+
+  hardware.graphics.enable = true;
 
   services.libinput.enable = true; # enable touchpad
 
