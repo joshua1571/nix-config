@@ -30,26 +30,44 @@
           {
             Fastmail = [
               {
+                icon = "sh-fastmail";
+                abbr = "FM";
                 href = "https://app.fastmail.com";
               }
             ];
+          }
+          {
             Maps = [
               {
+                icon = "sh-google-maps";
+                abbr = "GM";
                 href = "https://www.google.com/maps";
               }
             ];
+          }
+          {
             Reddit = [
               {
+                icon = "sh-reddit";
+                abbr = "RD";
                 href = "https://www.reddit.com/";
               }
             ];
+          }
+          {
             Feedly = [
               {
+                icon = "sh-feedly";
+                abbr = "FY";
                 href = "https://feedly.com/i/collection/content/user/436e25c7-bb60-4a7b-a350-b248ef3c9957/category/global.all";
               }
             ];
+          }
+          {
             Amazon = [
               {
+                icon = "sh-amazon";
+                abbr = "AZ";
                 href = "https://www.amazon.com/ref=nav_logo";
               }
             ];
@@ -62,26 +80,44 @@
           {
             Github = [
               {
+                icon = "sh-github";
+                abbr = "GH";
                 href = "https://github.com/";
               }
             ];
+          }
+          {
             Linode = [
               {
+                icon = "si-akamai";
+                abbr = "LN";
                 href = "https://cloud.linode.com/linodes";
               }
             ];
+          }
+          {
             Tailscale = [
               {
+                icon = "sh-tailscale";
+                abbr = "TS";
                 href = "https://login.tailscale.com/admin/machines";
               }
             ];
+          }
+          {
             HuggingFace = [
               {
+                icon = "si-huggingface";
+                abbr = "HF";
                 href = "https://huggingface.co/";
               }
             ];
+          }
+          {
             Kaggle = [
               {
+                icon = "si-kaggle";
+                abbr = "KG";
                 href = "https://www.kaggle.com/";
               }
             ];
@@ -94,46 +130,79 @@
           {
             YouTube = [
               {
+                icon = "sh-youtube";
+                abbr = "YT";
                 href = "https://youtube.com/";
               }
             ];
+          }
+          {
             Netflix = [
               {
+                icon = "sh-netflix";
+                abbr = "NX";
                 href = "https://www.netflix.com/browse";
               }
             ];
+          }
+          {
             Amazon_Prime = [
               {
+                icon = "sh-amazon-prime-video";
+                abbr = "AP";
                 href = "https://www.amazon.com/gp/video/storefront";
               }
             ];
+          }
+          {
             Hulu = [
               {
+                icon = "sh-hulu";
+                abbr = "HL";
                 href = "https://www.hulu.com/hub/home";
               }
             ];
+          }
+          {
             Disney_Plus = [
               {
+                icon = "sh-disney-plus";
+                abbr = "DP";
                 href = "https://www.disneyplus.com/home";
               }
             ];
+          }
+          {
             HBO_Max = [
               {
+                icon = "sh-hbo-max";
+                abbr = "HM";
                 href = "https://play.hbomax.com/";
               }
             ];
+          }
+          {
             Crunchyroll = [
               {
+                icon = "sh-crunchyroll";
+                abbr = "CR";
                 href = "https://www.crunchyroll.com/discover";
               }
             ];
+          }
+          {
             RunningMan = [
               {
+                abbr = "RM";
                 href = "https://www.myrunningman.com/";
               }
             ];
+          }
+          {
             TV_Pass = [
               {
+                icon = "mdi-television-box";
+                abbr = "TV";
                 href = "https://tvpass.org/";
               }
             ];
@@ -155,7 +224,7 @@
           {
             "Navidrome" = {
               description = "Music";
-              href = "http://10.0.0.126:4533/app/#/song";
+              href = "http://10.0.0.126:4533/app/#/login";
             };
           }
           {

@@ -75,8 +75,7 @@
       pulse.enable = true;
     };
 
-    tailscale.enable = true; # TODO: tailscale should probably be its own tailscale.nix file
-    opensnitch.enable = false; # TODO: Opensnitch service probably doesn't belong here
+    tailscale.enable = true;
     fwupd.enable = true;
   };
 
@@ -104,19 +103,18 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim
     wget
     curl
-    zip
     xz
+    zip
     unzip
-    xdg-utils
     sysstat
     lm_sensors # for `sensors` command
-    cifs-utils
     file
     pciutils
     usbutils
+    xdg-utils
+    cifs-utils
     glances
   ];
 
