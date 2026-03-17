@@ -17,8 +17,8 @@
     fzf.enable = true;
     fd.enable = true;
     ripgrep.enable = true;
-		mpv.enable = true;
-		zathura.enable = true;
+    mpv.enable = true;
+    zathura.enable = true;
 
     delta = {
       enable = true;
@@ -48,7 +48,7 @@
 
     yazi = {
       enable = true;
-			shellWrapperName = "y";
+      shellWrapperName = "y";
       settings = {
         log = {
           enabled = false;

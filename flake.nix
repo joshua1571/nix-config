@@ -3,19 +3,16 @@
 
   inputs = {
     # Nixpkgs (unstable)
+    # TODO: Add stable inputs for server host
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
 
     # Home manager (unstable)
+    # TODO: Add stable inputs for server host
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Used for raspberry pi
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware";
     };
 
     # nixvim (unstable)
@@ -24,27 +21,41 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # HIGH PRIORITY TODO: Add secrets using age
+    # TODO High Priority: Add secrets using age
     # TODO: Add ssh keys to user
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.darwin.follows = "";
     };
 
-    # HIGH PRIORITY TODO: Configure disks declaratively in nix config
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
+    # TODO Low Priority: Set up colmena
+    # Remote deployments
+    colmena = {
+      url = "github:zhaofengli/colmena";
     };
 
-    # TODO: Modularize flake using flake-parts
+    # TODO Low Priority: Add disks from server using disko
+    ## Configure disks declaratively in nix config
+    #disko = {
+    #  url = "github:nix-community/disko";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    #};
+
+    # TODO Low Priority: Add raspberry pi to flake
+    ## Used for raspberry pi
+    #nixos-hardware = {
+    #  url = "github:NixOS/nixos-hardware";
+    #};
+
+    # TODO Low Priority: Modularize flake using flake-parts
     #flake-parts = {
     #  url = "github:hercules-ci/flake-parts";
     #  inputs.nixpkgs-lib.follows = "nixpkgs";
     #};
 
-    # TODO: Replace regular nixpkgs plasma with plasma manager
-    # TODO: Try hyprland again first
+    # TODO Low Priority: Replace regular nixpkgs plasma with plasma manager
+    # Try wayland based tiling window manager first
     #plasma-manager = {
     #  url = "github:nix-community/plasma-manager";
     #  inputs.nixpkgs.follows = "nixpkgs";
@@ -57,7 +68,8 @@
       self,
       nixpkgs,
       home-manager,
-      nixos-hardware,
+      #nixos-hardware,
+      agenix,
       ...
     }:
     {
@@ -83,6 +95,7 @@
 
             modules = [
               ./hosts/laptop/default.nix
+              agenix.nixosModules.default
 
               home-manager.nixosModules.home-manager
               {
@@ -91,9 +104,9 @@
                   useUserPackages = true;
                   extraSpecialArgs = inputs // specialArgs;
                   users.${username} = import ./users/${username}/home.nix;
+                  backupFileExtension = "hm_backup";
                 };
               }
-
             ];
           };
 
@@ -118,7 +131,7 @@
 
             modules = [
               ./hosts/desktop/default.nix
-              # TODO: Add openrgb support: https://github.com/Misterio77/nix-config/blob/main/modules/nixos/openrgb.nix
+              agenix.nixosModules.default
 
               home-manager.nixosModules.home-manager
               {
@@ -127,6 +140,7 @@
                   useUserPackages = true;
                   extraSpecialArgs = inputs // specialArgs;
                   users.${username} = import ./users/${username}/home.nix;
+                  backupFileExtension = "hm_backup";
                 };
               }
             ];
@@ -149,11 +163,11 @@
           in
           nixpkgs.lib.nixosSystem {
             inherit specialArgs;
-            system = "aarch64-linux";
+            system = "x86_64-linux";
 
             modules = [
-              nixos-hardware.nixosModules.raspberry-pi-4
               ./hosts/server/default.nix
+              agenix.nixosModules.default
 
               home-manager.nixosModules.home-manager
               {
@@ -162,11 +176,11 @@
                   useUserPackages = true;
                   extraSpecialArgs = inputs // specialArgs;
                   users.${username} = import ./users/${username}/home.nix;
+                  backupFileExtension = "hm_backup";
                 };
               }
             ];
           };
-
       };
     };
 }

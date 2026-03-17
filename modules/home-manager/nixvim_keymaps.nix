@@ -25,7 +25,7 @@
         action = "<C-w>l";
         key = "<leader>l";
       }
-			#{
+      #{
       #  # TODO: split vertically
       #  action = ":vnew";
       #  key = "<leader>%";

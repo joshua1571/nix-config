@@ -1,7 +1,7 @@
-{ ... }: {
+{ username, ... }:
+{
   programs.steam = {
     enable = true;
-    remotePlay.openFirewall =
-      true;
+    remotePlay.openFirewall = true;
   };
 }

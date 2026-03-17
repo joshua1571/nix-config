@@ -19,12 +19,13 @@
 
   # customise /etc/nix/nix.conf declaratively via `nix.settings`
   nix.settings = {
+    trusted-users = [ "@wheel" ];
     # enable flakes globally
     experimental-features = [
       "nix-command"
       "flakes"
     ];
-		download-buffer-size = 524288000;
+    download-buffer-size = 524288000;
   };
 
   # do garbage collection weekly to keep disk usage low
@@ -36,6 +37,11 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+  };
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -55,17 +61,22 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  services.printing.enable = true;
-
   services = {
+    # Configure keymap in X11
+    xserver.xkb = {
+      layout = "us";
+      variant = "";
+    };
+
+    printing.enable = true;
+
     pipewire = {
       enable = true;
       pulse.enable = true;
     };
+
     tailscale.enable = true;
-    opensnitch.enable = false;
     fwupd.enable = true;
-    usbmuxd.enable = true; # iphone filesystem access
   };
 
   fonts = {
@@ -87,23 +98,24 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
+  networking.firewall.checkReversePath = "loose";
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim
     wget
     curl
-    zip
     xz
+    zip
     unzip
-    xdg-utils
     sysstat
     lm_sensors # for `sensors` command
-    cifs-utils
     file
     pciutils
     usbutils
+    xdg-utils
+    cifs-utils
+    glances
   ];
 
 }

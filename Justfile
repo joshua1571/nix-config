@@ -72,4 +72,21 @@ verify-store:
 #repair-store *paths:
 #  nix store repair {{paths}}
 
+###
+### TODO: Remote builds
+###
 
+## Remotely rebuild the server host
+#[group('build')]
+#build-server:
+#  nixos-rebuild --flake .#server --build-host jrh@server --target-host jrh@server --sudo switch
+#
+## Remotely rebuild the laptop host
+#[group('build')]
+#build-laptop:
+#  nixos-rebuild --flake .#laptop --build-host jrh@laptop --target-host jrh@laptop --use-remote-sudo switch
+#
+## Remotely rebuild the desktop host
+#[group('build')]
+#build-desktop:
+#  nixos-rebuild --flake .#desktop --build-host jrh@desktop --target-host jrh@desktop --use-remote-sudo switch
