@@ -6,6 +6,7 @@
     kdePackages.filelight
     kdePackages.kcalc
     kdePackages.koko
+    kdePackages.kdeconnect-kde
     kdePackages.ksshaskpass
     kdePackages.kwallet
     kdePackages.kwallet-pam

@@ -17,7 +17,7 @@
       ticktick
       ktailctl # Requires tailscale service
       brave
-      bitwarden-desktop
+			#bitwarden-desktop
       github-desktop
       libreoffice-qt6
       deskflow

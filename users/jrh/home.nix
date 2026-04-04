@@ -20,7 +20,7 @@
     ../../modules/home-manager/cli_applications.nix
     ../../modules/home-manager/git.nix
     ../../modules/home-manager/nixvim.nix
-    #../../modules/home-manager/services.nix
+    ../../modules/home-manager/services.nix
     ../../modules/home-manager/tmux.nix
   ]
   ++ lib.optionals desktop-environment [
@@ -28,6 +28,7 @@
     ../../modules/home-manager/graphical_applications.nix
     ../../modules/home-manager/kde_packages.nix
     ../../modules/home-manager/terminal.nix
+    ../../modules/home-manager/local_ai_client.nix
   ];
   #++ lib.optionals game-streaming-client [
   #++ lib.optionals game-streaming-server [
