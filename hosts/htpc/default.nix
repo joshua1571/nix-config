@@ -12,12 +12,8 @@
 
     # Graphical Client
     ../../modules/nixos/kde.nix
-    ../../modules/nixos/local_ai_server.nix
-    ../../modules/nixos/steam.nix
-    ../../modules/nixos/games_disk.nix
-    ../../modules/nixos/obs-studio.nix
+    #../../modules/nixos/obs-studio.nix
     #../../modules/nixos/smb_share.nix
-    #../../modules/nixos/openrgb.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -25,13 +21,15 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
-    extraModprobeConfig = ''
-      options mt7921e disable_aspm=1
-    '';
+    #extraModprobeConfig = ''
+    #  options mt7921e disable_aspm=1
+    #'';
   };
 
+  boot.initrd.systemd.tpm2.enable = false;
+
   networking = {
-    hostName = "desktop";
+    hostName = "htpc";
     networkmanager.enable = true;
   };
 
@@ -41,6 +39,14 @@
   };
 
   hardware.graphics.enable = true;
+  hardware.graphics.extraPackages = with pkgs; [
+    intel-media-driver # VA-API (iHD) userspace
+    vpl-gpu-rt # oneVPL (QSV) runtime
+  ];
+
+  services.xserver.videoDrivers = [ "modesetting" ];
+
+  services.libinput.enable = true; # enable touchpad
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

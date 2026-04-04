@@ -7,7 +7,7 @@
 
     ###text to image
     #stable-diffusion-cpp-rocm #https://lunnova.dev/articles/rocm-711-you-can-not-build/
-    stable-diffusion-cpp-vulkan
+    #stable-diffusion-cpp-vulkan
 
     ###speech to text
     #openai-whisper

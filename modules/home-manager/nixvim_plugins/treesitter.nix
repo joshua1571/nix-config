@@ -9,7 +9,7 @@
         highlight.enable = true;
         indent.enable = true;
       };
-      folding.enable = false;
+      #folding.enable = false;
     };
 
     treesitter-context.enable = true;
