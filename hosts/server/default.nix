@@ -4,6 +4,9 @@
 
 {
   imports = [
+    # Secrets
+    ../../modules/nixos/agenix.nix
+
     # Common
     ../../modules/nixos/common.nix
     ../../modules/nixos/gnupg.nix

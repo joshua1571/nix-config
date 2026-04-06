@@ -1,5 +1,5 @@
 {
-  #config,
+  config,
   pkgs,
   lib,
   inputs,
@@ -118,7 +118,6 @@
     xdg-utils
     cifs-utils
     glances
-    inputs.agenix.packages."${system}".default
   ];
 
 }
