@@ -12,11 +12,20 @@
     # Server
     ../../modules/nixos/zfs.nix
 
+    # Reverse Proxy
+    ../../modules/nixos/nginx.nix
+
     # Self Hosted Services
     ../../modules/nixos/homepage-dashboard.nix
     ../../modules/nixos/jellyfin.nix
     ../../modules/nixos/navidrome.nix
     ../../modules/nixos/immich.nix
+    ../../modules/nixos/radarr.nix
+    ../../modules/nixos/sonarr.nix
+    ../../modules/nixos/qbittorrent.nix
+    ../../modules/nixos/prowlarr.nix
+    ../../modules/nixos/lidarr.nix
+    ../../modules/nixos/jellyseerr.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix

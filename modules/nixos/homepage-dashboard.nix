@@ -233,6 +233,18 @@
               href = "http://10.0.0.126:2283/photos";
             };
           }
+          {
+            "Radarr" = {
+              description = "Movies";
+              href = "http://10.0.0.126:7878";
+            };
+          }
+          {
+            "Sonarr" = {
+              description = "TV Shows";
+              href = "http://10.0.0.126:8989";
+            };
+          }
         ];
       }
       {

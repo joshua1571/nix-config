@@ -2,6 +2,7 @@
   #config,
   pkgs,
   lib,
+  inputs,
   username,
   ...
 }:
@@ -117,6 +118,7 @@
     xdg-utils
     cifs-utils
     glances
+    inputs.agenix.packages."${system}".default
   ];
 
 }

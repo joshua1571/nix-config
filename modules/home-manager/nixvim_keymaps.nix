@@ -25,21 +25,18 @@
         action = "<C-w>l";
         key = "<leader>l";
       }
-      #{
-      #  # TODO: split vertically
-      #  action = ":vnew";
-      #  key = "<leader>%";
-      #}
-      #{
-      #  # TODO: split horizontally
-      #  action = ":split";
-      #  key = "<leader>;";
-      #}
-      #{
-      #  # TODO: create new buffer in a tab
-      #  action = ":tabnew";
-      #  key = "<leader>t";
-      #}
+      {
+        action = ":vnew<CR>";
+        key = "<leader>%";
+      }
+      {
+        action = ":split<CR>";
+        key = "<leader>;";
+      }
+      {
+        action = ":tabnew<CR>";
+        key = "<leader>t";
+      }
     ];
   };
 }
