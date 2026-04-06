@@ -32,8 +32,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # TODO High Priority: Add secrets using age
-    # TODO: Add ssh keys to user
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";

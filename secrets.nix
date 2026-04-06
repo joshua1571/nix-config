@@ -15,5 +15,5 @@ let
   ];
 in
 {
-  "tailscale-hostname.age".publicKeys = allKeys;
+  "secrets/tailscale-hostname.age".publicKeys = allKeys;
 }
