@@ -19,7 +19,7 @@
         "map to guest" = "bad user";
       };
       "Share" = {
-        "path" = "/tank/users/jrh";
+        "path" = "/tank/personal";
         "browseable" = "yes";
         "read only" = "no";
         "guest ok" = "no";

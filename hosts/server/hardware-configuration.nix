@@ -39,15 +39,15 @@
     ];
   };
 
-  #  fileSystems."/fasttank" = {
-  #    device = "fasttank";
-  #    fsType = "zfs";
-  #  };
-  #
-  #  fileSystems."/fasttank/containers" = {
-  #    device = "fasttank/containers";
-  #    fsType = "zfs";
-  #  };
+  fileSystems."/fasttank" = {
+    device = "fasttank";
+    fsType = "zfs";
+  };
+
+  fileSystems."/fasttank/containers" = {
+    device = "fasttank/containers";
+    fsType = "zfs";
+  };
   #
   #  fileSystems."/fasttank/test_dataset" = {
   #    device = "fasttank/test_dataset";
@@ -99,10 +99,10 @@
   #    fsType = "zfs";
   #  };
   #
-  #  fileSystems."/tank" = {
-  #    device = "tank";
-  #    fsType = "zfs";
-  #  };
+  fileSystems."/tank" = {
+    device = "tank";
+    fsType = "zfs";
+  };
   #
   #  fileSystems."/tank/backups" = {
   #    device = "tank/backups";
