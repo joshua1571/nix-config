@@ -22,7 +22,11 @@ in
   # Note: the machine must be authenticated to Tailscale before this runs.
   systemd.services.tailscale-cert = {
     description = "Provision Tailscale TLS certificate for nginx";
-    after = [ "tailscaled.service" "network-online.target" "agenix.service" ];
+    after = [
+      "tailscaled.service"
+      "network-online.target"
+      "agenix.service"
+    ];
     before = [ "nginx.service" ];
     wantedBy = [ "nginx.service" ];
     serviceConfig = {

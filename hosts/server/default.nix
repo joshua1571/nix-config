@@ -29,6 +29,7 @@
     ../../modules/nixos/prowlarr.nix
     ../../modules/nixos/lidarr.nix
     ../../modules/nixos/jellyseerr.nix
+    ../../modules/nixos/flaresolverr.nix
 
     # Storage layout
     ./storage.nix
