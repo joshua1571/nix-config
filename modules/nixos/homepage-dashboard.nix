@@ -266,6 +266,12 @@
             };
           }
           {
+            "Router(LuCI)" = {
+              description = "Router Web UI";
+              href = "http://10.0.0.1:8080/cgi-bin/luci/admin/status/overview";
+            };
+          }
+          {
             "Switch" = {
               description = "Switch Web UI";
               href = "http://10.0.0.2";

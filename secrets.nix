@@ -16,4 +16,5 @@ let
 in
 {
   "secrets/tailscale-hostname.age".publicKeys = allKeys;
+  "secrets/nextcloud-adminpass.age".publicKeys = allKeys;
 }
