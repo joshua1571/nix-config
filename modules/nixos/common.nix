@@ -118,6 +118,7 @@
     xdg-utils
     cifs-utils
     glances
+    lsof
   ];
 
 }

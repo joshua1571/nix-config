@@ -30,6 +30,9 @@
     ../../modules/nixos/lidarr.nix
     ../../modules/nixos/jellyseerr.nix
 
+    # Storage layout
+    ./storage.nix
+
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];

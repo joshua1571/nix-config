@@ -58,11 +58,17 @@ The server runs a self-hosted media/automation stack, all defined as individual 
 
 ### Storage layout
 
-The server has two ZFS pools:
-- `fasttank` — fast storage, used for container data (config, cache, DBs). Soon to be decommissioned in favor of tank pool.
-- `tank` — bulk storage, used for media, backups, downloads, user files
+The server has one active ZFS pool: `tank`. Datasets use native ZFS mountpoints (not `fileSystems` entries in `hardware-configuration.nix`).
 
-New service data dirs go under `tank/applications/` (e.g. `dataDir = "/tank/applications/radarr"`). ZFS datasets are declared in `hosts/server/hardware-configuration.nix` as `fileSystems` entries — add new datasets there rather than creating them via systemd services.
+Active datasets (mountpoint matches dataset name):
+- `tank/backups` — backups root
+- `tank/backups/desktop` — desktop backups
+- `tank/backups/laptop` — laptop backups
+- `tank/backups/macbookpro` — macbook pro backups
+- `tank/media` — media files
+- `tank/personal` — personal files
+
+New service data dirs go under `tank/` with an appropriate child dataset. Do **not** add ZFS datasets to `hardware-configuration.nix` — they are managed via native ZFS mountpoints.
 
 ### Nixvim
 

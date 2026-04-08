@@ -28,7 +28,7 @@
     ../../modules/home-manager/graphical_applications.nix
     ../../modules/home-manager/kde_packages.nix
     ../../modules/home-manager/terminal.nix
-    #../../modules/home-manager/local_ai_client.nix
+    ../../modules/home-manager/local_ai_client.nix
   ];
   #++ lib.optionals game-streaming-client [
   #++ lib.optionals game-streaming-server [
@@ -37,7 +37,7 @@
   #++ lib.optionals game-streaming-client [
   #  ../../modules/home-manager/game-streaming-client.nix
   #];
-  #++ lib.optionals ai_host [
+  #++ lib.optionals ai_server [
   #  ../../modules/home-manager/local_ai_client.nix
   #];
 
