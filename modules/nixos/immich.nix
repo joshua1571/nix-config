@@ -1,4 +1,4 @@
-{ username, ... }:
+{ ... }:
 {
   services.immich = {
     enable = true;
@@ -7,7 +7,7 @@
     port = 2283;
     openFirewall = true;
     accelerationDevices = null;
-    mediaLocation = "/tank/personal/photos/immich_data";
+    #mediaLocation = "/tank/personal/photos/immich_data";
   };
 
   users.users.immich.extraGroups = [

@@ -14,6 +14,7 @@
 
     # Server
     ../../modules/nixos/zfs.nix
+    ../../modules/nixos/smb_share_server.nix
 
     # Reverse Proxy
     ../../modules/nixos/nginx.nix
