@@ -5,9 +5,9 @@
     gh
     trash-cli
     nmap
-    ddgr
     cheat
     rclone
+    mullvad
   ];
 
   programs = {

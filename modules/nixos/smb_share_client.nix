@@ -1,7 +1,9 @@
-{ _ }:
+{ pkgs }:
 {
+  environment.systemPackages = [ pkgs.cifs-utils ];
+
   fileSystems."/home/jrh/Share" = {
-    device = "//server-ts/share"; # Need tailscale to be running on storage for mount to work properly, storage-ts won't reply
+    device = "//server/tank/personal";
     fsType = "cifs";
     options =
       let
