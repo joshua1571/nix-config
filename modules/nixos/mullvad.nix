@@ -35,11 +35,11 @@
     # qbittorrent packets into that table before the main table is consulted.
     postSetup = ''
       ip route add default dev mullvad0 table 200
-      ip rule add uidrange 352-352 lookup 200 priority 100
+      ip rule add fwmark 0x200 lookup 200 priority 100
     '';
 
     preShutdown = ''
-      ip rule del uidrange 352-352 lookup 200 priority 100 || true
+      ip rule del fwmark 0x200 lookup 200 priority 100 || true
       ip route del default dev mullvad0 table 200 || true
     '';
   };
