@@ -18,4 +18,6 @@ in
   "secrets/tailscale-hostname.age".publicKeys = allKeys;
   "secrets/tailscale-domain.age".publicKeys = allKeys;
   "secrets/nextcloud-adminpass.age".publicKeys = allKeys;
+  "secrets/mullvad-wg-private-key.age".publicKeys = allKeys;
+  "secrets/mullvad-wg-preshared-key.age".publicKeys = allKeys;
 }
