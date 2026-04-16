@@ -8,21 +8,19 @@
     file = ../../secrets/mullvad-wg-preshared-key.age;
   };
 
-  # systemd-resolved is required for the dns option below to take effect.
-  # It also makes /etc/resolv.conf point to 127.0.0.53, so all processes
-  # (including qbittorrent) query resolved on lo rather than an external
-  # server directly — lo is whitelisted in the kill switch.
+  # systemd-resolved makes /etc/resolv.conf point to 127.0.0.53, so all
+  # processes (including qbittorrent) query resolved on lo rather than an
+  # external server directly — lo is whitelisted in the kill switch.
+  # resolved then queries Mullvad's DNS (10.64.0.1) via the host route
+  # added in postSetup below, using its own UID (not kill-switched).
   services.resolved.enable = true;
+  networking.nameservers = [ "10.64.0.1" ];
 
   # Raw WireGuard interface for Mullvad — no default route set here.
   # Only qbittorrent traffic is routed through this tunnel (see postSetup).
   networking.wireguard.interfaces.mullvad0 = {
     # Your Mullvad-assigned tunnel address — from the [Interface] Address field
     ips = [ "10.136.102.81/32" ];
-
-    # Use Mullvad's in-tunnel DNS. resolved picks this up via resolvconf
-    # and queries it through the host route added in postSetup below.
-    dns = [ "10.64.0.1" ];
 
     privateKeyFile = config.age.secrets.mullvad-wg-private-key.path;
 
