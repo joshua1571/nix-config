@@ -4,9 +4,9 @@
     file = ../../secrets/mullvad-wg-private-key.age;
   };
 
-  age.secrets.mullvad-wg-preshared-key = {
-    file = ../../secrets/mullvad-wg-preshared-key.age;
-  };
+  # age.secrets.mullvad-wg-preshared-key = {
+  #   file = ../../secrets/mullvad-wg-preshared-key.age;
+  # };
 
   # systemd-resolved makes /etc/resolv.conf point to 127.0.0.53, so all
   # processes (including qbittorrent) query resolved on lo rather than an
@@ -34,7 +34,6 @@
       # and forwarded to this peer), but no kernel routes are added.
       ${pkgs.wireguard-tools}/bin/wg set mullvad0 \
         peer "SDnciTlujuy2APFTkhzfq5X+LDi+lhfU38wI2HBCxxs=" \
-        preshared-key ${config.age.secrets.mullvad-wg-preshared-key.path} \
         endpoint "169.150.203.15:18970" \
         allowed-ips "0.0.0.0/0,::/0" \
         persistent-keepalive 25
