@@ -21,7 +21,7 @@
       domain=$(cat ${config.age.secrets.tailscale-domain.path})
       {
         echo "HOMEPAGE_VAR_TAILSCALE_DOMAIN=$domain"
-        echo "HOMEPAGE_ALLOWED_HOSTS=localhost,10.0.0.125:8082,10.0.0.126:8082,10.0.0.100:8082,desktop.$domain,htpc.$domain,iphone.$domain,laptop.$domain,server.$domain"
+        echo "HOMEPAGE_ALLOWED_HOSTS=localhost:8082,10.0.0.125:8082,10.0.0.126:8082,10.0.0.100:8082,desktop.$domain:8082,htpc.$domain:8082,iphone.$domain:8082,laptop.$domain:8082,server.$domain:8082"
       } > /run/homepage-env
       chmod 400 /run/homepage-env
     '';
