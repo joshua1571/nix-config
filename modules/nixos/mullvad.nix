@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   age.secrets.mullvad-wg-private-key = {
     file = ../../secrets/mullvad-wg-private-key.age;
@@ -16,24 +16,23 @@
 
     privateKeyFile = config.age.secrets.mullvad-wg-private-key.path;
 
-    peers = [
-      {
-        # From the [Peer] section of the Mullvad WireGuard config
-        publicKey = "SDnciTlujuy2APFTkhzfq5X+LDi+lhfU38wI2HBCxxs=";
-        endpoint = "169.150.203.15:18970";
-        presharedKeyFile = config.age.secrets.mullvad-wg-preshared-key.path;
-        allowedIPs = [
-          "0.0.0.0/0"
-          "::/0"
-        ];
-        persistentKeepalive = 25;
-      }
-    ];
+    # No declarative peers — configuring the peer manually in postSetup
+    # via `wg set` avoids NixOS generating a peer systemd service that
+    # would add allowedIPs routes to the main routing table.
 
-    # Route qbittorrent (UID 352) through this interface via policy routing.
-    # Table 200 holds a default route via mullvad0; the ip rule steers
-    # qbittorrent packets into that table before the main table is consulted.
     postSetup = ''
+      # Add the Mullvad peer directly. allowedIPs here is WireGuard's
+      # cryptographic routing (any packet sent to mullvad0 is encrypted
+      # and forwarded to this peer), but no kernel routes are added.
+      ${pkgs.wireguard-tools}/bin/wg set mullvad0 \
+        peer "SDnciTlujuy2APFTkhzfq5X+LDi+lhfU38wI2HBCxxs=" \
+        preshared-key ${config.age.secrets.mullvad-wg-preshared-key.path} \
+        endpoint "169.150.203.15:18970" \
+        allowed-ips "0.0.0.0/0,::/0" \
+        persistent-keepalive 25
+
+      # Add default route only in table 200 — used exclusively for
+      # fwmark-tagged qbittorrent traffic, not for normal system traffic.
       ip route add default dev mullvad0 table 200
       ip rule add fwmark 0x200 lookup 200 priority 100
     '';
