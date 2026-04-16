@@ -7,7 +7,6 @@
     nmap
     cheat
     rclone
-    mullvad
   ];
 
   programs = {

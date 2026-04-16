@@ -1,9 +1,20 @@
-{ pkgs }:
+{ pkgs, username, ... }:
 {
   environment.systemPackages = [ pkgs.cifs-utils ];
 
+  security.wrappers."mount.cifs" = {
+    source = "${pkgs.cifs-utils.bin}/bin/mount.cifs";
+    owner = "root";
+    group = "root";
+    setuid = true;
+  };
+
+  systemd.tmpfiles.rules = [
+    "d /home/${username}/Share		0755 ${username} users -"
+  ];
+
   fileSystems."/home/jrh/Share" = {
-    device = "//server/tank/personal";
+    device = "//server/Share";
     fsType = "cifs";
     options =
       let
