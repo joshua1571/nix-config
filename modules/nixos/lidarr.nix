@@ -5,5 +5,5 @@
     openFirewall = true;
   };
 
-  users.users.lidarr.extraGroups = [ "users" ];
+  users.users.lidarr.extraGroups = [ "users" "media" ];
 }

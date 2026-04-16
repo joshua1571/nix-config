@@ -5,6 +5,12 @@
     openFirewall = true;
   };
 
+  users.users.jellyfin.extraGroups = [ "users" "media" ];
+
+  systemd.tmpfiles.rules = [
+    "d /tank/media 0775 jellyfin media - -"
+  ];
+
   environment.systemPackages = with pkgs; [
     jellyfin
     jellyfin-web
