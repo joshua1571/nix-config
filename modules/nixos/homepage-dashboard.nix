@@ -1,13 +1,40 @@
-{ username, ... }:
+{ config, username, ... }:
 {
+  age.secrets.tailscale-domain = {
+    file = ../../secrets/tailscale-domain.age;
+    owner = "root";
+    mode = "0400";
+  };
+
+  # Generate a runtime env file for homepage containing the Tailscale domain.
+  # The domain is encrypted at rest via agenix and read at service start.
+  systemd.services.homepage-env = {
+    description = "Generate homepage-dashboard environment file";
+    after = [ "agenix.service" ];
+    before = [ "homepage-dashboard.service" ];
+    wantedBy = [ "homepage-dashboard.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      domain=$(cat ${config.age.secrets.tailscale-domain.path})
+      {
+        echo "HOMEPAGE_VAR_TAILSCALE_DOMAIN=$domain"
+        echo "HOMEPAGE_ALLOWED_HOSTS=localhost,10.0.0.125:8082,10.0.0.126:8082,10.0.0.100:8082,desktop.$domain,htpc.$domain,iphone.$domain,laptop.$domain,server.$domain"
+      } > /run/homepage-env
+      chmod 400 /run/homepage-env
+    '';
+  };
+
   services.homepage-dashboard = {
     enable = true;
+    environmentFile = "/run/homepage-env";
     settings = {
       title = "JRH Home Lab";
       description = "My Home Lab";
       bookmarksStyle = "icons";
     };
-    allowedHosts = "localhost, 10.0.0.125:8082,10.0.0.126:8082,10.0.0.100:8082";
     listenPort = 8082;
     widgets = [
       {
@@ -248,11 +275,53 @@
         ];
       }
       {
-        "Self Hosted (Remote)" = [
+        "Self Hosted (Tailscale)" = [
           {
-            "My Second Service" = {
-              description = "Homepage is the best";
-              href = "http://localhost/";
+            "Jellyfin" = {
+              description = "Movies and TV Shows";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/jellyfin/";
+            };
+          }
+          {
+            "Navidrome" = {
+              description = "Music";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/navidrome/";
+            };
+          }
+          {
+            "Jellyseerr" = {
+              description = "Requests";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/jellyseerr/";
+            };
+          }
+          {
+            "Radarr" = {
+              description = "Movies";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/radarr/";
+            };
+          }
+          {
+            "Sonarr" = {
+              description = "TV Shows";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/sonarr/";
+            };
+          }
+          {
+            "Lidarr" = {
+              description = "Music";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/lidarr/";
+            };
+          }
+          {
+            "Prowlarr" = {
+              description = "Indexers";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/prowlarr/";
+            };
+          }
+          {
+            "qBittorrent" = {
+              description = "Downloads";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/qbittorrent/";
             };
           }
         ];
