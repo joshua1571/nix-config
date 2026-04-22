@@ -20,7 +20,6 @@
     ../../modules/nixos/games_disk.nix
     ../../modules/nixos/obs-studio.nix
     ../../modules/nixos/smb_share_client.nix
-		../../modules/nixos/mullvad.nix
     #../../modules/nixos/openrgb.nix
 
     # Include the results of the hardware scan.

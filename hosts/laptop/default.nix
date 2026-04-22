@@ -17,7 +17,6 @@
     ../../modules/nixos/kde.nix
     ../../modules/nixos/obs-studio.nix
     ../../modules/nixos/smb_share_client.nix
-		../../modules/nixos/mullvad.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix

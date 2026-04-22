@@ -12,12 +12,10 @@
     ../../modules/nixos/common.nix
     ../../modules/nixos/gnupg.nix
     ../../modules/nixos/openssh_server.nix
-		../../modules/nixos/mullvad.nix
 
     # Graphical Client
     ../../modules/nixos/kde.nix
-    #../../modules/nixos/obs-studio.nix
-    #../../modules/nixos/smb_share.nix
+    ../../modules/nixos/smb_share.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
