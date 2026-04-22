@@ -5,5 +5,14 @@
     openFirewall = true;
   };
 
-  users.users.prowlarr.extraGroups = [ "users" "media" ];
+  users.users.prowlarr = {
+    isSystemUser = true;
+    group = "prowlarr";
+    extraGroups = [
+      "users"
+      "media"
+    ];
+  };
+
+  users.groups.prowlarr = { };
 }

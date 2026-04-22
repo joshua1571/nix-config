@@ -5,7 +5,16 @@
     openFirewall = true;
   };
 
-  users.users.jellyfin.extraGroups = [ "users" "media" ];
+  users.users.jellyfin = {
+    isSystemUser = true;
+    group = "jellyfin";
+    extraGroups = [
+      "users"
+      "media"
+    ];
+  };
+
+  users.groups.jellyfin = { };
 
   systemd.tmpfiles.rules = [
     "d /tank/media 0775 jellyfin media - -"
