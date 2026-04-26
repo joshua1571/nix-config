@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    name: Nix checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@v14
+
+      - name: Evaluate all NixOS configurations
+        run: nix flake check --no-build --show-trace
+
+      - name: Check formatting
+        run: |
+          nix shell nixpkgs#nixfmt -c sh -c \
+            'find . -name "*.nix" ! -path "./.git/*" | xargs nixfmt --check'
+
+      - name: Lint with statix
+        run: nix run nixpkgs#statix -- check .
+
+      - name: Check for dead code with deadnix
+        run: nix run nixpkgs#deadnix -- --fail .
