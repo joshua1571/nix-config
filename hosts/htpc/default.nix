@@ -26,25 +26,27 @@
     #extraModprobeConfig = ''
     #  options mt7921e disable_aspm=1
     #'';
+    initrd.systemd.tpm2.enable = false;
   };
-
-  boot.initrd.systemd.tpm2.enable = false;
 
   networking = {
     hostName = "htpc";
     networkmanager.enable = true;
   };
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
+  hardware = {
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs; [
+        intel-media-driver # VA-API (iHD) userspace
+        vpl-gpu-rt # oneVPL (QSV) runtime
+      ];
+    };
   };
-
-  hardware.graphics.enable = true;
-  hardware.graphics.extraPackages = with pkgs; [
-    intel-media-driver # VA-API (iHD) userspace
-    vpl-gpu-rt # oneVPL (QSV) runtime
-  ];
 
   services.xserver.videoDrivers = [ "modesetting" ];
 
