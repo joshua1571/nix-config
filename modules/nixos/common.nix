@@ -29,6 +29,22 @@
     ];
   };
 
+  security.sudo.extraRules = [
+    {
+      users = [ "jrhassistant" ];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/nix*";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "/nix/store/*/bin/switch-to-configuration";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
+
   # customise /etc/nix/nix.conf declaratively via `nix.settings`
   nix.settings = {
     trusted-users = [ "@wheel" ];
