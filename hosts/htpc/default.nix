@@ -15,7 +15,7 @@
 
     # Graphical Client
     ../../modules/nixos/kde.nix
-    ../../modules/nixos/smb_share.nix
+    ../../modules/nixos/smb_share_client.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
