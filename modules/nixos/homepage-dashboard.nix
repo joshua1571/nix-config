@@ -1,4 +1,4 @@
-{ config, username, ... }:
+{ config, ... }:
 {
   age.secrets.tailscale-domain = {
     file = ../../secrets/tailscale-domain.age;

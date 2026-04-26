@@ -1,5 +1,4 @@
-{ username, ... }:
-{
+_: {
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;

@@ -1,5 +1,4 @@
-{ pkgs, desktop-environment, ... }:
-{
+_: {
   services = {
     dropbox.enable = false;
     opensnitch-ui.enable = false;

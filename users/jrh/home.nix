@@ -1,9 +1,6 @@
 {
   lib,
-  config,
   username,
-  game-streaming-server,
-  game-streaming-client,
   desktop-environment,
   ...
 }:
