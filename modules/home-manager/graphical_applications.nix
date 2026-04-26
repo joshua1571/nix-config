@@ -27,6 +27,7 @@
       localsend
       thunderbird
       activitywatch
+      openhue-cli
     ]
     ++ lib.optionals emulation [
       ryubing

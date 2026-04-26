@@ -7,7 +7,7 @@
   ...
 }:
 {
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. Don’t forget to set a password with ‘passwd’.
   users.users.${username} = {
     isNormalUser = true;
     description = username;
@@ -15,6 +15,17 @@
       "networkmanager"
       "wheel"
       "input"
+    ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKiRLsg3qCuqZDOa9NRhagjAzkSy2P5bGaDgN2+R4eZl jrh"
+    ];
+  };
+
+  users.users.jrhassistant = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOwhzK5oGO51sxxR/iCew1sobIEdVwf0PWw55D9+WMSg jrhassistant@macmini.local"
     ];
   };
 

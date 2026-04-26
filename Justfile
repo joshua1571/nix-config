@@ -72,6 +72,11 @@ verify-store:
 #repair-store *paths:
 #  nix store repair {{paths}}
 
+# Remotely rebuild the htpc host
+[group('build')]
+build-htpc:
+  NIX_SSHOPTS="-p 2228" nixos-rebuild --flake .#htpc --target-host jrhassistant@htpc --use-remote-sudo switch
+
 ###
 ### TODO: Remote builds
 ###
