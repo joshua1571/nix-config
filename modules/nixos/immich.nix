@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   services.immich = {
     enable = true;
     #host = "localhost";

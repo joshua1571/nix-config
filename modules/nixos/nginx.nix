@@ -13,41 +13,43 @@ in
   # Allow nginx to provision Tailscale TLS certificates
   services.tailscale.permitCertUid = "nginx";
 
-  systemd.tmpfiles.rules = [
-    "d ${certDir} 0750 root nginx - -"
-  ];
-
   # Provision the Tailscale TLS cert on startup and renew it weekly.
   # The hostname is read at runtime from the agenix-decrypted secret.
   # Note: the machine must be authenticated to Tailscale before this runs.
-  systemd.services.tailscale-cert = {
-    description = "Provision Tailscale TLS certificate for nginx";
-    after = [
-      "tailscaled.service"
-      "network-online.target"
-      "agenix.service"
+  systemd = {
+    tmpfiles.rules = [
+      "d ${certDir} 0750 root nginx - -"
     ];
-    before = [ "nginx.service" ];
-    wantedBy = [ "nginx.service" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-    script = ''
-      hostname=$(cat ${config.age.secrets.tailscale-hostname.path})
-      ${pkgs.tailscale}/bin/tailscale cert \
-        --cert-file ${certDir}/cert.pem \
-        --key-file ${certDir}/key.pem \
-        "$hostname"
-    '';
-  };
 
-  systemd.timers.tailscale-cert = {
-    description = "Renew Tailscale TLS certificate weekly";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "weekly";
-      Persistent = true;
+    services.tailscale-cert = {
+      description = "Provision Tailscale TLS certificate for nginx";
+      after = [
+        "tailscaled.service"
+        "network-online.target"
+        "agenix.service"
+      ];
+      before = [ "nginx.service" ];
+      wantedBy = [ "nginx.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      script = ''
+        hostname=$(cat ${config.age.secrets.tailscale-hostname.path})
+        ${pkgs.tailscale}/bin/tailscale cert \
+          --cert-file ${certDir}/cert.pem \
+          --key-file ${certDir}/key.pem \
+          "$hostname"
+      '';
+    };
+
+    timers.tailscale-cert = {
+      description = "Renew Tailscale TLS certificate weekly";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "weekly";
+        Persistent = true;
+      };
     };
   };
 
@@ -65,49 +67,51 @@ in
       sslCertificate = "${certDir}/cert.pem";
       sslCertificateKey = "${certDir}/key.pem";
 
-      # Homepage Dashboard
-      # Note: add your tailscale hostname to allowedHosts in homepage-dashboard.nix
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8082";
-      };
+      locations = {
+        # Homepage Dashboard
+        # Note: add your tailscale hostname to allowedHosts in homepage-dashboard.nix
+        "/" = {
+          proxyPass = "http://127.0.0.1:8082";
+        };
 
-      # Jellyfin
-      # Note: set Base URL to /jellyfin in Jellyfin → Dashboard → Networking
-      locations."/jellyfin/" = {
-        proxyPass = "http://127.0.0.1:8096/";
-        proxyWebsockets = true;
-      };
+        # Jellyfin
+        # Note: set Base URL to /jellyfin in Jellyfin → Dashboard → Networking
+        "/jellyfin/" = {
+          proxyPass = "http://127.0.0.1:8096/";
+          proxyWebsockets = true;
+        };
 
-      # Navidrome
-      # Note: add BaseUrl = "/navidrome" to navidrome.nix settings
-      locations."/navidrome/" = {
-        proxyPass = "http://127.0.0.1:4533/";
-      };
+        # Navidrome
+        # Note: add BaseUrl = "/navidrome" to navidrome.nix settings
+        "/navidrome/" = {
+          proxyPass = "http://127.0.0.1:4533/";
+        };
 
-      # Jellyseerr
-      locations."/jellyseerr/" = {
-        proxyPass = "http://127.0.0.1:5055/";
-      };
+        # Jellyseerr
+        "/jellyseerr/" = {
+          proxyPass = "http://127.0.0.1:5055/";
+        };
 
-      # *arr stack — admin services, tailscale only
-      # Note: set URL Base in each app's Settings → General
-      locations."/radarr/" = {
-        proxyPass = "http://127.0.0.1:7878/";
-      };
-      locations."/sonarr/" = {
-        proxyPass = "http://127.0.0.1:8989/";
-      };
-      locations."/lidarr/" = {
-        proxyPass = "http://127.0.0.1:8686/";
-      };
-      locations."/prowlarr/" = {
-        proxyPass = "http://127.0.0.1:9696/";
-      };
+        # *arr stack — admin services, tailscale only
+        # Note: set URL Base in each app's Settings → General
+        "/radarr/" = {
+          proxyPass = "http://127.0.0.1:7878/";
+        };
+        "/sonarr/" = {
+          proxyPass = "http://127.0.0.1:8989/";
+        };
+        "/lidarr/" = {
+          proxyPass = "http://127.0.0.1:8686/";
+        };
+        "/prowlarr/" = {
+          proxyPass = "http://127.0.0.1:9696/";
+        };
 
-      # qBittorrent — nginx reaches it via loopback, allowed by the kill switch
-      locations."/qbittorrent/" = {
-        proxyPass = "http://127.0.0.1:8080/";
-        proxyWebsockets = true;
+        # qBittorrent — nginx reaches it via loopback, allowed by the kill switch
+        "/qbittorrent/" = {
+          proxyPass = "http://127.0.0.1:8080/";
+          proxyWebsockets = true;
+        };
       };
     };
   };

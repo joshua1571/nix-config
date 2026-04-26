@@ -1,12 +1,10 @@
-{ username, ... }:
-{
-  # Enable the OpenSSH daemon.
+_: {
   services.openssh = {
     enable = true;
     settings = {
       X11Forwarding = true;
-      PermitRootLogin = "no"; # disable root login
-      PasswordAuthentication = false; # disable password login
+      PermitRootLogin = "no";
+      PasswordAuthentication = false;
       Port = "2228";
     };
     openFirewall = true;

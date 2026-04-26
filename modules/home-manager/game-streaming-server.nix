@@ -1,5 +1,4 @@
-{ _ }:
-{
+_: {
   services = {
     sunshine = {
       enable = true;

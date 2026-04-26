@@ -1,6 +1,5 @@
 # Any further configuration will be tied to my firefox account
-{ pkgs, ... }:
-{
+_: {
   programs = {
     firefox = {
       enable = true;

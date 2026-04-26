@@ -1,9 +1,11 @@
-{ ... }:
-{
+_: {
   services.lidarr = {
     enable = true;
     openFirewall = true;
   };
 
-  users.users.lidarr.extraGroups = [ "users" "media" ];
+  users.users.lidarr.extraGroups = [
+    "users"
+    "media"
+  ];
 }

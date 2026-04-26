@@ -22,7 +22,7 @@ in
     package = lib.mkPackageOption pkgs "openrgb" { };
 
     settings = lib.mkOption {
-      type = settingsFormat.type;
+      inherit (settingsFormat) type;
       default = { };
     };
 

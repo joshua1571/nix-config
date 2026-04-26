@@ -1,13 +1,11 @@
 {
-  config,
   pkgs,
   lib,
-  inputs,
   username,
   ...
 }:
 {
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. Don’t forget to set a password with ‘passwd’.
   users.users.${username} = {
     isNormalUser = true;
     description = username;
@@ -16,7 +14,38 @@
       "wheel"
       "input"
     ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKiRLsg3qCuqZDOa9NRhagjAzkSy2P5bGaDgN2+R4eZl jrh"
+    ];
   };
+
+  users.users.jrhassistant = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOwhzK5oGO51sxxR/iCew1sobIEdVwf0PWw55D9+WMSg jrhassistant@macmini.local"
+    ];
+  };
+
+  security.sudo.extraRules = [
+    {
+      users = [ "jrhassistant" ];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/nix*";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "/nix/store/*/bin/switch-to-configuration";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "/run/current-system/sw/bin/reboot";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
 
   # customise /etc/nix/nix.conf declaratively via `nix.settings`
   nix.settings = {
