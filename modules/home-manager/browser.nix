@@ -1,8 +1,9 @@
-# Any further configuration will be tied to my firefox account
-_: {
+{ config, ... }:
+{
   programs = {
     firefox = {
       enable = true;
+      configPath = "${config.xdg.configHome}/mozilla/firefox";
     };
   };
 }

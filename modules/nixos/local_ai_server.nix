@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 {
   services = {
     ollama = {
@@ -10,6 +10,7 @@
       environmentVariables = {
         OLLAMA_CONTEXT_LENGTH = "65536";
         OLLAMA_KEEP_ALIVE = "30m";
+        OLLAMA_HOME = "/home/$username/.ollama";
       };
     };
 
