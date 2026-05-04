@@ -4,9 +4,6 @@
 
 pkgs.mkShellNoCC {
   packages = with pkgs; [
-    nixfmt # nixfmt-rfc-style
-    statix
-    deadnix
     just
     nil
   ];
