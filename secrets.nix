@@ -20,4 +20,5 @@ in
   "secrets/nextcloud-adminpass.age".publicKeys = allKeys;
   "secrets/mullvad-wg-private-key.age".publicKeys = allKeys;
   "secrets/mullvad-wg-preshared-key.age".publicKeys = allKeys;
+  "secrets/ssh-jrh.age".publicKeys = allKeys;
 }
