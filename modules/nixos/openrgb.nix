@@ -37,11 +37,11 @@ in
       defaultText = "intel";
       description = ''
         CPU family of motherboard. This enables I2C support needed for motherboard RGB controllers and RAM lighting.
-        
+
         Common values:
         - "intel" for Intel chipsets (Z790, B760, H770, etc.)
         - "amd" for AMD chipsets (B650, X670, etc.)
-        
+
         If unsure, set this to the appropriate value for your motherboard.
       '';
     };

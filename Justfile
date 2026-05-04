@@ -39,6 +39,11 @@ fmt:
   nix shell nixpkgs#nixfmt -c sh -c \
     'find . -name "*.nix" ! -path "./.git/*" | xargs nixfmt --check'
 
+#Format a file using nixfmt
+[group('checks')]
+fmt-file file:
+	nix run nixpkgs#nixfmt -- {{file}}
+
 # Lint all code
 [group('checks')]
 lint:
