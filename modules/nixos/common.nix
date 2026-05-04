@@ -6,13 +6,6 @@
   ...
 }:
 {
-  # Decrypt the SSH key secret at boot
-  age.secrets.ssh-jrh = {
-    file = ../../secrets/ssh-jrh.age;
-    owner = "root";
-    mode = "0400";
-  };
-
   # Define a user account. Don’t forget to set a password with ‘passwd’.
   users.users.${username} = {
     isNormalUser = true;
@@ -23,7 +16,7 @@
       "input"
     ];
     openssh.authorizedKeys.keys = [
-      config.age.secrets.ssh-jrh.path
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKiRLsg3qCuqZDOa9NRhagjAzkSy2P5bGaDgN2+R4eZl jrh"
     ];
   };
 
@@ -141,6 +134,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    age
     vim
     wget
     curl

@@ -15,14 +15,14 @@ up:
 dry:
   nixos-rebuild dry-build --flake '.#' --show-trace
 
-# Rebuild your system, activate the new generation immediately and make it the default boot option
+# SUDO: Rebuild your system, activate the new generation immediately and make it the default boot option
 [group ('build')]
 build:
   sudo nixos-rebuild switch --flake '.#'
 
 ### TODO: Remote builds
 # Remotely rebuild the htpc host
-[group('build')]
+[group('remote-build')]
 build-htpc:
   NIX_SSHOPTS="-p 2228" nixos-rebuild --flake .#htpc --target-host jrhassistant@htpc --use-remote-sudo switch
 
