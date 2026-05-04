@@ -7,8 +7,6 @@
     };
     daemon.settings = {
       data-root = "/fasttank/containers/";
-    };
-    daemon.settings = {
       userland-proxy = false;
       experimental = true;
       metrics-addr = "0.0.0.0:9323";
