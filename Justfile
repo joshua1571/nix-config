@@ -51,8 +51,8 @@ lint:
 # Use dry-build and dry-activate options to check flake builds properly
 [group ('nix')]
 dry:
-  sudo nixos-rebuild dry-build --flake '.#' --show-trace
-  sudo nixos-rebuild dry-activate --flake '.#' --show-trace
+  nixos-rebuild dry-build --flake '.#' --show-trace
+  #nixos-rebuild dry-activate --flake '.#' --show-trace
 
 # Rebuild your system, activate the new generation immediately and make it the default boot option
 [group ('nix')]

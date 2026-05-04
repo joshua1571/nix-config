@@ -1,5 +1,9 @@
 { pkgs, username, ... }:
 {
+  environment.systemPackages = with pkgs; [
+    llama-cpp-vulkan
+  ];
+
   services = {
     ollama = {
       enable = true;

@@ -2,9 +2,10 @@
   pkgs,
   lib,
   username,
+  config,
   ...
 }:
-_: {
+{
   # Decrypt the SSH key secret at boot
   age.secrets.ssh-jrh = {
     file = ../../secrets/ssh-jrh.age;
