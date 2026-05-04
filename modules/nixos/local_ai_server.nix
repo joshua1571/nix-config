@@ -2,6 +2,7 @@
 {
   environment.systemPackages = with pkgs; [
     llama-cpp-vulkan
+		amdgpu_top
   ];
 
   services = {
