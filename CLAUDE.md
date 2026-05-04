@@ -39,6 +39,10 @@ Feature flags passed via `specialArgs`:
 
 **Host configs** (`hosts/<name>/default.nix`) compose modules for that machine. They contain minimal host-specific settings (hostname, stateVersion, hardware flags) and an `imports` list.
 
+### Host specifications
+
+Each host has a `hosts/<name>/SPEC.md` describing its intended hardware, services, networking, secrets, and known gaps. `hosts/README.md` is the index. Treat each `SPEC.md` as the source of truth for *what* a host should do; treat the nix modules as the implementation. When asked to work on a host, read its `SPEC.md` first and reconcile drift before adding new features.
+
 ### Secrets (agenix)
 
 Encrypted secrets live in `secrets/*.age`. The decryption key registry is `secrets.nix` at the **repo root** (not inside `secrets/`) — agenix requires this for the CLI to work (`agenix -e secrets/<file>.age` from repo root).
