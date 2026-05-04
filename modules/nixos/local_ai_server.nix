@@ -1,5 +1,10 @@
-{ pkgs, username, ... }:
+{ pkgs, ... }:
 {
+  environment.systemPackages = with pkgs; [
+    llama-cpp-vulkan
+    amdgpu_top
+  ];
+
   services = {
     ollama = {
       enable = true;

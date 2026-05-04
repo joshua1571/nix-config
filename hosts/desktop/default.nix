@@ -20,7 +20,7 @@
     ../../modules/nixos/games_disk.nix
     ../../modules/nixos/obs-studio.nix
     ../../modules/nixos/smb_share_client.nix
-    #../../modules/nixos/openrgb.nix
+    ../../modules/nixos/openrgb.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -36,6 +36,12 @@
   networking = {
     hostName = "desktop";
     networkmanager.enable = true;
+  };
+
+  # OpenRGB AMD motherboard
+  services.hardware.openrgb = {
+    enable = true;
+    motherboard = "amd";
   };
 
   hardware.bluetooth = {

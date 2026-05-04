@@ -1,4 +1,8 @@
-{ pkgs, username, ... }:
+{
+  pkgs,
+  username,
+  ...
+}:
 {
   environment.systemPackages = [ pkgs.cifs-utils ];
 
@@ -13,15 +17,13 @@
     "d /home/${username}/Share		0755 ${username} users -"
   ];
 
-  fileSystems."/home/jrh/Share" = {
+  fileSystems."/home/${username}/Share" = {
     device = "//server/Share";
     fsType = "cifs";
     options =
       let
-
-        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,uid=1000,gid=100,iocharset=utf8,x-systemd.requires=tailscaled.service";
-
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,uid=${username},gid=${username},iocharset=utf8,x-systemd.requires=tailscaled.service";
       in
-      [ "${automount_opts},credentials=/home/jrh/.samba/credentials" ];
+      [ "${automount_opts},credentials=/home/${username}/.samba/credentials" ];
   };
 }
