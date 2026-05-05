@@ -19,14 +19,15 @@ game-streaming *client* (receives streams from `desktop`).
 - Input: touchpad (libinput)
 - Kernel: `linuxPackages_latest`
 
-## Feature flags (`flake.nix`)
+## Composition
 
-| Flag | Value | Reason |
-|---|---|---|
-| `desktop-environment` | `true` | KDE + browser + graphical apps |
-| `game-streaming-client` | `true` | Receives streams from `desktop` |
-| `game-streaming-server` | `false` | Not a host for streaming |
-| `emulation` | `false` | No emulation packages here |
+NixOS modules — see `hosts/laptop/default.nix` `imports` list.
+
+Home-manager modules — see `users/jrh/home/laptop.nix`:
+
+- `common.nix` (always-on bundle: bash, cli, git, nixvim, services, tmux)
+- `desktop-environment.nix` (browser, graphical apps, KDE packages, terminal, local AI client)
+- `pkgs.moonlight-qt` (game-streaming client)
 
 ## Functionality (desired state)
 

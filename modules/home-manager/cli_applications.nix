@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 {
   home.packages = with pkgs; [
     # Command Line Applications
@@ -10,14 +10,14 @@
   ];
 
   programs = {
-    ncspot.enable = true;
-    bat.enable = true;
     aerc.enable = true;
+    ncspot.enable = true;
+    mpv.enable = true;
+    zathura.enable = true;
+    bat.enable = true;
     fzf.enable = true;
     fd.enable = true;
     ripgrep.enable = true;
-    mpv.enable = true;
-    zathura.enable = true;
 
     delta = {
       enable = true;
@@ -35,13 +35,12 @@
       enable = true;
       enableBashIntegration = true;
       nix-direnv.enable = true;
-
     };
 
     aria2 = {
       enable = true;
       settings = {
-        dir = "/home/jrh/Downloads";
+        dir = "/home/${username}/Downloads";
       };
     };
 

@@ -7,33 +7,40 @@ Primary workstation. Doubles as a game-streaming *server* (streams to
 
 ## Hardware
 
-- CPU: _TODO: fill in model_
-- GPU: _TODO: discrete GPU model — relevant for Steam, streaming, local AI_
-- RAM: _TODO_
+- CPU: AMD Ryzen 9 5900X
+- GPU: AMD Radeon RX 6800 XT
+- RAM: 64 GB
 - Storage:
   - Root: see `hardware-configuration.nix`
   - Games disk: managed by `modules/nixos/games_disk.nix`
+  - Windows disk: not managed by flake (/dev/sda, 256GB)
 - Network:
   - Wifi: MediaTek mt7921e (ASPM disabled via `extraModprobeConfig`)
-  - Wired: _TODO_
+  - Wired: Realtek RTL8125 2.5GbE Controller (rev 05)
 - Bluetooth: enabled, powers on at boot
 - Kernel: `linuxPackages_latest`
-- Peripherals: _TODO — controllers, capture, OpenRGB devices?_
+- Peripherals: 
+  - Keyboard: Ducky One 2 Mini
+  - Mouse: Glorious Model D Wireless
+  - Audio: Taotronics TT-BA014
+  - Microphone: Sennheiser Profile
+  - Controller: Gamesir Cyclone 2
 
-## Feature flags (`flake.nix`)
+## Composition
 
-| Flag | Value | Reason |
-|---|---|---|
-| `desktop-environment` | `true` | KDE + browser + graphical apps |
-| `game-streaming-client` | `false` | This host streams *out*, doesn't receive |
-| `game-streaming-server` | `true` | Streams games to `laptop` |
-| `emulation` | `true` | Retro / console emulation packages |
+NixOS modules — see `hosts/desktop/default.nix` `imports` list.
+
+Home-manager modules — see `users/jrh/home/desktop.nix`:
+
+- `common.nix` (always-on bundle: bash, cli, git, nixvim, services, tmux)
+- `desktop-environment.nix` (browser, graphical apps, KDE packages, terminal, local AI client)
+- `pkgs.ryubing` (Nintendo Switch emulator)
 
 ## Functionality (desired state)
 
 - KDE Plasma desktop
 - Steam + game-streaming server (Sunshine/Moonlight, see streaming module)
-- Emulation suite (`emulation` flag)
+- Emulation suite (ryubing via home-manager)
 - Local AI inference server (`local_ai_server.nix`)
 - Dedicated games disk mount
 - OBS Studio
@@ -44,8 +51,6 @@ Primary workstation. Doubles as a game-streaming *server* (streams to
 ## Networking
 
 - Tailscale: client member of the tailnet
-- LAN-exposed ports: SSH (22), game-streaming ports (per streaming module)
-- Tailscale-only ports: none
 
 ## Secrets (agenix)
 
@@ -53,8 +58,5 @@ None required directly. Inherits common setup.
 
 ## Known gaps / TODO
 
-- Fill in CPU/GPU/RAM details — important for `local_ai_server` sizing.
-- `openrgb.nix` is currently commented out in `default.nix` — decide
-  whether to enable.
+- `openrgb.nix` does not see RAM rgb lights
 - Document the games disk device path / filesystem.
-- Decide whether to mirror nextcloud / immich client setup.

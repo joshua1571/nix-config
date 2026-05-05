@@ -19,14 +19,14 @@ Uses **stable** nixpkgs (`nixos-25.11`) — all other hosts are unstable.
   - Root: see `hardware-configuration.nix`
 - Network: _TODO — NIC model, link speed_
 
-## Feature flags (`flake.nix`)
+## Composition
 
-| Flag | Value | Reason |
-|---|---|---|
-| `desktop-environment` | `false` | Headless |
-| `game-streaming-client` | `false` | n/a |
-| `game-streaming-server` | `false` | n/a |
-| `emulation` | `false` | n/a |
+NixOS modules — see `hosts/server/default.nix` `imports` list (zfs, smb_share_server,
+mullvad, nginx, the media + arr stack, etc.).
+
+Home-manager modules — see `users/jrh/home/server.nix`:
+
+- `common.nix` only (no desktop-environment bundle on this headless host)
 
 ## Functionality (desired state)
 

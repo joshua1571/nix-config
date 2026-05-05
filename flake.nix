@@ -95,18 +95,10 @@
           let
             username = "jrh";
             system = "x86_64-linux";
-            emulation = false;
-            desktop-environment = true;
-            game-streaming-client = true;
-            game-streaming-server = false;
             specialArgs = {
               inherit system;
               inherit inputs;
               inherit username;
-              inherit emulation;
-              inherit desktop-environment;
-              inherit game-streaming-client;
-              inherit game-streaming-server;
             };
           in
           nixpkgs-unstable.lib.nixosSystem {
@@ -121,7 +113,7 @@
                   useGlobalPkgs = true;
                   useUserPackages = true;
                   extraSpecialArgs = inputs // specialArgs;
-                  users.${username} = import ./users/${username}/home.nix;
+                  users.${username} = import ./users/${username}/home/laptop.nix;
                   backupFileExtension = "hm_backup";
                 };
               }
@@ -132,18 +124,10 @@
           let
             username = "jrh";
             system = "x86_64-linux";
-            emulation = true;
-            desktop-environment = true;
-            game-streaming-client = false;
-            game-streaming-server = true;
             specialArgs = {
               inherit system;
               inherit inputs;
               inherit username;
-              inherit emulation;
-              inherit desktop-environment;
-              inherit game-streaming-client;
-              inherit game-streaming-server;
             };
           in
           nixpkgs-unstable.lib.nixosSystem {
@@ -158,7 +142,7 @@
                   useGlobalPkgs = true;
                   useUserPackages = true;
                   extraSpecialArgs = inputs // specialArgs;
-                  users.${username} = import ./users/${username}/home.nix;
+                  users.${username} = import ./users/${username}/home/desktop.nix;
                   backupFileExtension = "hm_backup";
                 };
               }
@@ -169,18 +153,10 @@
           let
             username = "jrh";
             system = "x86_64-linux";
-            emulation = false;
-            game-streaming-client = false;
-            game-streaming-server = false;
-            desktop-environment = false;
             specialArgs = {
               inherit system;
               inherit inputs;
               inherit username;
-              inherit emulation;
-              inherit desktop-environment;
-              inherit game-streaming-client;
-              inherit game-streaming-server;
             };
           in
           nixpkgs.lib.nixosSystem {
@@ -195,7 +171,7 @@
                   useGlobalPkgs = true;
                   useUserPackages = true;
                   extraSpecialArgs = inputs // specialArgs;
-                  users.${username} = import ./users/${username}/home.nix;
+                  users.${username} = import ./users/${username}/home/server.nix;
                   backupFileExtension = "hm_backup";
                 };
               }
@@ -206,18 +182,10 @@
           let
             username = "jrh";
             system = "x86_64-linux";
-            emulation = false;
-            desktop-environment = true;
-            game-streaming-client = false;
-            game-streaming-server = false;
             specialArgs = {
               inherit inputs;
               inherit system;
               inherit username;
-              inherit emulation;
-              inherit desktop-environment;
-              inherit game-streaming-client;
-              inherit game-streaming-server;
             };
           in
           nixpkgs-unstable.lib.nixosSystem {
@@ -232,7 +200,7 @@
                   useGlobalPkgs = true;
                   useUserPackages = true;
                   extraSpecialArgs = inputs // specialArgs;
-                  users.${username} = import ./users/${username}/home.nix;
+                  users.${username} = import ./users/${username}/home/htpc.nix;
                   backupFileExtension = "hm_backup";
                 };
               }
