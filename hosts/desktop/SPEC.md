@@ -20,14 +20,15 @@ Primary workstation. Doubles as a game-streaming *server* (streams to
 - Kernel: `linuxPackages_latest`
 - Peripherals: _TODO — controllers, capture, OpenRGB devices?_
 
-## Feature flags (`flake.nix`)
+## Composition
 
-| Flag | Value | Reason |
-|---|---|---|
-| `desktop-environment` | `true` | KDE + browser + graphical apps |
-| `game-streaming-client` | `false` | This host streams *out*, doesn't receive |
-| `game-streaming-server` | `true` | Streams games to `laptop` |
-| `emulation` | `true` | Retro / console emulation packages |
+NixOS modules — see `hosts/desktop/default.nix` `imports` list.
+
+Home-manager modules — see `users/jrh/home/desktop.nix`:
+
+- `common.nix` (always-on bundle: bash, cli, git, nixvim, services, tmux)
+- `desktop-environment.nix` (browser, graphical apps, KDE packages, terminal, local AI client)
+- `pkgs.ryubing` (emulation)
 
 ## Functionality (desired state)
 

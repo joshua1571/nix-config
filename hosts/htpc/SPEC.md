@@ -21,14 +21,14 @@ hardware-accelerated via Intel iGPU.
 - Boot quirk: `initrd.systemd.tpm2.enable = false` (disabled because TPM2
   in initrd caused boot issues — leave off unless re-tested)
 
-## Feature flags (`flake.nix`)
+## Composition
 
-| Flag | Value | Reason |
-|---|---|---|
-| `desktop-environment` | `true` | KDE shell for couch use |
-| `game-streaming-client` | `false` | Not currently a streaming target |
-| `game-streaming-server` | `false` | n/a |
-| `emulation` | `false` | n/a |
+NixOS modules — see `hosts/htpc/default.nix` `imports` list.
+
+Home-manager modules — see `users/jrh/home/htpc.nix`:
+
+- `common.nix` (always-on bundle: bash, cli, git, nixvim, services, tmux)
+- `desktop-environment.nix` (browser, graphical apps, KDE packages, terminal, local AI client)
 
 ## Functionality (desired state)
 
