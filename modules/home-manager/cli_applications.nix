@@ -40,7 +40,7 @@
     aria2 = {
       enable = true;
       settings = {
-        dir = "/home/$username/Downloads";
+        dir = "/home/${username}/Downloads";
       };
     };
 
