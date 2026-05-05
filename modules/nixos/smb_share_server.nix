@@ -1,4 +1,5 @@
-{ username, ... }: {
+{ username, ... }:
+{
   services.samba = {
     enable = true;
     openFirewall = true;
