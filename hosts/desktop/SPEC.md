@@ -26,20 +26,21 @@ Primary workstation. Doubles as a game-streaming *server* (streams to
   - Microphone: Sennheiser Profile
   - Controller: Gamesir Cyclone 2
 
-## Feature flags (`flake.nix`)
+## Composition
 
-| Flag | Value | Reason |
-|---|---|---|
-| `desktop-environment` | `true` | KDE + browser + graphical apps |
-| `game-streaming-client` | `false` | This host streams *out*, doesn't receive |
-| `game-streaming-server` | `true` | Streams games to `laptop` |
-| `emulation` | `true` | Retro / console emulation packages |
+NixOS modules — see `hosts/desktop/default.nix` `imports` list.
+
+Home-manager modules — see `users/jrh/home/desktop.nix`:
+
+- `common.nix` (always-on bundle: bash, cli, git, nixvim, services, tmux)
+- `desktop-environment.nix` (browser, graphical apps, KDE packages, terminal, local AI client)
+- `pkgs.ryubing` (Nintendo Switch emulator)
 
 ## Functionality (desired state)
 
 - KDE Plasma desktop
 - Steam + game-streaming server (Sunshine/Moonlight, see streaming module)
-- Emulation suite (`emulation` flag)
+- Emulation suite (ryubing via home-manager)
 - Local AI inference server (`local_ai_server.nix`)
 - Dedicated games disk mount
 - OBS Studio

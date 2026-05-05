@@ -51,8 +51,8 @@ None required directly.
 ## Known gaps / TODO
 
 - Fill in CPU/GPU model (matters for QSV codec support matrix).
-- Consider enabling `game-streaming-client` so the living room can
-  receive streams from `desktop`.
+- Consider adding `pkgs.moonlight-qt` to `users/jrh/home/htpc.nix` so
+  the living room can receive streams from `desktop`.
 - Consider auto-launching Jellyfin Media Player or a kiosk session on
   boot.
 - Revisit `initrd.systemd.tpm2.enable = false` once root cause known.
