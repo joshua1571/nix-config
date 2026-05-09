@@ -13,6 +13,7 @@ _: {
         tput = "trash-put";
         tlist = "trash-list";
         trestore = "trash-restore";
+        fe = "nvim $(fzf --preview 'bat --color=always {}')";
       };
     };
   };

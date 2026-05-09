@@ -2,7 +2,7 @@
 {
   programs = {
     wezterm = {
-      enable = true;
+      enable = false;
       extraConfig = ''
         -- This will hold the configuration.
         local config = wezterm.config_builder()
