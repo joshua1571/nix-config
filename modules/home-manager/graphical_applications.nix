@@ -13,7 +13,7 @@
     libreoffice-qt6
     deskflow
     localsend
-		remmina
+    remmina
     ktailctl
     activitywatch
     openhue-cli
