@@ -14,10 +14,10 @@
   };
 
   systemd.tmpfiles.rules = [
-    "d /home/${username}/Share		0755 ${username} users -"
+    "d /mnt/Share 0755 ${username} users -"
   ];
 
-  fileSystems."/home/${username}/Share" = {
+  fileSystems."/mnt/Share" = {
     device = "//server/Share";
     fsType = "cifs";
     options =
