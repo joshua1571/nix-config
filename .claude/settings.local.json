@@ -8,7 +8,8 @@
       "Bash(gh pr *)",
       "Bash(git checkout *)",
       "Bash(gh api *)",
-      "Bash(just dry *)"
+      "Bash(just dry *)",
+      "Bash(claude update *)"
     ]
   }
 }

@@ -12,6 +12,7 @@
     ../../modules/nixos/common.nix
     ../../modules/nixos/gnupg.nix
     ../../modules/nixos/openssh_server.nix
+    ../../modules/nixos/keychron.nix
 
     # Graphical Client
     ../../modules/nixos/kde.nix

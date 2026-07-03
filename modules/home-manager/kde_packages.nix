@@ -17,5 +17,20 @@
     kdePackages.wayland
     kdePackages.wayland-protocols
     haruna
+    #kdePackages.kontact
+    #kdePackages.kmail
+    #kdePackages.korganizer
+    #kdePackages.kaddressbook
+    #kdePackages.akonadi
+    #kdePackages.akonadi-contacts
+    #kdePackages.akonadi-calendar
+    #kdePackages.akonadi-mime
+    #kdePackages.akonadi-search
+    #kdePackages.kdepim-runtime
+    #kdePackages.kdepim-addons
+    #kdePackages.kmailtransport
+    #kdePackages.kmail-account-wizard
+    #kdePackages.kldap
+    #kdePackages.merkuro
   ];
 }
