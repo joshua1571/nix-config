@@ -11,6 +11,7 @@
     # Common
     ../../modules/nixos/common.nix
     ../../modules/nixos/gnupg.nix
+    ../../modules/nixos/email.nix
     ../../modules/nixos/openssh_server.nix
     ../../modules/nixos/keychron.nix
 
@@ -18,6 +19,7 @@
     ../../modules/nixos/kde.nix
     ../../modules/nixos/obs-studio.nix
     ../../modules/nixos/smb_share_client.nix
+    ../../modules/nixos/steam.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix

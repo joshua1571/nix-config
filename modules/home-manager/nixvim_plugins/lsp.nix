@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     pyright
     nil
-    docker-language-server
+    #docker-language-server
     bash-language-server
     marksman
     yaml-language-server
@@ -17,7 +17,7 @@
       inlayHints.enable = true;
       servers = {
         nil_ls.enable = true; # Nix
-        dockerls.enable = true; # Docker
+        #dockerls.enable = true; # Docker
         bashls.enable = true; # Bash
         pyright.enable = true; # Python
         marksman.enable = true; # Markdown

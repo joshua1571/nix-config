@@ -16,6 +16,7 @@
     kdePackages.sddm-kcm
     kdePackages.wayland
     kdePackages.wayland-protocols
+    kdePackages.krdc
     haruna
     #kdePackages.kontact
     #kdePackages.kmail
