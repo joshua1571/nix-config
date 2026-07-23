@@ -39,6 +39,15 @@
     ];
   };
 
+  fileSystems."/mnt/external8tb" = {
+    device = "/dev/disk/by/uuid/7eb69560-ec2c-48dc-a7f5-7363e775de86";
+    fsType = "btrfs";
+    options = [
+      "defaults"
+      "nofail"
+    ];
+  };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
