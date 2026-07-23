@@ -25,27 +25,29 @@
     extraModulePackages = [ ];
   };
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/c45a8d41-9b8d-4998-8365-d8810ce3b416";
-    fsType = "ext4";
-  };
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/c45a8d41-9b8d-4998-8365-d8810ce3b416";
+      fsType = "ext4";
+    };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/41EE-99E6";
-    fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
-    ];
-  };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/41EE-99E6";
+      fsType = "vfat";
+      options = [
+        "fmask=0077"
+        "dmask=0077"
+      ];
+    };
 
-  fileSystems."/mnt/external8tb" = {
-    device = "/dev/disk/by/uuid/7eb69560-ec2c-48dc-a7f5-7363e775de86";
-    fsType = "btrfs";
-    options = [
-      "defaults"
-      "nofail"
-    ];
+    "/mnt/external8tb" = {
+      device = "/dev/disk/by-uuid/7eb69560-ec2c-48dc-a7f5-7363e775de86";
+      fsType = "btrfs";
+      options = [
+        "defaults"
+        "nofail"
+      ];
+    };
   };
 
   swapDevices = [ ];
