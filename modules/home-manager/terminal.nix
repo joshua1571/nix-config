@@ -1,5 +1,6 @@
-#{ _ }:
+{ pkgs, ... }:
 {
+  home.packages = [ pkgs.ghostty ];
   programs = {
     wezterm = {
       enable = false;
@@ -32,7 +33,7 @@
     };
 
     foot = {
-      enable = true;
+      enable = false;
       settings = {
         main = {
           font = "SauceCodePro Nerd Font:size=10";
