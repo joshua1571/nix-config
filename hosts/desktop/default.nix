@@ -22,6 +22,7 @@
     ../../modules/nixos/smb_share_client.nix
     ../../modules/nixos/openrgb.nix
     ../../modules/nixos/keychron.nix
+    ../../modules/nixos/email.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
