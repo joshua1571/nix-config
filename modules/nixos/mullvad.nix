@@ -20,7 +20,7 @@
   # Only qbittorrent traffic is routed through this tunnel (see postSetup).
   networking.wireguard.interfaces.mullvad0 = {
     # Your Mullvad-assigned tunnel address — from the [Interface] Address field
-    ips = [ "10.136.102.81/32" ];
+    ips = [ "10.68.238.33/32" ];
 
     privateKeyFile = config.age.secrets.mullvad-wg-private-key.path;
 
@@ -33,8 +33,8 @@
       # cryptographic routing (any packet sent to mullvad0 is encrypted
       # and forwarded to this peer), but no kernel routes are added.
       ${pkgs.wireguard-tools}/bin/wg set mullvad0 \
-        peer "SDnciTlujuy2APFTkhzfq5X+LDi+lhfU38wI2HBCxxs=" \
-        endpoint "169.150.203.15:18970" \
+        peer "/iivwlyqWqxQ0BVWmJRhcXIFdJeo0WbHQ/hZwuXaN3g=" \
+        endpoint "193.32.127.66:51820" \
         allowed-ips "0.0.0.0/0,::/0" \
         persistent-keepalive 25
 
