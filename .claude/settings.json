@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(systemctl status *)",
+      "Bash(journalctl *)",
+      "Bash(wg show *)",
+      "Bash(ip rule show)",
+      "Bash(ip route show *)",
+      "Bash(just lint)"
+    ]
+  }
+}
