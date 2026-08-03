@@ -9,9 +9,9 @@
   systemd.tmpfiles.rules = [
     "d /tank/media/torrents									0755 ${username} users -"
     "d /tank/media/torrents/books						0755 ${username} users -"
-    "d /tank/media/torrents/movies     			0755 radarr radarr -"
-    "d /tank/media/torrents/music      			0755 lidarr lidarr-"
-    "d /tank/media/torrents/tv         			0755 sonarr sonarr -"
+    "d /tank/media/torrents/movies     			0775 qbittorrent media -"
+    "d /tank/media/torrents/music      			0775 qbittorrent media -"
+    "d /tank/media/torrents/tv         			0775 qbittorrent media -"
     "d /tank/media/torrents/games      			0755 ${username} users -"
 
     "d /tank/media/usenet              			0755 ${username} users -"
