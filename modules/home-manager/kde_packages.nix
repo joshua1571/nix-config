@@ -17,6 +17,7 @@
     kdePackages.wayland
     kdePackages.wayland-protocols
     kdePackages.krdc
+		kdePackages.kclock
     haruna
     #kdePackages.kontact
     #kdePackages.kmail
