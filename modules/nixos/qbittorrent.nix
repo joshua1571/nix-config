@@ -8,6 +8,8 @@ in
     openFirewall = false;
   };
 
+  users.groups.media = { };
+
   users.users.qbittorrent = {
     uid = 352;
     extraGroups = [

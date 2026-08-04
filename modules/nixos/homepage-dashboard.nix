@@ -261,6 +261,12 @@
             };
           }
           {
+            "Jellyseerr" = {
+              description = "Requests";
+              href = "http://10.0.0.126:5055";
+            };
+          }
+          {
             "Radarr" = {
               description = "Movies";
               href = "http://10.0.0.126:7878";
@@ -270,6 +276,18 @@
             "Sonarr" = {
               description = "TV Shows";
               href = "http://10.0.0.126:8989";
+            };
+          }
+          {
+            "Lidarr" = {
+              description = "Music";
+              href = "http://10.0.0.126:8686";
+            };
+          }
+          {
+            "Prowlarr" = {
+              description = "Indexers";
+              href = "http://10.0.0.126:9696";
             };
           }
         ];
