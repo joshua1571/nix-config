@@ -6,6 +6,7 @@ pkgs.mkShellNoCC {
   packages = with pkgs; [
     just
     nil
-		jq
+    jq
+    vscodium.fhs
   ];
 }
