@@ -36,6 +36,14 @@ Home-manager modules — see `users/jrh/home/server.nix`:
 - Navidrome (LAN-exposed via `openFirewall`)
 - Immich (`:2283`, LAN-exposed via `openFirewall`)
 
+### Files / productivity
+
+- Nextcloud (`:80`, LAN-exposed via `openFirewall`). PostgreSQL + Redis,
+  datadir on `tank/personal/nextcloud`. Admin password in
+  `secrets/nextcloud-adminpass.age`. Core apps
+  (contacts/calendar/tasks/notes/deck/mail/news) pinned declaratively;
+  app store open for extras.
+
 ### *arr automation
 
 - Radarr (LAN-exposed)
@@ -72,9 +80,10 @@ Home-manager modules — see `users/jrh/home/server.nix`:
 ## Networking
 
 - Tailscale: tailnet node, hostname registered in agenix secret
-- LAN-exposed TCP ports: 22 (SSH), Jellyfin 8096, Navidrome (default),
-  Immich 2283, Radarr/Sonarr/Lidarr/Prowlarr/Jellyseerr/Flaresolverr
-  (defaults), Homepage 8082, SMB
+- LAN-exposed TCP ports: 22 (SSH), 80 (Nextcloud), Jellyfin 8096,
+  Navidrome (default), Immich 2283,
+  Radarr/Sonarr/Lidarr/Prowlarr/Jellyseerr/Flaresolverr (defaults),
+  Homepage 8082, SMB
 - Tailscale-only TCP ports: 443 (nginx), 8080 (qBittorrent web UI)
 - Mullvad WireGuard interface for qBittorrent
 
@@ -103,13 +112,14 @@ datasets to `hardware-configuration.nix`.
 | `tailscale-domain.age` | `homepage-dashboard.nix` | Dashboard domain |
 | `mullvad-wg-private-key.age` | `mullvad.nix` | WireGuard private key |
 | `mullvad-wg-preshared-key.age` | `mullvad.nix` (commented) | WG preshared key |
+| `nextcloud-adminpass.age` | `nextcloud.nix` | Nextcloud admin password |
 
 ## Known gaps / TODO
 
 - Migrate disks to declarative `disko` config (low priority TODO in `flake.nix`).
 - Migrate to `colmena` for remote deploys.
-- Decide whether `home-assistant`, `nextcloud`, `syncthing` (modules
-  exist but are not imported) should run here.
+- Decide whether `home-assistant`, `syncthing` (modules exist but are
+  not imported) should run here.
 - Document the actual Tailscale hostname/domain values somewhere
   outside agenix (e.g. README) for human reference.
 - Add backup strategy: who pulls from `tank/backups/*`, retention.

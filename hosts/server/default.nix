@@ -32,6 +32,7 @@
     ../../modules/nixos/lidarr.nix
     ../../modules/nixos/jellyseerr.nix
     ../../modules/nixos/flaresolverr.nix
+    ../../modules/nixos/nextcloud.nix
 
     # Storage layout
     ./storage.nix
