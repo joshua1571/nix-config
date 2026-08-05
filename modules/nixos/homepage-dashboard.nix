@@ -290,6 +290,18 @@
               href = "http://10.0.0.126:9696";
             };
           }
+          {
+            "Nextcloud" = {
+              description = "Files, calendar, contacts";
+              href = "http://10.0.0.126/";
+            };
+          }
+          {
+            "Home Assistant" = {
+              description = "Home Automation";
+              href = "http://10.0.0.155:8123/home/overview";
+            };
+          }
         ];
       }
       {
@@ -340,6 +352,13 @@
             "qBittorrent" = {
               description = "Downloads";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/qbittorrent/";
+            };
+          }
+          {
+            "Nextcloud" = {
+              description = "Files, calendar, contacts";
+              # Not behind nginx (:443 catch-all owns /), so plain HTTP on :80.
+              href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/";
             };
           }
         ];

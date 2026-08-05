@@ -40,6 +40,10 @@ in
           --cert-file ${certDir}/cert.pem \
           --key-file ${certDir}/key.pem \
           "$hostname"
+        # tailscale writes key.pem as root:root 0600; nginx runs as uid nginx
+        # and can't read it. Regrant to the nginx group each run.
+        chown root:nginx ${certDir}/cert.pem ${certDir}/key.pem
+        chmod 0640 ${certDir}/key.pem
       '';
     };
 

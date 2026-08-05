@@ -6,8 +6,14 @@
     "fasttank"
   ];
 
-  # /tank/personal/** — same-owner as /tank, tmpfiles works fine here.
+  # /tank and /tank/personal must be root-owned so that systemd-tmpfiles'
+  # "unsafe path transition" check doesn't block modules whose datadirs
+  # live under here (e.g. nextcloud creating files as user 'nextcloud').
+  # A root-owned ancestor is a trusted transition point; a user-owned
+  # ancestor traversing into a different user's subtree is not.
   systemd.tmpfiles.rules = [
+    "d /tank                                0755 root root -"
+    "d /tank/personal                       0755 root root -"
     "d /tank/personal/photos                0755 ${username} users -"
     "d /tank/personal/photos/immich_data    0755 ${username} users -"
     "d /tank/personal/documents             0755 ${username} users -"
