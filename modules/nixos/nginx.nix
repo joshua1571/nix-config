@@ -85,30 +85,30 @@ in
           proxyWebsockets = true;
         };
 
-        # Navidrome
-        # Note: add BaseUrl = "/navidrome" to navidrome.nix settings
+        # Navidrome — BaseUrl = "/navidrome" is set in navidrome.nix, so
+        # the /navidrome/ prefix must be preserved (no trailing slash on proxyPass).
         "/navidrome/" = {
-          proxyPass = "http://127.0.0.1:4533/";
+          proxyPass = "http://127.0.0.1:4533";
         };
 
-        # Jellyseerr
-        "/jellyseerr/" = {
-          proxyPass = "http://127.0.0.1:5055/";
-        };
+        # Jellyseerr — does not support URL base paths, so it's not proxied
+        # here. Reached directly on port 5055 over tailscale/LAN instead.
 
-        # *arr stack — admin services, tailscale only
-        # Note: set URL Base in each app's Settings → General
+        # *arr stack — admin services, tailscale only.
+        # URL Base must be set in each app's Settings → General to match the
+        # location prefix (e.g. /radarr). No trailing slash on proxyPass so
+        # nginx preserves the prefix when forwarding.
         "/radarr/" = {
-          proxyPass = "http://127.0.0.1:7878/";
+          proxyPass = "http://127.0.0.1:7878";
         };
         "/sonarr/" = {
-          proxyPass = "http://127.0.0.1:8989/";
+          proxyPass = "http://127.0.0.1:8989";
         };
         "/lidarr/" = {
-          proxyPass = "http://127.0.0.1:8686/";
+          proxyPass = "http://127.0.0.1:8686";
         };
         "/prowlarr/" = {
-          proxyPass = "http://127.0.0.1:9696/";
+          proxyPass = "http://127.0.0.1:9696";
         };
 
         # qBittorrent — nginx reaches it via loopback, allowed by the kill switch

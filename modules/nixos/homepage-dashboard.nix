@@ -1,13 +1,30 @@
 { config, ... }:
 {
-  age.secrets.tailscale-domain = {
-    file = ../../secrets/tailscale-domain.age;
-    owner = "root";
-    mode = "0400";
-  };
+  age.secrets =
+    let
+      serverOwned = file: {
+        inherit file;
+        owner = "root";
+        mode = "0400";
+      };
+    in
+    {
+      tailscale-domain = serverOwned ../../secrets/tailscale-domain.age;
+      homepage-jellyfin-key = serverOwned ../../secrets/homepage-jellyfin-key.age;
+      homepage-jellyseerr-key = serverOwned ../../secrets/homepage-jellyseerr-key.age;
+      homepage-immich-key = serverOwned ../../secrets/homepage-immich-key.age;
+      homepage-radarr-key = serverOwned ../../secrets/homepage-radarr-key.age;
+      homepage-sonarr-key = serverOwned ../../secrets/homepage-sonarr-key.age;
+      homepage-lidarr-key = serverOwned ../../secrets/homepage-lidarr-key.age;
+      homepage-prowlarr-key = serverOwned ../../secrets/homepage-prowlarr-key.age;
+      homepage-navidrome-user = serverOwned ../../secrets/homepage-navidrome-user.age;
+      homepage-navidrome-salt = serverOwned ../../secrets/homepage-navidrome-salt.age;
+      homepage-navidrome-token = serverOwned ../../secrets/homepage-navidrome-token.age;
+      homepage-homeassistant-key = serverOwned ../../secrets/homepage-homeassistant-key.age;
+    };
 
-  # Generate a runtime env file for homepage containing the Tailscale domain.
-  # The domain is encrypted at rest via agenix and read at service start.
+  # Generate a runtime env file for homepage containing widget credentials.
+  # Everything is encrypted at rest via agenix and read at service start.
   systemd.services.homepage-env = {
     description = "Generate homepage-dashboard environment file";
     after = [ "agenix.service" ];
@@ -22,6 +39,18 @@
       {
         echo "HOMEPAGE_VAR_TAILSCALE_DOMAIN=$domain"
         echo "HOMEPAGE_ALLOWED_HOSTS=localhost:8082,10.0.0.125:8082,10.0.0.126:8082,10.0.0.100:8082,desktop.$domain:8082,htpc.$domain:8082,iphone.$domain:8082,laptop.$domain:8082,server.$domain:8082"
+        echo "HOMEPAGE_VAR_JELLYFIN_KEY=$(cat ${config.age.secrets.homepage-jellyfin-key.path})"
+        echo "HOMEPAGE_VAR_JELLYSEERR_KEY=$(cat ${config.age.secrets.homepage-jellyseerr-key.path})"
+        echo "HOMEPAGE_VAR_IMMICH_KEY=$(cat ${config.age.secrets.homepage-immich-key.path})"
+        echo "HOMEPAGE_VAR_RADARR_KEY=$(cat ${config.age.secrets.homepage-radarr-key.path})"
+        echo "HOMEPAGE_VAR_SONARR_KEY=$(cat ${config.age.secrets.homepage-sonarr-key.path})"
+        echo "HOMEPAGE_VAR_LIDARR_KEY=$(cat ${config.age.secrets.homepage-lidarr-key.path})"
+        echo "HOMEPAGE_VAR_PROWLARR_KEY=$(cat ${config.age.secrets.homepage-prowlarr-key.path})"
+        echo "HOMEPAGE_VAR_NEXTCLOUD_PASSWORD=$(cat ${config.age.secrets.nextcloud-adminpass.path})"
+        echo "HOMEPAGE_VAR_NAVIDROME_USER=$(cat ${config.age.secrets.homepage-navidrome-user.path})"
+        echo "HOMEPAGE_VAR_NAVIDROME_SALT=$(cat ${config.age.secrets.homepage-navidrome-salt.path})"
+        echo "HOMEPAGE_VAR_NAVIDROME_TOKEN=$(cat ${config.age.secrets.homepage-navidrome-token.path})"
+        echo "HOMEPAGE_VAR_HOMEASSISTANT_KEY=$(cat ${config.age.secrets.homepage-homeassistant-key.path})"
       } > /run/homepage-env
       chmod 400 /run/homepage-env
     '';
@@ -48,6 +77,25 @@
         search = {
           provider = "duckduckgo";
           target = "_blank";
+        };
+      }
+      {
+        datetime = {
+          text_size = "xl";
+          format = {
+            timeStyle = "short";
+            dateStyle = "long";
+            hourCycle = "h12";
+          };
+        };
+      }
+      {
+        openmeteo = {
+          latitude = "33.6439";
+          longitude = "-117.7481";
+          timezone = "America/Los_Angeles";
+          units = "imperial";
+          cache = 5;
         };
       }
     ];
@@ -241,129 +289,165 @@
 
     services = [
       {
-        "Self Hosted (Local)" = [
-          {
-            "Jellyfin" = {
-              description = "Movies and TV Shows";
-              href = "http://10.0.0.126:8096/web/#/login?serverid=d11f4daf81904233a08637f4bdb164c6&url=%2Fhome";
-            };
-          }
-          {
-            "Navidrome" = {
-              description = "Music";
-              href = "http://10.0.0.126:4533/app/#/login";
-            };
-          }
-          {
-            "Immich" = {
-              description = "Photos";
-              href = "http://10.0.0.126:2283/photos";
-            };
-          }
-          {
-            "Jellyseerr" = {
-              description = "Requests";
-              href = "http://10.0.0.126:5055";
-            };
-          }
-          {
-            "Radarr" = {
-              description = "Movies";
-              href = "http://10.0.0.126:7878";
-            };
-          }
-          {
-            "Sonarr" = {
-              description = "TV Shows";
-              href = "http://10.0.0.126:8989";
-            };
-          }
-          {
-            "Lidarr" = {
-              description = "Music";
-              href = "http://10.0.0.126:8686";
-            };
-          }
-          {
-            "Prowlarr" = {
-              description = "Indexers";
-              href = "http://10.0.0.126:9696";
-            };
-          }
-          {
-            "Nextcloud" = {
-              description = "Files, calendar, contacts";
-              href = "http://10.0.0.126/";
-            };
-          }
-          {
-            "Home Assistant" = {
-              description = "Home Automation";
-              href = "http://10.0.0.155:8123/home/overview";
-            };
-          }
-        ];
-      }
-      {
-        "Self Hosted (Tailscale)" = [
+        "Media" = [
           {
             "Jellyfin" = {
               description = "Movies and TV Shows";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/jellyfin/";
+              siteMonitor = "http://127.0.0.1:8096";
+              widget = {
+                type = "jellyfin";
+                url = "http://127.0.0.1:8096";
+                key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
+                enableBlocks = true;
+                enableNowPlaying = true;
+              };
             };
           }
           {
             "Navidrome" = {
               description = "Music";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/navidrome/";
+              siteMonitor = "http://127.0.0.1:4533";
+              widget = {
+                type = "navidrome";
+                # BaseUrl = "/navidrome" is set in navidrome.nix, so it's
+                # part of the widget URL too.
+                url = "http://127.0.0.1:4533/navidrome";
+                user = "{{HOMEPAGE_VAR_NAVIDROME_USER}}";
+                salt = "{{HOMEPAGE_VAR_NAVIDROME_SALT}}";
+                token = "{{HOMEPAGE_VAR_NAVIDROME_TOKEN}}";
+              };
+            };
+          }
+          {
+            "Immich" = {
+              description = "Photos";
+              href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:2283/photos";
+              siteMonitor = "http://127.0.0.1:2283";
+              widget = {
+                type = "immich";
+                url = "http://127.0.0.1:2283";
+                key = "{{HOMEPAGE_VAR_IMMICH_KEY}}";
+                version = 2;
+              };
             };
           }
           {
             "Jellyseerr" = {
               description = "Requests";
-              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/jellyseerr/";
+              href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:5055";
+              siteMonitor = "http://127.0.0.1:5055";
+              widget = {
+                type = "jellyseerr";
+                url = "http://127.0.0.1:5055";
+                key = "{{HOMEPAGE_VAR_JELLYSEERR_KEY}}";
+              };
             };
           }
+        ];
+      }
+      {
+        "Downloads" = [
           {
             "Radarr" = {
               description = "Movies";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/radarr/";
+              siteMonitor = "http://127.0.0.1:7878";
+              widget = {
+                type = "radarr";
+                url = "http://127.0.0.1:7878";
+                key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
+                enableQueue = true;
+              };
             };
           }
           {
             "Sonarr" = {
               description = "TV Shows";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/sonarr/";
+              siteMonitor = "http://127.0.0.1:8989";
+              widget = {
+                type = "sonarr";
+                url = "http://127.0.0.1:8989";
+                key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
+                enableQueue = true;
+              };
             };
           }
           {
             "Lidarr" = {
               description = "Music";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/lidarr/";
+              siteMonitor = "http://127.0.0.1:8686";
+              widget = {
+                type = "lidarr";
+                url = "http://127.0.0.1:8686";
+                key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
+              };
             };
           }
           {
             "Prowlarr" = {
               description = "Indexers";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/prowlarr/";
+              siteMonitor = "http://127.0.0.1:9696";
+              widget = {
+                type = "prowlarr";
+                url = "http://127.0.0.1:9696";
+                key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
+              };
             };
           }
           {
             "qBittorrent" = {
               description = "Downloads";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/qbittorrent/";
-            };
-          }
-          {
-            "Nextcloud" = {
-              description = "Files, calendar, contacts";
-              # Not behind nginx (:443 catch-all owns /), so plain HTTP on :80.
-              href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/";
+              siteMonitor = "http://127.0.0.1:8080";
+              widget = {
+                type = "qbittorrent";
+                url = "http://127.0.0.1:8080";
+                # Auth bypassed for loopback in qbittorrent.nix (LocalHostAuth=false).
+                username = "";
+                password = "";
+              };
             };
           }
         ];
       }
       {
+        "Files/Cloud" = [
+          {
+            "Nextcloud" = {
+              description = "Files, calendar, contacts";
+              # Not behind nginx (:443 catch-all owns /), so plain HTTP on :80.
+              href = "http://server/";
+              siteMonitor = "http://127.0.0.1";
+              widget = {
+                type = "nextcloud";
+                url = "http://127.0.0.1";
+                username = "admin";
+                password = "{{HOMEPAGE_VAR_NEXTCLOUD_PASSWORD}}";
+              };
+            };
+          }
+          {
+            "Home Assistant" = {
+              description = "Home Automation";
+              href = "http://10.0.0.155:8123/home/overview";
+              siteMonitor = "http://10.0.0.155:8123";
+              widget = {
+                type = "homeassistant";
+                url = "http://10.0.0.155:8123";
+                key = "{{HOMEPAGE_VAR_HOMEASSISTANT_KEY}}";
+              };
+            };
+          }
+        ];
+      }
+      {
+        # Admin devices redirect http → https and often use self-signed certs,
+        # which homepage's siteMonitor can't follow, so no reachability pill.
         "Administration" = [
           {
             "Router" = {

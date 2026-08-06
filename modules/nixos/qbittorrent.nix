@@ -6,6 +6,13 @@ in
   services.qbittorrent = {
     enable = true;
     openFirewall = false;
+    serverConfig.Preferences.WebUI = {
+      # Skip auth for loopback so homepage-dashboard's widget can hit the API
+      # without credentials. Safe because the WebUI only listens on tailscale.
+      LocalHostAuth = false;
+      AuthSubnetWhitelistEnabled = true;
+      AuthSubnetWhitelist = "127.0.0.1/32";
+    };
   };
 
   users.groups.media = { };
