@@ -12,7 +12,7 @@
     ../../modules/nixos/common.nix
     ../../modules/nixos/gnupg.nix
     ../../modules/nixos/openssh_server.nix
-		../../modules/nixos/mullvad_client.nix
+    ../../modules/nixos/mullvad_client.nix
 
     # Graphical Client
     ../../modules/nixos/kde.nix

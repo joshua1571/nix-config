@@ -15,9 +15,12 @@
     ktailctl # Tailscale GUI applet
     openhue-cli # Philips Hue lighting CLI
     easyeffects # Audio effects
-    #github-desktop				# Error whenever you open this on nix
     activitywatch # Not sure if I really need this
     opensnitch # Requires opensnitch service
+    jellyfin-desktop
+    strawberry
+    nextcloud-client
+    #github-desktop				# Error whenever you open this on nix
     #bitwarden-desktop		# I mostly just use this via the browser plugin instead of the native app
     #zapzap								# Use web app instead
     #fastmail-desktop			# Use web app instead
