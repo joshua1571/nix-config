@@ -2,7 +2,9 @@
 {
   home.packages = with pkgs; [
     claude-code
+    codex
     mcp-nixos
+
     #nodejs
 
     #(pkgs.symlinkJoin {
