@@ -15,6 +15,7 @@
     ../../modules/nixos/openssh_server.nix
     ../../modules/nixos/keychron.nix
     ../../modules/nixos/mullvad_client.nix
+    ../../modules/nixos/development_environment.nix
 
     # Graphical Client
     ../../modules/nixos/kde.nix
