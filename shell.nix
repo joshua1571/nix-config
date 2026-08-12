@@ -7,6 +7,5 @@ pkgs.mkShellNoCC {
     just
     nil
     jq
-    vscodium.fhs
   ];
 }

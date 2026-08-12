@@ -15,15 +15,13 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v14
 
       - name: Evaluate all NixOS configurations
-        run: nix flake check --no-build --show-trace
+        run: ./scripts/checks.sh flake-check
 
       - name: Check formatting
-        run: |
-          nix shell nixpkgs#nixfmt -c sh -c \
-            'find . -name "*.nix" ! -path "./.git/*" | xargs nixfmt --check'
+        run: ./scripts/checks.sh fmt
 
       - name: Lint with statix
-        run: nix run nixpkgs#statix -- check .
+        run: ./scripts/checks.sh lint
 
       - name: Check for dead code with deadnix
-        run: nix run nixpkgs#deadnix -- --fail .
+        run: ./scripts/checks.sh dead

@@ -20,24 +20,15 @@ dry:
 build:
   sudo nixos-rebuild switch --flake '.#'
 
-### TODO: Remote builds
-# Remotely rebuild the htpc host
-[group('remote-build')]
-build-htpc:
-  NIX_SSHOPTS="-p 2228" nixos-rebuild --flake .#htpc --target-host jrhassistant@htpc --use-remote-sudo switch
-
-
 # Attempt to build flake for all configurations
 [group('checks')]
 check:
-  nix flake check --no-build --show-trace
+  ./scripts/checks.sh flake-check
 
 # Check formatting on all code
 [group('checks')]
 fmt:
-  #find . -name \*.nix -exec nixfmt {} \;
-  nix shell nixpkgs#nixfmt -c sh -c \
-    'find . -name "*.nix" ! -path "./.git/*" | xargs nixfmt --check'
+  ./scripts/checks.sh fmt
 
 #Format a file using nixfmt
 [group('checks')]
@@ -47,12 +38,17 @@ fmt-file file:
 # Lint all code
 [group('checks')]
 lint:
-  nix run nixpkgs#statix -- check .
+  ./scripts/checks.sh lint
 
 # Check for dead code still present in the repo
 [group('checks')]
 dead:
-  nix run nixpkgs#deadnix -- --fail .
+  ./scripts/checks.sh dead
+
+# Run all checks (same as CI and the pre-commit hook)
+[group('checks')]
+check-all:
+  ./scripts/checks.sh all
 
 
 

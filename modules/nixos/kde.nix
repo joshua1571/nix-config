@@ -11,10 +11,10 @@
   programs = {
     partition-manager.enable = true;
     kde-pim = {
-      enable = true;
-      kmail = true;
-      kontact = true;
-      merkuro = true;
+      enable = false;
+      kmail = false;
+      kontact = false;
+      merkuro = false;
     };
   };
 

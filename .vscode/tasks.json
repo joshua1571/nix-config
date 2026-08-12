@@ -1,0 +1,115 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Update flake inputs",
+            "detail": "just up",
+            "type": "shell",
+            "command": "nix flake update",
+            "group": "build"
+        },
+        {
+            "label": "Dry Build",
+            "detail": "just dry",
+            "type": "shell",
+            "command": "nixos-rebuild dry-build --flake '.#' --show-trace",
+            "group": "build"
+        },
+        {
+            "label": "Build",
+            "detail": "just build",
+            "type": "shell",
+            "command": "sudo nixos-rebuild switch --flake '.#'",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Remote Build HTPC",
+            "detail": "just build-htpc",
+            "type": "shell",
+            "command": "NIX_SSHOPTS=\"-p 2228\" nixos-rebuild --flake .#htpc --target-host jrhassistant@htpc --use-remote-sudo switch",
+            "group": "build"
+        },
+        {
+            "label": "Check Flake",
+            "detail": "just check",
+            "type": "shell",
+            "command": "nix flake check --no-build --show-trace",
+            "group": "test"
+        },
+        {
+            "label": "Format All",
+            "detail": "just fmt",
+            "type": "shell",
+            "command": "nix shell nixpkgs#nixfmt -c sh -c 'find . -name \"*.nix\" ! -path \"./.git/*\" | xargs nixfmt --check'",
+            "group": "test"
+        },
+        {
+            "label": "Format File",
+            "detail": "just fmt-file <file>",
+            "type": "shell",
+            "command": "nix run nixpkgs#nixfmt -- ${input:nixFile}",
+            "group": "test"
+        },
+        {
+            "label": "Lint",
+            "detail": "just lint",
+            "type": "shell",
+            "command": "nix run nixpkgs#statix -- check .",
+            "group": "test"
+        },
+        {
+            "label": "Dead Code Check",
+            "detail": "just dead",
+            "type": "shell",
+            "command": "nix run nixpkgs#deadnix -- --fail .",
+            "group": "test"
+        },
+        {
+            "label": "System Generation History",
+            "detail": "just history",
+            "type": "shell",
+            "command": "nix profile history --profile /nix/var/nix/profiles/system",
+            "group": "none"
+        },
+        {
+            "label": "Clean System Generations",
+            "detail": "just clean-system",
+            "type": "shell",
+            "command": "sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d",
+            "group": "none"
+        },
+        {
+            "label": "Clean Home-Manager Generations",
+            "detail": "just clean-home",
+            "type": "shell",
+            "command": "nix profile wipe-history --profile \"${env:XDG_STATE_HOME:-$HOME/.local/state}/nix/profiles/home-manager\" --older-than 7d",
+            "group": "none"
+        },
+        {
+            "label": "Garbage Collect System",
+            "detail": "just gc-system",
+            "type": "shell",
+            "command": "nix-collect-garbage --delete-older-than 7d",
+            "group": "none"
+        },
+        {
+            "label": "Garbage Collect Home-Manager",
+            "detail": "just gc-home",
+            "type": "shell",
+            "command": "nix-collect-garbage --delete-older-than 7d",
+            "group": "none"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "nixFile",
+            "type": "promptString",
+            "description": "Path to the .nix file to format"
+        }
+    ]
+}

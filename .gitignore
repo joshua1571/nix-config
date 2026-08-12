@@ -4,3 +4,7 @@ result-*
 
 # Ignore automatically generated direnv output
 .direnv
+
+# Global gitignore has a python-venv rule (`[Ss]cripts`) that would otherwise
+# catch this repo's scripts/ directory
+!/scripts/

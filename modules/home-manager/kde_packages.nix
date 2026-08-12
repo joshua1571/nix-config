@@ -19,7 +19,6 @@
     kdePackages.krdc
     kdePackages.kclock
     haruna
-    drawy
     kdiff3
     #kdePackages.kontact
     #kdePackages.kmail
