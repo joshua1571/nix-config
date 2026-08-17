@@ -9,11 +9,10 @@
         ms-vscode.remote-explorer
         ms-vscode-remote.remote-ssh-edit
         ms-vscode-remote.remote-containers
+        ms-azuretools.vscode-containers
         anthropic.claude-code
         eamodio.gitlens
         gruntfuggly.todo-tree
-        #docker.docker
-        #ms-vscode-remote.vscode-remote-extensionpack
       ];
     })
   ];

@@ -1,13 +1,9 @@
-{
-  pkgs,
-  ...
-}:
-{
+_: {
   programs.thunderbird = {
     enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    birdtray
-  ];
+  #environment.systemPackages = with pkgs; [
+  #  birdtray
+  #];
 }

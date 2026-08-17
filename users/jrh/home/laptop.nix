@@ -1,5 +1,5 @@
 {
-  pkgs,
+  #pkgs,
   ...
 }:
 
@@ -9,5 +9,5 @@
     ./desktop-environment.nix
   ];
 
-  home.packages = [ pkgs.moonlight-qt ];
+  #home.packages = [ pkgs.moonlight-qt ];
 }

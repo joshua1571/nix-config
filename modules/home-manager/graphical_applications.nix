@@ -20,6 +20,7 @@
     jellyfin-desktop
     strawberry
     nextcloud-client
+    calibre
     #github-desktop				# Error whenever you open this on nix
     #bitwarden-desktop		# I mostly just use this via the browser plugin instead of the native app
     #zapzap								# Use web app instead

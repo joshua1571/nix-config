@@ -16,6 +16,7 @@
     ../../modules/nixos/keychron.nix
     ../../modules/nixos/mullvad_client.nix
     ../../modules/nixos/development_environment.nix
+    ../../modules/nixos/podman.nix
 
     # Graphical Client
     ../../modules/nixos/kde.nix
