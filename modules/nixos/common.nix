@@ -128,7 +128,6 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
-  networking.nftables.enable = false;
   networking.firewall.checkReversePath = "loose";
 
   # List packages installed in system profile. To search, run:

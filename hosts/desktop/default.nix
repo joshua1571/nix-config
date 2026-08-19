@@ -7,23 +7,21 @@
   imports = [
     # Secrets
     ../../modules/nixos/agenix.nix
-
-    # Common
     ../../modules/nixos/common.nix
     ../../modules/nixos/gnupg.nix
     ../../modules/nixos/openssh_server.nix
-    ../../modules/nixos/mullvad_client.nix
-
-    # Graphical Client
+    #../../modules/nixos/mullvad_client.nix #This uses options that are unavailable in nixpkgs stable
     ../../modules/nixos/kde.nix
-    ../../modules/nixos/local_ai_server.nix
+    #../../modules/nixos/local_ai_server.nix
     ../../modules/nixos/steam.nix
     ../../modules/nixos/games_disk.nix
     ../../modules/nixos/obs-studio.nix
-    ../../modules/nixos/smb_share_client.nix
+    #../../modules/nixos/smb_share_client.nix #This uses options that are unavailable in nixpkgs stable
     ../../modules/nixos/openrgb.nix
     ../../modules/nixos/keychron.nix
     ../../modules/nixos/email.nix
+    ../../modules/nixos/development_environment.nix
+    ../../modules/nixos/podman.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix

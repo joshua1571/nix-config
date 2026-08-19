@@ -130,13 +130,13 @@
               inherit username;
             };
           in
-          nixpkgs-unstable.lib.nixosSystem {
+          nixpkgs.lib.nixosSystem {
             inherit system specialArgs;
 
             modules = [
               ./hosts/desktop/default.nix
-              agenix-unstable.nixosModules.default
-              home-manager-unstable.nixosModules.home-manager
+              agenix.nixosModules.default
+              home-manager.nixosModules.home-manager
               {
                 home-manager = {
                   useGlobalPkgs = true;
@@ -178,34 +178,35 @@
             ];
           };
 
-        htpc =
-          let
-            username = "jrh";
-            system = "x86_64-linux";
-            specialArgs = {
-              inherit inputs;
-              inherit system;
-              inherit username;
-            };
-          in
-          nixpkgs-unstable.lib.nixosSystem {
-            inherit system specialArgs;
+        # Original host was removed. May change this to the new htpc host which is a mac mini
+        #htpc =
+        #  let
+        #    username = "jrh";
+        #    system = "x86_64-linux";
+        #    specialArgs = {
+        #      inherit inputs;
+        #      inherit system;
+        #      inherit username;
+        #    };
+        #  in
+        #  nixpkgs-unstable.lib.nixosSystem {
+        #    inherit system specialArgs;
 
-            modules = [
-              ./hosts/htpc/default.nix
-              agenix-unstable.nixosModules.default
-              home-manager-unstable.nixosModules.home-manager
-              {
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  extraSpecialArgs = inputs // specialArgs;
-                  users.${username} = import ./users/${username}/home/htpc.nix;
-                  backupFileExtension = "hm_backup";
-                };
-              }
-            ];
-          };
+        #    modules = [
+        #      ./hosts/htpc/default.nix
+        #      agenix-unstable.nixosModules.default
+        #      home-manager-unstable.nixosModules.home-manager
+        #      {
+        #        home-manager = {
+        #          useGlobalPkgs = true;
+        #          useUserPackages = true;
+        #          extraSpecialArgs = inputs // specialArgs;
+        #          users.${username} = import ./users/${username}/home/htpc.nix;
+        #          backupFileExtension = "hm_backup";
+        #        };
+        #      }
+        #    ];
+        #  };
       };
     };
 }
