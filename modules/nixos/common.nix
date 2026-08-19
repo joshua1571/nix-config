@@ -127,7 +127,8 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = false;
+  networking.firewall.enable = true;
+  networking.nftables.enable = false;
   networking.firewall.checkReversePath = "loose";
 
   # List packages installed in system profile. To search, run:
@@ -149,6 +150,13 @@
     cifs-utils
     glances
     lsof
+    nftables
+    iptables
+    tcpdump
+    ethtool
+    dnsutils
+    traceroute
+    mtr
   ];
 
 }

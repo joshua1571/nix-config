@@ -7,6 +7,7 @@
     nmap
     cheat
     rclone
+    glow
   ];
 
   programs = {
