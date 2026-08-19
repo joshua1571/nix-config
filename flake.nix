@@ -8,29 +8,29 @@
       url = "github:nixos/nixpkgs/nixos-25.11";
     };
 
-    nixpkgs-unstable = {
-      url = "github:nixos/nixpkgs/nixos-unstable";
-    };
+    #nixpkgs-unstable = {
+    #  url = "github:nixos/nixpkgs/nixos-unstable";
+    #};
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    home-manager-unstable = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    #home-manager-unstable = {
+    #  url = "github:nix-community/home-manager";
+    #  inputs.nixpkgs.follows = "nixpkgs-unstable";
+    #};
 
     nixvim = {
       url = "github:nix-community/nixvim/nixos-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixvim-unstable = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    #nixvim-unstable = {
+    #  url = "github:nix-community/nixvim";
+    #  inputs.nixpkgs.follows = "nixpkgs-unstable";
+    #};
 
     agenix = {
       url = "github:ryantm/agenix";
@@ -38,17 +38,17 @@
       inputs.darwin.follows = "";
     };
 
-    agenix-unstable = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.darwin.follows = "";
-    };
+    #agenix-unstable = {
+    #  url = "github:ryantm/agenix";
+    #  inputs.nixpkgs.follows = "nixpkgs-unstable";
+    #  inputs.darwin.follows = "";
+    #};
 
     # TODO Low Priority: Set up colmena
     # Remote deployments
-    colmena = {
-      url = "github:zhaofengli/colmena";
-    };
+    #colmena = {
+    #  url = "github:zhaofengli/colmena";
+    #};
 
     # TODO Low Priority: Add disks from server using disko
     ## Configure disks declaratively in nix config
@@ -81,12 +81,8 @@
   outputs =
     inputs@{
       nixpkgs,
-      nixpkgs-unstable,
       home-manager,
-      home-manager-unstable,
-      #nixos-hardware,
       agenix,
-      agenix-unstable,
       ...
     }:
     {
@@ -101,13 +97,13 @@
               inherit username;
             };
           in
-          nixpkgs-unstable.lib.nixosSystem {
+          nixpkgs.lib.nixosSystem {
             inherit system specialArgs;
 
             modules = [
               ./hosts/laptop/default.nix
-              agenix-unstable.nixosModules.default
-              home-manager-unstable.nixosModules.home-manager
+              agenix.nixosModules.default
+              home-manager.nixosModules.home-manager
               {
                 home-manager = {
                   useGlobalPkgs = true;

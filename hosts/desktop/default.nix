@@ -22,6 +22,7 @@
     ../../modules/nixos/email.nix
     ../../modules/nixos/development_environment.nix
     ../../modules/nixos/podman.nix
+    ../../modules/nixos/deskflow.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -33,6 +34,8 @@
       options mt7921e disable_aspm=1
     '';
   };
+
+  local.deskflow.isServer = true;
 
   networking = {
     hostName = "desktop";

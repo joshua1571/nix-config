@@ -14,14 +14,13 @@
     ../../modules/nixos/email.nix
     ../../modules/nixos/openssh_server.nix
     ../../modules/nixos/keychron.nix
-    ../../modules/nixos/mullvad_client.nix
+    #../../modules/nixos/mullvad_client.nix
     ../../modules/nixos/development_environment.nix
     ../../modules/nixos/podman.nix
-
-    # Graphical Client
+    ../../modules/nixos/deskflow.nix
     ../../modules/nixos/kde.nix
     ../../modules/nixos/obs-studio.nix
-    ../../modules/nixos/smb_share_client.nix
+    #../../modules/nixos/smb_share_client.nix
     ../../modules/nixos/steam.nix
 
     # Include the results of the hardware scan.

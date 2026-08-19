@@ -12,5 +12,7 @@
   environment.systemPackages = with pkgs; [
     distrobox
     podman-desktop
+    podman-compose
+    kind
   ];
 }

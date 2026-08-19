@@ -124,11 +124,14 @@
     ];
   };
 
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = true;
-  networking.firewall.checkReversePath = "loose";
+  networking = {
+    firewall = {
+      enable = true;
+      checkReversePath = "loose"; # Required for Tailscale
+      #allowedTCPPorts = [ ];
+      #allowedUDPPorts = [ ];
+    };
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
