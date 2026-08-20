@@ -28,13 +28,6 @@
             }
         },
         {
-            "label": "Remote Build HTPC",
-            "detail": "just build-htpc",
-            "type": "shell",
-            "command": "NIX_SSHOPTS=\"-p 2228\" nixos-rebuild --flake .#htpc --target-host jrhassistant@htpc --use-remote-sudo switch",
-            "group": "build"
-        },
-        {
             "label": "Check Flake",
             "detail": "just check",
             "type": "shell",

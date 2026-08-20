@@ -7,5 +7,8 @@ pkgs.mkShellNoCC {
     just
     nil
     jq
+    nixfmt
+    deadnix
+    statix
   ];
 }
