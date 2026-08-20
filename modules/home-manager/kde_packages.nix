@@ -18,6 +18,7 @@
     kdePackages.wayland-protocols
     kdePackages.krdc
     kdePackages.kclock
+    kdePackages.markdownpart
     haruna
     kdiff3
     #kdePackages.kontact

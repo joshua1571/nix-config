@@ -35,7 +35,7 @@
     '';
   };
 
-  local.deskflow.isServer = true;
+  #local.deskflow.isServer = true;
 
   networking = {
     hostName = "desktop";
