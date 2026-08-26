@@ -11,8 +11,10 @@
         ms-vscode-remote.remote-containers
         ms-azuretools.vscode-containers
         anthropic.claude-code
+        #openai.chatgpt
         eamodio.gitlens
         gruntfuggly.todo-tree
+        github.vscode-github-actions
       ];
     })
   ];
