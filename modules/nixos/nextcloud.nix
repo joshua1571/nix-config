@@ -51,8 +51,14 @@
     };
     script = ''
       hostname=$(cat "$CREDENTIALS_DIRECTORY/tailscale-hostname")
-      ${config.services.nextcloud.occ}/bin/nextcloud-occ \
-        config:system:set trusted_domains 4 --value="$hostname"
+      occ=${config.services.nextcloud.occ}/bin/nextcloud-occ
+      $occ config:system:set trusted_domains 4 --value="$hostname"
+      # URL-generation overrides for the tailnet reverse-proxy path.
+      # These pair with overwritecondaddr (set in settings) so they only
+      # apply to requests coming in via 127.0.0.1 (i.e. the nginx proxy),
+      # leaving direct LAN hits at http://server untouched.
+      $occ config:system:set overwritehost --value="$hostname"
+      $occ config:system:set overwrite.cli.url --value="https://$hostname/nextcloud"
     '';
   };
 
@@ -94,6 +100,19 @@
         "localhost"
         "10.0.0.126"
       ];
+
+      # Reverse-proxy overrides for the tailnet path. The paired
+      # overwritehost and overwrite.cli.url values are injected at
+      # runtime by nextcloud-trusted-domains-tailscale.service because
+      # the tailnet hostname is an agenix secret.
+      # overwritecondaddr scopes all overwrite* settings to requests
+      # arriving from 127.0.0.1 (the nginx reverse proxy on this host),
+      # so LAN clients hitting http://server directly still get plain
+      # http URLs back.
+      overwriteprotocol = "https";
+      overwritewebroot = "/nextcloud";
+      overwritecondaddr = "^127\\.0\\.0\\.1$";
+      trusted_proxies = [ "127.0.0.1" ];
     };
 
     # Pin the core set declaratively; leave the web app store on for
@@ -110,7 +129,7 @@
         notes
         deck
         mail
-        news
+        qownnotesapi
         ;
     };
   };

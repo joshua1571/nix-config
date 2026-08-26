@@ -15,6 +15,7 @@ in
   "secrets/tailscale-hostname.age".publicKeys = serverOnly;
   "secrets/tailscale-domain.age".publicKeys = serverOnly;
   "secrets/nextcloud-adminpass.age".publicKeys = serverOnly;
+  "secrets/freshrss-password.age".publicKeys = serverOnly;
   "secrets/mullvad-wg-private-key.age".publicKeys = serverOnly;
   "secrets/mullvad-wg-preshared-key.age".publicKeys = serverOnly;
 
@@ -30,4 +31,5 @@ in
   "secrets/homepage-navidrome-salt.age".publicKeys = serverOnly;
   "secrets/homepage-navidrome-token.age".publicKeys = serverOnly;
   "secrets/homepage-homeassistant-key.age".publicKeys = serverOnly;
+  "secrets/homepage-freshrss-password.age".publicKeys = serverOnly;
 }

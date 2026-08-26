@@ -116,6 +116,48 @@ in
           proxyPass = "http://127.0.0.1:8080/";
           proxyWebsockets = true;
         };
+
+        # Nextcloud — proxied to the module-managed vhost on :80, which is
+        # the only listener on port 80 so it serves any Host. The include
+        # from recommendedProxySettings is appended after extraConfig and
+        # already sets `proxy_set_header Host $host;` — adding a second
+        # `Host` directive here would send two Host headers upstream,
+        # which nginx rejects with 400. Leave Host handling to the include.
+        # The trailing slash on proxyPass strips the /nextcloud/ prefix;
+        # Nextcloud regenerates externally-visible URLs under /nextcloud
+        # via overwritewebroot (see nextcloud.nix).
+        # client_max_body_size must match services.nextcloud.maxUploadSize.
+        "/nextcloud/" = {
+          proxyPass = "http://127.0.0.1:80/";
+          extraConfig = ''
+            client_max_body_size 16G;
+          '';
+        };
+
+        # CardDAV / CalDAV / webfinger / nodeinfo autodiscovery. Clients
+        # probe these at the site root; Nextcloud expects them under its
+        # webroot, so redirect to /nextcloud/... . Nextcloud emits the
+        # 30x back to /nextcloud/remote.php/dav from there.
+        "= /.well-known/carddav".return = "301 /nextcloud/remote.php/dav";
+        "= /.well-known/caldav".return = "301 /nextcloud/remote.php/dav";
+        "= /.well-known/webfinger".return = "301 /nextcloud/index.php/.well-known/webfinger";
+        "= /.well-known/nodeinfo".return = "301 /nextcloud/index.php/.well-known/nodeinfo";
+
+        # FreshRSS — served by its own nginx vhost bound to 127.0.0.1:8083
+        # (see freshrss.nix). Trailing slash on proxyPass strips the
+        # /freshrss/ prefix before forwarding, since the freshrss vhost
+        # itself serves at root.
+        # proxy_cookie_path rewrites the Set-Cookie path from FreshRSS's
+        # runtime-derived /i/ (SCRIPT_NAME=/i/index.php after prefix strip)
+        # to /freshrss/i/ so the browser actually sends the session cookie
+        # back on subsequent requests. Without this, login fails with
+        # "cookies required for PHP sessions."
+        "/freshrss/" = {
+          proxyPass = "http://127.0.0.1:8083/";
+          extraConfig = ''
+            proxy_cookie_path / /freshrss/;
+          '';
+        };
       };
     };
   };

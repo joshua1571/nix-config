@@ -21,6 +21,7 @@
       homepage-navidrome-salt = serverOwned ../../secrets/homepage-navidrome-salt.age;
       homepage-navidrome-token = serverOwned ../../secrets/homepage-navidrome-token.age;
       homepage-homeassistant-key = serverOwned ../../secrets/homepage-homeassistant-key.age;
+      homepage-freshrss-password = serverOwned ../../secrets/homepage-freshrss-password.age;
     };
 
   # Generate a runtime env file for homepage containing widget credentials.
@@ -38,7 +39,6 @@
       domain=$(cat ${config.age.secrets.tailscale-domain.path})
       {
         echo "HOMEPAGE_VAR_TAILSCALE_DOMAIN=$domain"
-        echo "HOMEPAGE_ALLOWED_HOSTS=localhost:8082,10.0.0.125:8082,10.0.0.126:8082,10.0.0.100:8082,desktop.$domain:8082,htpc.$domain:8082,iphone.$domain:8082,laptop.$domain:8082,server.$domain:8082"
         echo "HOMEPAGE_VAR_JELLYFIN_KEY=$(cat ${config.age.secrets.homepage-jellyfin-key.path})"
         echo "HOMEPAGE_VAR_JELLYSEERR_KEY=$(cat ${config.age.secrets.homepage-jellyseerr-key.path})"
         echo "HOMEPAGE_VAR_IMMICH_KEY=$(cat ${config.age.secrets.homepage-immich-key.path})"
@@ -51,6 +51,8 @@
         echo "HOMEPAGE_VAR_NAVIDROME_SALT=$(cat ${config.age.secrets.homepage-navidrome-salt.path})"
         echo "HOMEPAGE_VAR_NAVIDROME_TOKEN=$(cat ${config.age.secrets.homepage-navidrome-token.path})"
         echo "HOMEPAGE_VAR_HOMEASSISTANT_KEY=$(cat ${config.age.secrets.homepage-homeassistant-key.path})"
+        echo "HOMEPAGE_VAR_FRESHRSS_USER=${config.services.freshrss.defaultUser}"
+        echo "HOMEPAGE_VAR_FRESHRSS_PASSWORD=$(cat ${config.age.secrets.homepage-freshrss-password.path})"
       } > /run/homepage-env
       chmod 400 /run/homepage-env
     '';
@@ -59,6 +61,11 @@
   services.homepage-dashboard = {
     enable = true;
     environmentFile = "/run/homepage-env";
+    # Wildcard: access control is enforced by Tailscale (interface-bound
+    # firewall) and nginx (443 on tailscale0 only). The Host header from
+    # nginx varies with the tailscale domain, which is a runtime agenix
+    # secret — a specific list can't be baked in at build time.
+    allowedHosts = "*";
     settings = {
       title = "JRH Home Lab";
       description = "My Home Lab";
@@ -345,6 +352,23 @@
               };
             };
           }
+          {
+            "FreshRSS" = {
+              description = "RSS Reader";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/freshrss/";
+              siteMonitor = "http://127.0.0.1:8083";
+              widget = {
+                type = "freshrss";
+                # baseUrl in freshrss.nix is /freshrss, so the widget URL
+                # must include it too.
+                url = "http://127.0.0.1:8083";
+                username = "{{HOMEPAGE_VAR_FRESHRSS_USER}}";
+                # Not the login password — the API password set per-user in
+                # FreshRSS → Profile → API management (Fever/GReader).
+                password = "{{HOMEPAGE_VAR_FRESHRSS_PASSWORD}}";
+              };
+            };
+          }
         ];
       }
       {
@@ -420,8 +444,7 @@
           {
             "Nextcloud" = {
               description = "Files, calendar, contacts";
-              # Not behind nginx (:443 catch-all owns /), so plain HTTP on :80.
-              href = "http://server/";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/nextcloud/";
               siteMonitor = "http://127.0.0.1";
               widget = {
                 type = "nextcloud";
