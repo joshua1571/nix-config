@@ -41,7 +41,7 @@ Feature flags passed via `specialArgs`:
 
 ### Host specifications
 
-Each host has a `hosts/<name>/SPEC.md` describing its intended hardware, services, networking, secrets, and known gaps. `hosts/README.md` is the index. Treat each `SPEC.md` as the source of truth for *what* a host should do; treat the nix modules as the implementation. When asked to work on a host, read its `SPEC.md` first and reconcile drift before adding new features.
+The repo-root `README.md` has a section per host describing its intended hardware, services, networking, secrets, and known gaps. Treat that section as the source of truth for *what* a host should do; treat the nix modules as the implementation. When asked to work on a host, read its section in `README.md` first and reconcile drift before adding new features.
 
 ### Secrets (agenix)
 
@@ -79,10 +79,8 @@ Do **not** add ZFS datasets to `hardware-configuration.nix` — they are managed
 
 ### Nixvim
 
-Neovim is configured via nixvim across several files:
-- `nixvim.nix` — top-level: options, colorscheme, plugins
-- `nixvim_keymaps.nix` — all keybindings (leader = `<Space>`)
-- `nixvim_completions.nix` — completion sources
-- `nixvim_plugins/` — one file per plugin
+See `docs/nixvim_documentation.md` for file layout and keymap conventions.
 
-All `:command` style keymap actions require `<CR>`. Raw key sequences (e.g. `<C-w>h`) and plugin action names (fzf-lua) do not.
+### TODOs
+
+All outstanding work lives in `docs/TODO.md` — a single, central list. Do not scatter `TODO` comments in `.nix`/`.md` files; if something new comes up, add it to `docs/TODO.md` (or extend an existing entry) and keep the code clean.

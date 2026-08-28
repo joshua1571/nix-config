@@ -8,12 +8,9 @@
     #./nixvim_plugins/lualine.nix
     ./nixvim_plugins/treesitter.nix
     ./nixvim_plugins/neo-tree.nix
-    # TODO: Fix hints for this plugin ./nixvim_plugins/hardtime.nix
     ./nixvim_keymaps.nix
     ./nixvim_completions.nix
     ./nixvim_plugins/fzf-lua.nix
-    # Ideas from: https://github.com/Ahwxorg/nixvim-config/blob/master/config/plugins.nix
-    # TODO: debugger https://github.com/mfussenegger/nvim-dap
   ];
 
   programs.nixvim = {

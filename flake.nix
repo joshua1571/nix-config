@@ -44,38 +44,6 @@
     #  inputs.darwin.follows = "";
     #};
 
-    # TODO Low Priority: Set up colmena
-    # Remote deployments
-    #colmena = {
-    #  url = "github:zhaofengli/colmena";
-    #};
-
-    # TODO Low Priority: Add disks from server using disko
-    ## Configure disks declaratively in nix config
-    #disko = {
-    #  url = "github:nix-community/disko";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    #};
-
-    # TODO Low Priority: Add raspberry pi to flake
-    ## Used for raspberry pi
-    #nixos-hardware = {
-    #  url = "github:NixOS/nixos-hardware";
-    #};
-
-    # TODO Low Priority: Modularize flake using flake-parts
-    #flake-parts = {
-    #  url = "github:hercules-ci/flake-parts";
-    #  inputs.nixpkgs-lib.follows = "nixpkgs";
-    #};
-
-    # TODO Low Priority: Replace regular nixpkgs plasma with plasma manager
-    # Try wayland based tiling window manager first
-    #plasma-manager = {
-    #  url = "github:nix-community/plasma-manager";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    #  inputs.home-manager.follows = "home-manager";
-    #};
   };
 
   outputs =

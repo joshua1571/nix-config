@@ -356,7 +356,10 @@
             "FreshRSS" = {
               description = "RSS Reader";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/freshrss/";
-              siteMonitor = "http://127.0.0.1:8083";
+              # / redirects to /freshrss/i/ (derived from baseUrl), a path that
+              # only exists behind the nginx prefix-stripping proxy — hitting
+              # 8083 directly 404s. /i/ is the real app root on this port.
+              siteMonitor = "http://127.0.0.1:8083/i/";
               widget = {
                 type = "freshrss";
                 # baseUrl in freshrss.nix is /freshrss, so the widget URL
@@ -445,7 +448,11 @@
             "Nextcloud" = {
               description = "Files, calendar, contacts";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/nextcloud/";
-              siteMonitor = "http://127.0.0.1";
+              # overwritecondaddr in nextcloud.nix matches homepage's own
+              # loopback connection, so / redirects to an https URL — which
+              # homepage's http-only redirect follower rejects. status.php
+              # answers 200 directly with no redirect.
+              siteMonitor = "http://127.0.0.1/status.php";
               widget = {
                 type = "nextcloud";
                 url = "http://127.0.0.1";

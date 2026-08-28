@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   username,
   ...
 }:
@@ -13,6 +14,10 @@
   services = {
     freshrss = {
       enable = true;
+
+      extensions = with pkgs.freshrss-extensions; [
+        youtube
+      ];
 
       # baseUrl mostly affects absolute URLs in OPML export / emails.
       # Nav uses request-derived URLs, so a static placeholder is fine here.
