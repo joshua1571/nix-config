@@ -1,5 +1,4 @@
-_:
-{
+_: {
   #home.packages = [ pkgs.ghostty ];
 
   programs = {
