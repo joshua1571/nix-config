@@ -72,16 +72,44 @@
       bookmarksStyle = "icons";
       headerStyle = "clean";
       hideVersion = true;
-      layout = {
-        Bookmarks = {
-          style = "column";
-          header = true;
-        };
-        Media.style = "column";
-        Downloads.style = "column";
-        "Files/Cloud".style = "column";
-        Administration.style = "column";
-      };
+      useEqualHeights = true;
+      iconStyle = "theme";
+      layout = [
+        {
+          Bookmarks = {
+            tab = "Main";
+            style = "row";
+            header = false;
+            columns = 22;
+            iconsOnly = true;
+          };
+        }
+        {
+          Main = {
+            tab = "Main";
+            style = "row";
+            header = false;
+            columns = 4;
+          };
+        }
+        {
+          Downloads = {
+            tab = "Downloads";
+            style = "row";
+            header = false;
+            columns = 4;
+          };
+        }
+        {
+          Administration = {
+            tab = "Administration";
+            style = "row";
+            header = false;
+            columns = 5;
+            iconsOnly = true;
+          };
+        }
+      ];
     };
     listenPort = 8082;
     widgets = [
@@ -123,7 +151,8 @@
             month = "long";
             day = "numeric";
             year = "numeric";
-            timeStyle = "short";
+            hour = "numeric";
+            minute = "numeric";
             hourCycle = "h12";
           };
         };
@@ -142,6 +171,33 @@
       {
         Bookmarks = [
           {
+            Claude = [
+              {
+                icon = "sh-claude";
+                abbr = "CL";
+                href = "https://claude.ai/";
+              }
+            ];
+          }
+          {
+            ChatGPT = [
+              {
+                icon = "sh-chatgpt";
+                abbr = "GP";
+                href = "https://chat.openai.com/";
+              }
+            ];
+          }
+          {
+            Gemini = [
+              {
+                icon = "sh-google-gemini";
+                abbr = "GE";
+                href = "https://gemini.google.com/";
+              }
+            ];
+          }
+          {
             Fastmail = [
               {
                 icon = "sh-fastmail";
@@ -151,11 +207,56 @@
             ];
           }
           {
-            Maps = [
+            Gmail = [
+              {
+                icon = "sh-gmail";
+                abbr = "GL";
+                href = "https://mail.google.com/";
+              }
+            ];
+          }
+          {
+            Hotmail = [
+              {
+                icon = "sh-microsoft-outlook";
+                abbr = "HO";
+                href = "https://outlook.live.com/mail/";
+              }
+            ];
+          }
+          {
+            Thundermail = [
+              {
+                icon = "sh-thundermail";
+                abbr = "TM";
+                href = "https://mail.thundermail.com/";
+              }
+            ];
+          }
+          {
+            TickTick = [
+              {
+                icon = "sh-ticktick";
+                abbr = "TT";
+                href = "https://ticktick.com/webapp/";
+              }
+            ];
+          }
+          {
+            Google_Maps = [
               {
                 icon = "sh-google-maps";
                 abbr = "GM";
                 href = "https://www.google.com/maps";
+              }
+            ];
+          }
+          {
+            Apple_Maps = [
+              {
+                icon = "sh-apple-maps";
+                abbr = "AM";
+                href = "https://beta.maps.apple.com/";
               }
             ];
           }
@@ -192,24 +293,6 @@
                 icon = "sh-github";
                 abbr = "GH";
                 href = "https://github.com/";
-              }
-            ];
-          }
-          {
-            Vultr = [
-              {
-                icon = "sh-vultr";
-                abbr = "VU";
-                href = "https://my.vultr.com/";
-              }
-            ];
-          }
-          {
-            Tailscale = [
-              {
-                icon = "sh-tailscale";
-                abbr = "TS";
-                href = "https://login.tailscale.com/admin/machines";
               }
             ];
           }
@@ -286,13 +369,63 @@
           }
         ];
       }
+      {
+        Administration = [
+          {
+            Router = [
+              {
+                icon = "mdi-router-wireless";
+                abbr = "RT";
+                href = "http://10.0.0.1:8080/cgi-bin/luci/admin/status/overview";
+              }
+            ];
+          }
+          {
+            Switch = [
+              {
+                icon = "mdi-lan";
+                abbr = "SW";
+                href = "http://10.0.0.2";
+              }
+            ];
+          }
+          {
+            KVM = [
+              {
+                icon = "mdi-monitor-dashboard";
+                abbr = "KV";
+                href = "http://10.0.0.209";
+              }
+            ];
+          }
+          {
+            Vultr = [
+              {
+                icon = "sh-vultr";
+                abbr = "VU";
+                href = "https://my.vultr.com/";
+              }
+            ];
+          }
+          {
+            Tailscale = [
+              {
+                icon = "sh-tailscale";
+                abbr = "TS";
+                href = "https://login.tailscale.com/admin/machines";
+              }
+            ];
+          }
+        ];
+      }
     ];
 
     services = [
       {
-        "Media" = [
+        "Main" = [
           {
             "Jellyfin" = {
+              icon = "sh-jellyfin";
               description = "Movies and TV Shows";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/jellyfin/";
               siteMonitor = "http://127.0.0.1:8096";
@@ -307,6 +440,7 @@
           }
           {
             "Navidrome" = {
+              icon = "sh-navidrome";
               description = "Music";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/navidrome/";
               siteMonitor = "http://127.0.0.1:4533";
@@ -323,6 +457,7 @@
           }
           {
             "Immich" = {
+              icon = "sh-immich";
               description = "Photos";
               href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:2283/photos";
               siteMonitor = "http://127.0.0.1:2283";
@@ -336,6 +471,7 @@
           }
           {
             "Jellyseerr" = {
+              icon = "sh-jellyseerr";
               description = "Requests";
               href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:5055";
               siteMonitor = "http://127.0.0.1:5055";
@@ -348,6 +484,7 @@
           }
           {
             "FreshRSS" = {
+              icon = "sh-freshrss";
               description = "RSS Reader";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/freshrss/";
               # / redirects to /freshrss/i/ (derived from baseUrl), a path that
@@ -366,86 +503,9 @@
               };
             };
           }
-        ];
-      }
-      {
-        "Downloads" = [
-          {
-            "Radarr" = {
-              description = "Movies";
-              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/radarr/";
-              siteMonitor = "http://127.0.0.1:7878";
-              widget = {
-                type = "radarr";
-                url = "http://127.0.0.1:7878";
-                key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
-                enableQueue = true;
-              };
-            };
-          }
-          {
-            "Sonarr" = {
-              description = "TV Shows";
-              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/sonarr/";
-              siteMonitor = "http://127.0.0.1:8989";
-              widget = {
-                type = "sonarr";
-                url = "http://127.0.0.1:8989";
-                key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
-                enableQueue = true;
-              };
-            };
-          }
-          {
-            "Lidarr" = {
-              description = "Music";
-              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/lidarr/";
-              siteMonitor = "http://127.0.0.1:8686";
-              widget = {
-                type = "lidarr";
-                url = "http://127.0.0.1:8686";
-                key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
-              };
-            };
-          }
-          {
-            "Prowlarr" = {
-              description = "Indexers";
-              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/prowlarr/";
-              siteMonitor = "http://127.0.0.1:9696";
-              widget = {
-                type = "prowlarr";
-                url = "http://127.0.0.1:9696";
-                key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
-              };
-            };
-          }
-          {
-            "qBittorrent" = {
-              description = "Downloads";
-              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/qbittorrent/";
-              siteMonitor = "http://127.0.0.1:8080";
-              widget = {
-                type = "qbittorrent";
-                url = "http://127.0.0.1:8080";
-                # Auth bypassed for loopback in qbittorrent.nix (LocalHostAuth=false).
-                username = "";
-                password = "";
-                fields = [
-                  "download"
-                  "upload"
-                  "leech"
-                  "seed"
-                ];
-              };
-            };
-          }
-        ];
-      }
-      {
-        "Files/Cloud" = [
           {
             "Nextcloud" = {
+              icon = "sh-nextcloud";
               description = "Files, calendar, contacts";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/nextcloud/";
               # overwritecondaddr in nextcloud.nix matches homepage's own
@@ -463,6 +523,7 @@
           }
           {
             "Home Assistant" = {
+              icon = "sh-home-assistant";
               description = "Home Automation";
               href = "http://10.0.0.155:8123/home/overview";
               siteMonitor = "http://10.0.0.155:8123";
@@ -476,25 +537,80 @@
         ];
       }
       {
-        # Admin devices redirect http → https and often use self-signed certs,
-        # which homepage's siteMonitor can't follow, so no reachability pill.
-        "Administration" = [
+        "Downloads" = [
           {
-            "Router" = {
-              description = "Router Web UI (LuCI)";
-              href = "http://10.0.0.1:8080/cgi-bin/luci/admin/status/overview";
+            "Radarr" = {
+              icon = "sh-radarr";
+              description = "Movies";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/radarr/";
+              siteMonitor = "http://127.0.0.1:7878";
+              widget = {
+                type = "radarr";
+                url = "http://127.0.0.1:7878";
+                key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
+                enableQueue = true;
+              };
             };
           }
           {
-            "Switch" = {
-              description = "Switch Web UI";
-              href = "http://10.0.0.2";
+            "Sonarr" = {
+              icon = "sh-sonarr";
+              description = "TV Shows";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/sonarr/";
+              siteMonitor = "http://127.0.0.1:8989";
+              widget = {
+                type = "sonarr";
+                url = "http://127.0.0.1:8989";
+                key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
+                enableQueue = true;
+              };
             };
           }
           {
-            "KVM (Local)" = {
-              description = "KVM Web UI";
-              href = "http://10.0.0.209";
+            "Lidarr" = {
+              icon = "sh-lidarr";
+              description = "Music";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/lidarr/";
+              siteMonitor = "http://127.0.0.1:8686";
+              widget = {
+                type = "lidarr";
+                url = "http://127.0.0.1:8686";
+                key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
+              };
+            };
+          }
+          {
+            "Prowlarr" = {
+              icon = "sh-prowlarr";
+              description = "Indexers";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/prowlarr/";
+              siteMonitor = "http://127.0.0.1:9696";
+              widget = {
+                type = "prowlarr";
+                url = "http://127.0.0.1:9696";
+                key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
+              };
+            };
+          }
+          {
+            "qBittorrent" = {
+              icon = "sh-qbittorrent";
+              description = "Downloads";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/qbittorrent/";
+              siteMonitor = "http://127.0.0.1:8080";
+              widget = {
+                type = "qbittorrent";
+                url = "http://127.0.0.1:8080";
+                # Auth bypassed for loopback in qbittorrent.nix (LocalHostAuth=false).
+                username = "";
+                password = "";
+                fields = [
+                  "download"
+                  "upload"
+                  "leech"
+                  "seed"
+                ];
+              };
             };
           }
         ];

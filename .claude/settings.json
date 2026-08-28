@@ -6,7 +6,8 @@
       "Bash(wg show *)",
       "Bash(ip rule show)",
       "Bash(ip route show *)",
-      "Bash(just lint)"
+      "Bash(just lint)",
+      "Bash(nix-instantiate --parse modules/nixos/homepage-dashboard.nix)"
     ]
   }
 }
