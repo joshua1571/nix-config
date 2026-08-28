@@ -1,9 +1,10 @@
-{ pkgs, ... }:
+_:
 {
-  home.packages = [ pkgs.ghostty ];
+  #home.packages = [ pkgs.ghostty ];
+
   programs = {
     wezterm = {
-      enable = false;
+      enable = true;
       extraConfig = ''
         -- This will hold the configuration.
         local config = wezterm.config_builder()
@@ -33,7 +34,7 @@
     };
 
     foot = {
-      enable = false;
+      enable = true;
       settings = {
         main = {
           font = "SauceCodePro Nerd Font:size=10";
