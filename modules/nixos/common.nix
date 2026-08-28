@@ -29,7 +29,10 @@
 
   security.sudo.extraRules = [
     {
-      users = [ "jrhassistant" ];
+      users = [
+        "jrh"
+        "jrhassistant"
+      ];
       commands = [
         {
           command = "/run/current-system/sw/bin/nix*";

@@ -20,6 +20,38 @@ dry:
 build:
   sudo nixos-rebuild switch --flake '.#'
 
+# Deploy a remote host over SSH via tailscale (builds on the target). Usage: just deploy server
+[group ('build')]
+deploy HOST:
+  nixos-rebuild switch --flake '.#{{HOST}}' \
+    --target-host jrh@{{HOST}} \
+    --build-host jrh@{{HOST}} \
+    --use-remote-sudo
+
+# Deploy a remote host with an interactive sudo password prompt (bootstrap or fallback when the passwordless sudo rule isn't active). Usage: just deploy-ask server
+[group ('build')]
+deploy-ask HOST:
+  nixos-rebuild switch --flake '.#{{HOST}}' \
+    --target-host jrh@{{HOST}} \
+    --build-host jrh@{{HOST}} \
+    --use-remote-sudo \
+    --ask-sudo-password
+
+# Dry-run a remote deploy (build + activation script only, no switch). Usage: just deploy-dry server
+[group ('build')]
+deploy-dry HOST:
+  nixos-rebuild dry-activate --flake '.#{{HOST}}' \
+    --target-host jrh@{{HOST}} \
+    --build-host jrh@{{HOST}} \
+    --use-remote-sudo
+
+# Deploy to all remote hosts sequentially
+[group ('build')]
+deploy-all:
+  just deploy laptop
+  just deploy desktop
+  just deploy server
+
 # Attempt to build flake for all configurations
 [group('checks')]
 check:

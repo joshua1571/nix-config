@@ -70,14 +70,43 @@
       title = "JRH Home Lab";
       description = "My Home Lab";
       bookmarksStyle = "icons";
+      headerStyle = "clean";
+      hideVersion = true;
+      layout = {
+        Bookmarks = {
+          style = "column";
+          header = true;
+        };
+        Media.style = "column";
+        Downloads.style = "column";
+        "Files/Cloud".style = "column";
+        Administration.style = "column";
+      };
     };
     listenPort = 8082;
     widgets = [
       {
         resources = {
           cpu = true;
-          disk = "/";
           memory = true;
+        };
+      }
+      {
+        resources = {
+          label = "root";
+          disk = "/";
+        };
+      }
+      {
+        resources = {
+          label = "tank";
+          disk = "/tank";
+        };
+      }
+      {
+        resources = {
+          label = "fasttank";
+          disk = "/fasttank";
         };
       }
       {
@@ -90,8 +119,11 @@
         datetime = {
           text_size = "xl";
           format = {
+            weekday = "long";
+            month = "long";
+            day = "numeric";
+            year = "numeric";
             timeStyle = "short";
-            dateStyle = "long";
             hourCycle = "h12";
           };
         };
@@ -108,7 +140,7 @@
     ];
     bookmarks = [
       {
-        Main = [
+        Bookmarks = [
           {
             Fastmail = [
               {
@@ -137,11 +169,11 @@
             ];
           }
           {
-            Feedly = [
+            WhatsApp = [
               {
-                icon = "sh-feedly";
-                abbr = "FY";
-                href = "https://feedly.com/i/collection/content/user/436e25c7-bb60-4a7b-a350-b248ef3c9957/category/global.all";
+                icon = "sh-whatsapp";
+                abbr = "WA";
+                href = "https://web.whatsapp.com/";
               }
             ];
           }
@@ -154,11 +186,6 @@
               }
             ];
           }
-        ];
-      }
-
-      {
-        Development = [
           {
             Github = [
               {
@@ -169,11 +196,11 @@
             ];
           }
           {
-            Linode = [
+            Vultr = [
               {
-                icon = "si-akamai";
-                abbr = "LN";
-                href = "https://cloud.linode.com/linodes";
+                icon = "sh-vultr";
+                abbr = "VU";
+                href = "https://my.vultr.com/";
               }
             ];
           }
@@ -186,29 +213,6 @@
               }
             ];
           }
-          {
-            HuggingFace = [
-              {
-                icon = "si-huggingface";
-                abbr = "HF";
-                href = "https://huggingface.co/";
-              }
-            ];
-          }
-          {
-            Kaggle = [
-              {
-                icon = "si-kaggle";
-                abbr = "KG";
-                href = "https://www.kaggle.com/";
-              }
-            ];
-          }
-        ];
-      }
-
-      {
-        Video = [
           {
             YouTube = [
               {
@@ -280,17 +284,7 @@
               }
             ];
           }
-          {
-            TV_Pass = [
-              {
-                icon = "mdi-television-box";
-                abbr = "TV";
-                href = "https://tvpass.org/";
-              }
-            ];
-          }
         ];
-
       }
     ];
 
@@ -437,6 +431,12 @@
                 # Auth bypassed for loopback in qbittorrent.nix (LocalHostAuth=false).
                 username = "";
                 password = "";
+                fields = [
+                  "download"
+                  "upload"
+                  "leech"
+                  "seed"
+                ];
               };
             };
           }
@@ -481,13 +481,7 @@
         "Administration" = [
           {
             "Router" = {
-              description = "Router Web UI";
-              href = "http://10.0.0.1/#/internet";
-            };
-          }
-          {
-            "Router(LuCI)" = {
-              description = "Router Web UI";
+              description = "Router Web UI (LuCI)";
               href = "http://10.0.0.1:8080/cgi-bin/luci/admin/status/overview";
             };
           }
