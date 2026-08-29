@@ -7,6 +7,27 @@
     # Without this, / returns 400 and the browser shows "file does not
     # exist or is not accessible" for every panel.
     package = pkgs.netdata.override { withCloudUi = true; };
+
+    config = {
+      # Cap on-disk retention to 7 days at high resolution. Default keeps
+      # ~14 days across multiple tiers, which is more than needed here and
+      # eats disk on a low-power server.
+      db = {
+        "mode" = "dbengine";
+        "storage tiers" = "1";
+        "dbengine tier 0 retention time" = "7d";
+      };
+
+      # Silence noisy plugins that either need hardware/services this host
+      # doesn't have (freeipmi) or ship dead auto-probes (charts.d, python.d
+      # try dozens of collectors and log a failure for each). Go collectors
+      # cover everything we actually monitor.
+      plugins = {
+        "freeipmi" = "no";
+        "charts.d" = "no";
+        "python.d" = "no";
+      };
+    };
   };
 
   # Route health alarms to the local ntfy server so they land on the phone.

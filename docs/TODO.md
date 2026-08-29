@@ -30,6 +30,7 @@ done, delete the entry — don't leave breadcrumbs in the code.
 - Decide whether `home-assistant` and `syncthing` (modules exist, unimported) should run here.
 - Document actual Tailscale hostname/domain values outside agenix for human reference.
 - Add backup strategy: who pulls from `tank/backups/*`, retention policy.
+- Add ntfy access token auth: currently anyone on the tailnet who guesses a topic name can publish/subscribe. Encrypt a token via agenix, set `services.ntfy-sh.settings.auth-file` + `auth-default-access = "deny-all"`, and update the netdata/gatus/notify-failure/zfs-health-check publishers to send it in an Authorization header.
 
 ### htpc
 

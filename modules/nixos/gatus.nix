@@ -30,6 +30,13 @@ in
         port = 8084;
       };
 
+      # Persist uptime history across restarts. Without this gatus uses
+      # in-memory storage and loses all history on rebuild.
+      storage = {
+        type = "sqlite";
+        path = "/var/lib/gatus/data.db";
+      };
+
       # Route alerts to the local ntfy server. Phone subscribes to
       # `server-uptime` to receive them.
       alerting.ntfy = {
