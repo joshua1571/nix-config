@@ -1,6 +1,13 @@
 { pkgs, ... }:
 {
-  services.netdata.enable = true;
+  services.netdata = {
+    enable = true;
+    # The nixpkgs netdata package omits the dashboard bundle by default
+    # (opt-in due to the non-commercial ncul1 license on the Cloud UI).
+    # Without this, / returns 400 and the browser shows "file does not
+    # exist or is not accessible" for every panel.
+    package = pkgs.netdata.override { withCloudUi = true; };
+  };
 
   # Route health alarms to the local ntfy server so they land on the phone.
   # This file must live at /etc/netdata/health_alarm_notify.conf directly —
