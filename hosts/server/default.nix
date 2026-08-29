@@ -35,6 +35,9 @@
     ../../modules/nixos/nextcloud.nix
     ../../modules/nixos/freshrss.nix
 
+    # Monitoring
+    ../../modules/nixos/ntfy.nix
+
     # Storage layout
     ./storage.nix
 
