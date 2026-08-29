@@ -32,4 +32,7 @@ in
   "secrets/homepage-navidrome-token.age".publicKeys = serverOnly;
   "secrets/homepage-homeassistant-key.age".publicKeys = serverOnly;
   "secrets/homepage-freshrss-password.age".publicKeys = serverOnly;
+
+  # Grafana admin password (read by grafana at startup via $__file{...}).
+  "secrets/grafana-admin-password.age".publicKeys = serverOnly;
 }

@@ -43,6 +43,7 @@
     ../../modules/nixos/zfs-health-check.nix
     ../../modules/nixos/prometheus.nix
     ../../modules/nixos/alertmanager.nix
+    ../../modules/nixos/grafana.nix
 
     # Storage layout
     ./storage.nix
