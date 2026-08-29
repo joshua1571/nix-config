@@ -37,6 +37,7 @@
 
     # Monitoring
     ../../modules/nixos/ntfy.nix
+    ../../modules/nixos/netdata.nix
 
     # Storage layout
     ./storage.nix
