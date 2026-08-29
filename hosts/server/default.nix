@@ -37,7 +37,6 @@
 
     # Monitoring
     ../../modules/nixos/ntfy.nix
-    ../../modules/nixos/netdata.nix
     ../../modules/nixos/gatus.nix
     ../../modules/nixos/notify-failure.nix
     ../../modules/nixos/zfs-health-check.nix
