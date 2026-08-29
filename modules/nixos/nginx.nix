@@ -63,6 +63,10 @@ in
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
     recommendedTlsSettings = true;
+    # Expose stub_status on 127.0.0.1/nginx_status for the prometheus
+    # nginx exporter. The upstream module adds a dedicated localhost
+    # vhost restricted to loopback; safe alongside the other :80 vhosts.
+    statusPage = true;
 
     # server_name _ is a catch-all — no hostname needed at build time.
     # Access control is handled at the network level by Tailscale.
