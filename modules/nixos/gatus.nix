@@ -76,7 +76,9 @@ in
         # Infrastructure
         (http "homepage" "infra" "http://127.0.0.1:8082")
         (http "ntfy" "infra" "http://127.0.0.1:8085/v1/health")
-        (http "netdata" "infra" "http://127.0.0.1:19999/api/v1/info")
+        (http "prometheus" "infra" "http://127.0.0.1:9090/-/healthy")
+        (http "alertmanager" "infra" "http://127.0.0.1:9093/-/healthy")
+        (http "grafana" "infra" "http://127.0.0.1:3000/api/health")
         (http "gatus-self" "infra" "http://127.0.0.1:8084/health")
       ];
     };

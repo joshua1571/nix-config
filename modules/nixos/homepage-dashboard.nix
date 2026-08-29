@@ -634,11 +634,19 @@
             };
           }
           {
-            "Netdata" = {
-              icon = "sh-netdata";
-              description = "Host metrics";
-              href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:19999";
-              siteMonitor = "http://127.0.0.1:19999/api/v1/info";
+            "Grafana" = {
+              icon = "sh-grafana";
+              description = "Dashboards";
+              href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:3000";
+              siteMonitor = "http://127.0.0.1:3000/api/health";
+            };
+          }
+          {
+            "Prometheus" = {
+              icon = "sh-prometheus";
+              description = "Metrics & rules";
+              href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:9090";
+              siteMonitor = "http://127.0.0.1:9090/-/healthy";
             };
           }
           {
