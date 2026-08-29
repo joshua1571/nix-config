@@ -39,12 +39,21 @@
     # Bind the freshrss-generated vhost to loopback so it isn't exposed on
     # the LAN. The nginx catch-all in nginx.nix reverse-proxies /freshrss/
     # to this port over the tailscale interface.
-    nginx.virtualHosts.freshrss.listen = [
-      {
-        addr = "127.0.0.1";
-        port = 8083;
-      }
-    ];
+    nginx.virtualHosts.freshrss = {
+      listen = [
+        {
+          addr = "127.0.0.1";
+          port = 8083;
+        }
+      ];
+      # Pass the Remote-User header (set by Authelia and forwarded through
+      # the catch-all's autheliaSnippet) to PHP-FPM as REMOTE_USER. That's
+      # what FreshRSS's HTTP-auth mode consumes for SSO. Set at server
+      # scope so the PHP location's fastcgi_pass picks it up automatically.
+      extraConfig = ''
+        fastcgi_param REMOTE_USER $http_remote_user;
+      '';
+    };
 
     postgresql = {
       enable = true;

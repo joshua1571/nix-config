@@ -17,7 +17,11 @@ _: {
     alertmanager = {
       enable = true;
       port = 9093;
-      listenAddress = "0.0.0.0";
+      # Loopback-only; reached via nginx at /alertmanager/ behind Authelia.
+      listenAddress = "127.0.0.1";
+      # Serve UI + endpoints under /alertmanager. See prometheus.nix
+      # `alertmanagers.path_prefix` which mirrors this.
+      extraFlags = [ "--web.route-prefix=/alertmanager" ];
       configuration = {
         route = {
           receiver = "ntfy";
@@ -41,10 +45,13 @@ _: {
     };
 
     # Wire prometheus to send firing alerts to the local alertmanager.
+    # path_prefix matches alertmanager's --web.route-prefix so the POST
+    # lands on /alertmanager/api/v2/alerts, not /api/v2/alerts.
     alertmanagers = [
-      { static_configs = [ { targets = [ "127.0.0.1:9093" ]; } ]; }
+      {
+        static_configs = [ { targets = [ "127.0.0.1:9093" ]; } ];
+        path_prefix = "/alertmanager";
+      }
     ];
   };
-
-  networking.firewall.allowedTCPPorts = [ 9093 ];
 }

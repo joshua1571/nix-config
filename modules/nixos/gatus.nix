@@ -70,15 +70,19 @@ in
         # freshrss serves the app at /i/ on port 8083; root 302s to a path
         # that only resolves behind the nginx prefix-stripping proxy.
         (http "freshrss" "personal" "http://127.0.0.1:8083/i/")
-        # nextcloud vhost lives on :80; status.php answers 200 with no redirect.
-        (http "nextcloud" "personal" "http://127.0.0.1/status.php")
+        # nextcloud vhost lives on :80 with server_name = "server"
+        # (services.nextcloud.hostName). Use the "server" hostname (resolved
+        # locally via /etc/hosts) so the Host header matches — hitting
+        # http://127.0.0.1/... instead would land on the localhost vhost
+        # (server_name includes 127.0.0.1) which only serves /nginx_status.
+        (http "nextcloud" "personal" "http://server/status.php")
 
         # Infrastructure
         (http "homepage" "infra" "http://127.0.0.1:8082")
         (http "ntfy" "infra" "http://127.0.0.1:8085/v1/health")
-        (http "prometheus" "infra" "http://127.0.0.1:9090/-/healthy")
-        (http "alertmanager" "infra" "http://127.0.0.1:9093/-/healthy")
-        (http "grafana" "infra" "http://127.0.0.1:3000/api/health")
+        (http "prometheus" "infra" "http://127.0.0.1:9090/prometheus/-/healthy")
+        (http "alertmanager" "infra" "http://127.0.0.1:9093/alertmanager/-/healthy")
+        (http "grafana" "infra" "http://127.0.0.1:3000/grafana/api/health")
         (http "gatus-self" "infra" "http://127.0.0.1:8084/health")
       ];
     };

@@ -61,6 +61,7 @@ See [`docs/nixvim_documentation.md`](./docs/nixvim_documentation.md).
 
 - [`docs/TODO.md`](./docs/TODO.md) — single source of truth for outstanding work across the flake, hosts, and modules.
 - [`docs/nixvim_documentation.md`](./docs/nixvim_documentation.md) — nixvim layout and keymap conventions.
+- [`docs/freshrss_recovery.md`](./docs/freshrss_recovery.md) — how to unstick FreshRSS if the SSO HTTP-auth path locks you out.
 - [`docs/troubleshooting/`](./docs/troubleshooting) — dated incident writeups.
 
 ## Hosts
@@ -152,22 +153,34 @@ Uses **stable** nixpkgs (`nixos-25.11`).
 
 | Category | Service | Port / notes |
 |---|---|---|
-| Media | Jellyfin | `:8096`, LAN via `openFirewall` |
-| Media | Navidrome | default, LAN |
-| Media | Immich | `:2283`, LAN |
-| Files | Nextcloud | `:80`, LAN. PostgreSQL + Redis, datadir `tank/personal/nextcloud`. Admin pw in `nextcloud-adminpass.age`. Core apps (contacts/calendar/tasks/notes/deck/mail/news) pinned declaratively; app store open for extras. |
-| RSS | FreshRSS | Own nginx vhost on `127.0.0.1:8083`, reverse-proxied by the tailscale nginx at `/freshrss/` (Tailscale-only). PostgreSQL via unix socket (peer auth). Password in `freshrss-password.age`. YouTube extension enabled. |
-| *arr | Radarr / Sonarr / Lidarr / Prowlarr / Jellyseerr / Flaresolverr | defaults, LAN |
-| Downloads | qBittorrent | `openFirewall = false`. Traffic kill-switched to `tailscale0` via nftables. Web UI `:8080`, **Tailscale-only**. |
-| Reverse proxy | nginx | HTTPS via Tailscale cert (`server_name _` catch-all), bound to `tailscale0:443` only. Hostname read at runtime from `tailscale-hostname.age`. LAN-only services keep original ports. |
-| Dashboard | Homepage Dashboard | `:8082`. Domain from `tailscale-domain.age`. FreshRSS widget uses `homepage-freshrss-password.age`. |
+| Media | Jellyfin | `:8096`, LAN. Base URL `/jellyfin`, OIDC via `sso-auth` plugin (installed via Jellyfin plugin catalog). |
+| Media | Navidrome | default, LAN. Reverse-proxied at `/navidrome/`. |
+| Media | Immich | `:2283` bound loopback; reached via dedicated nginx HTTPS listener on `:2443` (Immich doesn't support subpath serving). Native OIDC configured in Immich admin UI. |
+| Files | Nextcloud | `:80`, LAN. PostgreSQL + Redis, datadir `tank/personal/nextcloud`. Admin pw in `nextcloud-adminpass.age`. `user_oidc` app configured against Authelia; `allow_local_remote_servers=true` so PHP can reach the tailnet FQDN. |
+| RSS | FreshRSS | Own nginx vhost on `127.0.0.1:8083`, reverse-proxied at `/freshrss/`. PostgreSQL via unix socket. SSO via HTTP-auth mode: nginx forwards Authelia's `Remote-User` to PHP-FPM as `REMOTE_USER`. See [docs/freshrss_recovery.md](./docs/freshrss_recovery.md) if locked out. |
+| *arr | Radarr / Sonarr / Lidarr / Prowlarr / Jellyseerr / Flaresolverr | defaults, LAN. All *arr apps gated by Authelia forward-auth at nginx; each app's own auth set to "Disabled for Local Addresses". Jellyseerr keeps its own auth (no upstream subpath support — see `docs/TODO.md`). |
+| Downloads | qBittorrent | `openFirewall = false`. Traffic kill-switched to `tailscale0` via nftables. Web UI `:8080`, **Tailscale-only**, behind Authelia forward-auth. |
+| Reverse proxy | nginx | HTTPS via Tailscale cert (`server_name _` catch-all on `:443`, plus a dedicated `:2443` listener for Immich). `recommendedProxySettings = false`; per-location `proxyHeaders` / `autheliaSnippet` helpers in `nginx.nix` control `X-Forwarded-*` shaping (auth'd locations pin XFF to loopback so upstream "local address" auth-bypass works). |
+| SSO / identity | Authelia | Loopback, reached at `/authelia/`. SQLite storage, LDAP backend to LLDAP, OIDC issuer with per-client PHC-hashed secrets. Runtime cookie-domain config assembled from `tailscale-hostname.age`. |
+| SSO / identity | LLDAP | Loopback (`:3890` LDAP, `:17170` admin UI); admin reached via SSH port-forward for now. Base DN `dc=homelab,dc=local`. Two service accounts in `lldap_strict_readonly`: the admin bootstrap, and `authelia_bind` used by Authelia. |
+| Monitoring | Prometheus | Loopback `:9090`, `--web.route-prefix=/prometheus`. Node + ZFS + systemd + nginx + Postgres exporters, all loopback. Reverse-proxied at `/prometheus/` behind Authelia. |
+| Monitoring | Alertmanager | Loopback `:9093`, `--web.route-prefix=/alertmanager`. Routes to a local `alertmanager-ntfy` bridge, which publishes to ntfy `server-alerts`. Reverse-proxied at `/alertmanager/` behind Authelia. |
+| Monitoring | Grafana | Loopback `:3000`, `serve_from_sub_path` under `/grafana`. Prometheus datasource + Node Exporter Full dashboard provisioned. OIDC via Authelia (env-injected endpoints); role-mapped via LLDAP `admins` group. Admin pw in `grafana-admin-password.age`. |
+| Monitoring | Gatus | `:8084`. HTTP healthchecks against every service on loopback (bypasses nginx); alerts to ntfy `server-uptime`. |
+| Monitoring | ntfy | `:8085`. Push notifications for alertmanager + gatus + notify-failure + zfs-health-check. |
+| Dashboard | Homepage Dashboard | `:8082`, behind Authelia forward-auth at `/`. Tailnet domain from `tailscale-domain.age`. All widget backend calls hit `127.0.0.1` server-side so they bypass nginx and stay live behind SSO. |
 | Other | ZFS, SMB server, Mullvad WireGuard (qBittorrent VPN), SSH, GnuPG | |
 
 **Networking**
 - Tailscale node, hostname registered in agenix
-- LAN TCP: 22 (SSH), 80 (Nextcloud), 8096 (Jellyfin), Navidrome, 2283 (Immich),
-  arr defaults, 8082 (Homepage), SMB
-- Tailscale-only TCP: 443 (nginx, includes `/freshrss/`), 8080 (qBittorrent web UI)
+- LAN TCP: 22 (SSH), 80 (Nextcloud), 8096 (Jellyfin), Navidrome, arr defaults,
+  8082 (Homepage), 8084 (Gatus), 8085 (ntfy), 5055 (Jellyseerr), SMB
+- Tailscale-only TCP:
+  - 443 (nginx catch-all — Homepage, Jellyfin, Navidrome, *arr, qBittorrent,
+    Nextcloud, FreshRSS, Prometheus, Alertmanager, Grafana, Authelia portal)
+  - 2443 (nginx TLS listener dedicated to Immich — no subpath support upstream)
+- Loopback only: LLDAP (`:3890` LDAP, `:17170` admin UI), Prometheus, Alertmanager,
+  Grafana, Immich backend, Authelia, exporters
 - Mullvad WireGuard interface for qBittorrent
 
 **Storage layout** — defined in `hosts/server/storage.nix` via
@@ -189,13 +202,20 @@ do **not** add these datasets to `hardware-configuration.nix`.
 
 | Secret | Used by | Purpose |
 |---|---|---|
-| `tailscale-hostname.age` | `nginx.nix` | Tailscale cert hostname |
+| `tailscale-hostname.age` | `nginx.nix` / `authelia.nix` / `grafana.nix` / `nextcloud.nix` | Tailscale cert hostname; also referenced by Authelia's cookie-domain and OIDC redirect_uri templates (declared with an authelia-scoped name so its decrypted copy is readable by `authelia-main`) |
 | `tailscale-domain.age` | `homepage-dashboard.nix` | Dashboard domain |
 | `mullvad-wg-private-key.age` | `mullvad.nix` | WireGuard private key |
 | `mullvad-wg-preshared-key.age` | `mullvad.nix` (commented) | WG preshared key |
 | `nextcloud-adminpass.age` | `nextcloud.nix` | Nextcloud admin password |
-| `freshrss-password.age` | `freshrss.nix` | FreshRSS default user password |
-| `homepage-freshrss-password.age` | `homepage-dashboard.nix` | FreshRSS widget API password |
+| `freshrss-password.age` | `freshrss.nix` | FreshRSS default user password (break-glass; SSO uses HTTP auth) |
+| `homepage-*.age` | `homepage-dashboard.nix` | Per-service widget API keys / creds |
+| `grafana-admin-password.age` | `grafana.nix` | Grafana local admin password |
+| `lldap-jwt-secret.age` / `lldap-key-seed.age` / `lldap-admin-password.age` | `lldap.nix` | JWT signing, DB encryption seed, admin bootstrap password |
+| `authelia-jwt-secret.age` / `authelia-storage-encryption-key.age` | `authelia.nix` | Authelia identity-validation JWT + storage encryption |
+| `authelia-oidc-hmac-secret.age` / `authelia-oidc-jwks-key.age` | `authelia.nix` | OIDC HMAC + RSA JWKS private key (do NOT rotate JWKS while tokens are in the wild) |
+| `authelia-lldap-bind-password.age` | `authelia.nix` | Password for the `authelia_bind` LLDAP user |
+| `authelia-oidc-client-<app>-hash.age` | `authelia.nix` | PHC-hashed client secret per OIDC app (grafana / immich / nextcloud / jellyfin). Plaintext is entered into each app's UI. |
+| `grafana-oidc-client-secret.age` | `grafana.nix` | Plaintext OIDC secret for Grafana (env-injected into `GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET`) |
 
 ---
 

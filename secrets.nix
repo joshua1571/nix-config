@@ -35,4 +35,35 @@ in
 
   # Grafana admin password (read by grafana at startup via $__file{...}).
   "secrets/grafana-admin-password.age".publicKeys = serverOnly;
+
+  # LLDAP — assembled into /run/lldap-env at boot (see lldap.nix).
+  "secrets/lldap-jwt-secret.age".publicKeys = serverOnly;
+  "secrets/lldap-key-seed.age".publicKeys = serverOnly;
+  "secrets/lldap-admin-password.age".publicKeys = serverOnly;
+
+  # Authelia core secrets (see authelia.nix).
+  "secrets/authelia-jwt-secret.age".publicKeys = serverOnly;
+  "secrets/authelia-storage-encryption-key.age".publicKeys = serverOnly;
+  "secrets/authelia-lldap-bind-password.age".publicKeys = serverOnly;
+
+  # Authelia OIDC issuer secrets (see authelia.nix — identity_providers.oidc).
+  "secrets/authelia-oidc-hmac-secret.age".publicKeys = serverOnly;
+  "secrets/authelia-oidc-jwks-key.age".publicKeys = serverOnly;
+
+  # Grafana OIDC — plaintext used by grafana, PHC hash used by authelia.
+  "secrets/grafana-oidc-client-secret.age".publicKeys = serverOnly;
+  "secrets/authelia-oidc-client-grafana-hash.age".publicKeys = serverOnly;
+
+  # Immich OIDC — Immich stores the plaintext client secret in its DB
+  # (configured via its admin UI), so no plaintext lives in agenix. Only
+  # Authelia's PHC hash needs to be here.
+  "secrets/authelia-oidc-client-immich-hash.age".publicKeys = serverOnly;
+
+  # Nextcloud OIDC — same pattern as Immich: plaintext pasted into the
+  # user_oidc admin UI, only the PHC hash needs to live in agenix.
+  "secrets/authelia-oidc-client-nextcloud-hash.age".publicKeys = serverOnly;
+
+  # Jellyfin OIDC — plaintext pasted into the SSO-Auth plugin config in
+  # Jellyfin UI, only the PHC hash lives here.
+  "secrets/authelia-oidc-client-jellyfin-hash.age".publicKeys = serverOnly;
 }

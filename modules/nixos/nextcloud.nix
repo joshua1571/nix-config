@@ -113,6 +113,12 @@
       overwritewebroot = "/nextcloud";
       overwritecondaddr = "^127\\.0\\.0\\.1$";
       trusted_proxies = [ "127.0.0.1" ];
+
+      # Nextcloud's DnsPinMiddleware refuses server-side HTTP calls to
+      # addresses it classifies as "local" (RFC1918 + 100.64/10 CGNAT).
+      # Tailnet IPs live in the CGNAT range, so the user_oidc app can't
+      # fetch Authelia's discovery URL over the tailnet FQDN without this.
+      allow_local_remote_servers = true;
     };
 
     # Pin the core set declaratively; leave the web app store on for
@@ -130,6 +136,7 @@
         deck
         mail
         qownnotesapi
+        user_oidc
         ;
     };
   };

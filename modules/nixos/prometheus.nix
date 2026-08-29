@@ -2,7 +2,12 @@ _: {
   services.prometheus = {
     enable = true;
     port = 9090;
-    listenAddress = "0.0.0.0";
+    # Loopback-only; reached via nginx at /prometheus/ behind Authelia.
+    listenAddress = "127.0.0.1";
+    # Serve the UI + all endpoints under /prometheus so nginx can proxy
+    # cleanly. Skips --web.external-url (would require baking in the
+    # tailscale FQDN, which is a runtime secret).
+    extraFlags = [ "--web.route-prefix=/prometheus" ];
 
     # Lower polling and retention below defaults (1m / 15d) to keep the
     # resource cost close to the netdata setup this replaces.
@@ -147,5 +152,4 @@ _: {
     ];
   };
 
-  networking.firewall.allowedTCPPorts = [ 9090 ];
 }

@@ -424,6 +424,15 @@
               }
             ];
           }
+          {
+            Authelia = [
+              {
+                icon = "sh-authelia";
+                abbr = "AU";
+                href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/authelia/";
+              }
+            ];
+          }
         ];
       }
     ];
@@ -467,7 +476,7 @@
             "Immich" = {
               icon = "sh-immich";
               description = "Photos";
-              href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:2283/photos";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:2443/photos";
               siteMonitor = "http://127.0.0.1:2283";
               widget = {
                 type = "immich";
@@ -637,16 +646,16 @@
             "Grafana" = {
               icon = "sh-grafana";
               description = "Dashboards";
-              href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:3000";
-              siteMonitor = "http://127.0.0.1:3000/api/health";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/grafana/";
+              siteMonitor = "http://127.0.0.1:3000/grafana/api/health";
             };
           }
           {
             "Prometheus" = {
               icon = "sh-prometheus";
               description = "Metrics & rules";
-              href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:9090";
-              siteMonitor = "http://127.0.0.1:9090/-/healthy";
+              href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/prometheus/";
+              siteMonitor = "http://127.0.0.1:9090/prometheus/-/healthy";
             };
           }
           {

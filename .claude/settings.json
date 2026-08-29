@@ -1,13 +1,39 @@
 {
   "permissions": {
     "allow": [
-      "Bash(systemctl status *)",
-      "Bash(journalctl *)",
-      "Bash(wg show *)",
-      "Bash(ip rule show)",
-      "Bash(ip route show *)",
-      "Bash(just lint)",
-      "Bash(nix-instantiate --parse modules/nixos/homepage-dashboard.nix)"
+      "Bash(git add *)",
+      "Bash(git checkout *)",
+      "Bash(git commit -m ' *)",
+
+      "Bash(just check *)",
+      "Bash(just dry *)",
+      "Bash(just lint *)",
+      "Bash(nix eval *)",
+      "Bash(nix flake *)",
+      "Bash(nixfmt *)",
+      "Bash(statix *)",
+
+      "Bash(sudo journalctl *)",
+      "Bash(systemctl --no-pager status *)",
+      "Bash(systemctl show *)",
+
+      "Bash(ip addr *)",
+      "Bash(ip link *)",
+      "Bash(ip -4 -o addr show eno1)",
+      "Bash(tailscale status *)",
+
+      "Bash(getent group *)",
+      "Bash(lspci -nn)",
+
+      "Bash(awk '{print $4}')",
+      "Bash(grep -E ':[0-9]+$')",
+
+      "Bash(claude update *)",
+
+      "WebFetch(domain:gethomepage.dev)",
+      "WebFetch(domain:mynixos.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebSearch"
     ]
   }
 }

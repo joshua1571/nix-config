@@ -20,6 +20,10 @@
     # Reverse Proxy
     ../../modules/nixos/nginx.nix
 
+    # Authentication
+    ../../modules/nixos/lldap.nix
+    ../../modules/nixos/authelia.nix
+
     # Self Hosted Services
     ../../modules/nixos/homepage-dashboard.nix
     ../../modules/nixos/jellyfin.nix
