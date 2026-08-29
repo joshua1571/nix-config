@@ -6,7 +6,7 @@ _: {
     port = 2283;
     openFirewall = true;
     accelerationDevices = null;
-    #mediaLocation = "/tank/personal/photos/immich_data";
+    mediaLocation = "/tank/personal/photos/immich";
   };
 
   users.users.immich.extraGroups = [

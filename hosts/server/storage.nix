@@ -15,7 +15,6 @@
     "d /tank                                0755 root root -"
     "d /tank/personal                       0755 root root -"
     "d /tank/personal/photos                0755 ${username} users -"
-    "d /tank/personal/photos/immich_data    0755 ${username} users -"
     "d /tank/personal/documents             0755 ${username} users -"
     "d /tank/personal/downloads             0755 ${username} users -"
     "d /tank/personal/development           0755 ${username} users -"
@@ -70,6 +69,8 @@
       apply 0755 lidarr        lidarr  /tank/media/music
       apply 0755 sonarr        sonarr  /tank/media/tv
       apply 0755 ${username}   users   /tank/media/games
+
+      apply 0700 immich        immich  /tank/personal/photos/immich
     '';
   };
 }

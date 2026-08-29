@@ -180,7 +180,7 @@ do **not** add these datasets to `hardware-configuration.nix`.
 - `tank/media/torrents/*` — qBittorrent download dirs (per-arr ownership)
 - `tank/media/usenet/*` — usenet incomplete + complete
 - `tank/personal/{photos,documents,downloads,development}` — personal files
-- `tank/personal/photos/immich_data` — immich backing store
+- `tank/personal/photos/immich` — immich backing store
 
 `fasttank` (fast):
 - `fasttank/containers` — docker data root
