@@ -109,6 +109,14 @@
             iconsOnly = true;
           };
         }
+        {
+          Monitoring = {
+            tab = "Administration";
+            style = "row";
+            header = true;
+            columns = 3;
+          };
+        }
       ];
     };
     listenPort = 8082;
@@ -611,6 +619,34 @@
                   "seed"
                 ];
               };
+            };
+          }
+        ];
+      }
+      {
+        "Monitoring" = [
+          {
+            "Gatus" = {
+              icon = "sh-gatus";
+              description = "Uptime checks";
+              href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:8084";
+              siteMonitor = "http://127.0.0.1:8084/health";
+            };
+          }
+          {
+            "Netdata" = {
+              icon = "sh-netdata";
+              description = "Host metrics";
+              href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:19999";
+              siteMonitor = "http://127.0.0.1:19999/api/v1/info";
+            };
+          }
+          {
+            "ntfy" = {
+              icon = "sh-ntfy";
+              description = "Push notifications";
+              href = "http://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:8085";
+              siteMonitor = "http://127.0.0.1:8085/v1/health";
             };
           }
         ];

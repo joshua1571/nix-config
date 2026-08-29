@@ -3,14 +3,6 @@
   services.netdata = {
     enable = true;
 
-    # Bind only to loopback; the UI is reached via the nginx reverse proxy
-    # over tailscale.
-    config = {
-      web = {
-        "bind to" = "127.0.0.1";
-      };
-    };
-
     # Route health alarms to the local ntfy server so they land on the phone.
     # Netdata sources this file and calls custom_sender() for any alarm whose
     # recipient list resolves to the custom channel.
@@ -43,4 +35,7 @@
       '';
     };
   };
+
+  # Expose netdata's UI on the tailscale/LAN interface (port 19999).
+  networking.firewall.allowedTCPPorts = [ 19999 ];
 }

@@ -26,7 +26,7 @@ in
     enable = true;
     settings = {
       web = {
-        address = "127.0.0.1";
+        address = "0.0.0.0";
         port = 8084;
       };
 
@@ -74,4 +74,7 @@ in
       ];
     };
   };
+
+  # Expose gatus's status page on the tailscale/LAN interface.
+  networking.firewall.allowedTCPPorts = [ 8084 ];
 }
