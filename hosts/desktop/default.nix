@@ -23,6 +23,7 @@
     ../../modules/nixos/development_environment.nix
     ../../modules/nixos/podman.nix
     ../../modules/nixos/deskflow.nix
+		../../modules/nixos/opensnitch.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix

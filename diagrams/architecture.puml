@@ -1,0 +1,52 @@
+@startuml
+
+!include <osa2/Common>
+!include <osa2/Server/all>
+!include <osa2/Hardware/all>
+!include <osa2/Misc/all>
+!include <osa2/Server/all>
+!include <tupadr3/common>
+!include <office/Devices/management_console>
+!include <tupadr3/font-awesome-6/plug_circle_bolt>
+
+hide stereotype
+
+title Homelab Architecture
+
+'. Order is: alias, Name, IP, extra(optional)
+
+' Network
+osa_cloud(internet, "Internet", "Google Fiber")
+osa_cloud(vps, "Tailscale Exit Node", "Vultr VPS")
+osa_cloud(external_monitor, "External Monitoring", "healthchecks.io")
+osa_device_wireless_router(wifiAP, "Router", "10.0.0.1") 
+osa_hub(mainlabswitch,"Main Lab Switch", "Switch")
+
+' Wired Hosts
+osa_server(server, "Primary Server", 10.0.0.200, "NixOS")
+osa_server(watcher, "Monitoring Server", 10.0.0.103, "Raspberry Pi OS")
+osa_desktop(desktop, "Desktop", 10.0.0.101, "NixOS")
+osa_laptop(old_laptop, "Admin Server", 10.0.0.102, "NixOS")
+
+' Wireless Hosts
+osa_laptop(main_laptop, "Main Laptop", 10.0.0.100, "NixOS")
+osa_iPhone(main_phone, "Main Phone", "Dynamic IP", "iOS")
+
+' Supporting Hardware
+OFF_MANAGEMENT_CONSOLE(kvm, "KVM")
+FA6_PLUG_CIRCLE_BOLT(ups, "UPS")
+
+internet --> wifiAP 
+vps -> wifiAP
+external_monitor -> wifiAP
+wifiAP ..> main_laptop :WiFi
+wifiAP ..> main_phone :WiFi
+wifiAP --> mainlabswitch :Ethernet
+mainlabswitch --> server :Ethernet
+mainlabswitch --> old_laptop :Ethernet
+mainlabswitch --> watcher :Ethernet
+mainlabswitch --> desktop :Ethernet
+kvm --> server :Ethernet
+ups --> server :Ethernet
+
+@enduml
