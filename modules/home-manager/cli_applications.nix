@@ -8,8 +8,8 @@
     cheat
     rclone
     glow
-		plantuml
-		graphviz
+    plantuml
+    graphviz
   ];
 
   programs = {

@@ -1,10 +1,5 @@
-_: {
-  services = {
-    opensnitch = {
-      enable = true;
-    };
-    opensnitch-ui = {
-      enable = true;
-    };
-  };
+{ pkgs, ... }:
+{
+  environment.systemPackages = [ pkgs.opensnitch-ui ];
+  services.opensnitch.enable = true;
 }
