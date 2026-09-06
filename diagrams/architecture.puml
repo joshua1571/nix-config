@@ -1,52 +1,54 @@
 @startuml
-
-!include <osa2/Common>
-!include <osa2/Server/all>
-!include <osa2/Hardware/all>
-!include <osa2/Misc/all>
-!include <osa2/Server/all>
 !include <tupadr3/common>
-!include <office/Devices/management_console>
+!include <tupadr3/font-awesome-6/globe>
+!include <tupadr3/font-awesome-6/wifi>
+!include <tupadr3/font-awesome-6/network_wired>
+!include <tupadr3/font-awesome-6/server>
+!include <tupadr3/font-awesome-6/computer>
+!include <tupadr3/font-awesome-6/laptop>
+!include <tupadr3/font-awesome-6/mobile>
 !include <tupadr3/font-awesome-6/plug_circle_bolt>
+!include <tupadr3/font-awesome-6/keyboard>
 
 hide stereotype
+skinparam shadowing false
 
-title Homelab Architecture
+!$PLANNED = "#back:FFF5F5;line:C0392B;line.dashed"
+!$PLANNED_LINK  = "[#C0392B,dashed]"
 
-'. Order is: alias, Name, IP, extra(optional)
+title Homelab — Physical Layout
 
-' Network
-osa_cloud(internet, "Internet", "Google Fiber")
-osa_cloud(vps, "Tailscale Exit Node", "Vultr VPS")
-osa_cloud(external_monitor, "External Monitoring", "healthchecks.io")
-osa_device_wireless_router(wifiAP, "Router", "10.0.0.1") 
-osa_hub(mainlabswitch,"Main Lab Switch", "Switch")
+FA6_GLOBE(internet, "Internet\nGoogle Fiber")
+FA6_WIFI(router, "Router\nHW: Flint 2 (GL-MT6000)")
+FA6_NETWORK_WIRED(sw, "Switch\nHW: UGREEN 35372US")
 
-' Wired Hosts
-osa_server(server, "Primary Server", 10.0.0.200, "NixOS")
-osa_server(watcher, "Monitoring Server", 10.0.0.103, "Raspberry Pi OS")
-osa_desktop(desktop, "Desktop", 10.0.0.101, "NixOS")
-osa_laptop(old_laptop, "Admin Server", 10.0.0.102, "NixOS")
+FA6_SERVER(server01, "server01\nHW: Custom\nOS: NixOS\nRole: Production Env")
+FA6_SERVER(monitor01, "monitor01\nHW: Rasbperry Pi 4 (4GB)\nOS: Raspberry Pi OS\nRole: Monitoring") $PLANNED
+FA6_LAPTOP(admin01, "admin01\nHW: Old Dell Laptop\nOS: NixOS\nRole: Dev Server") $PLANNED
+FA6_COMPUTER(desktop, "desktop01\nHW: Custom\nOS: NixOS\nRole: Test Env")
+FA6_LAPTOP(laptop, "laptop01\nHW: Asus Vivobook S M5406W\nOS: NixOS\nRole: Dev Client")
+FA6_MOBILE(phone, "JRH iPhone\nHW: iPhone 15 Pro\nOS: iOS")
 
-' Wireless Hosts
-osa_laptop(main_laptop, "Main Laptop", 10.0.0.100, "NixOS")
-osa_iPhone(main_phone, "Main Phone", "Dynamic IP", "iOS")
+FA6_KEYBOARD(kvm, "KVM01\nHW: Comet PoE (GL-RM1PE)")
+FA6_PLUG_CIRCLE_BOLT(ups, "UPS01\n HW: TBD") $PLANNED
 
-' Supporting Hardware
-OFF_MANAGEMENT_CONSOLE(kvm, "KVM")
-FA6_PLUG_CIRCLE_BOLT(ups, "UPS")
+internet -- router : 1 Gb
+router .. laptop : WiFi
+router .. phone : WiFi
+router -- sw
+sw -- server01
+sw -- admin01
+sw -- monitor01
+sw -- desktop
 
-internet --> wifiAP 
-vps -> wifiAP
-external_monitor -> wifiAP
-wifiAP ..> main_laptop :WiFi
-wifiAP ..> main_phone :WiFi
-wifiAP --> mainlabswitch :Ethernet
-mainlabswitch --> server :Ethernet
-mainlabswitch --> old_laptop :Ethernet
-mainlabswitch --> watcher :Ethernet
-mainlabswitch --> desktop :Ethernet
-kvm --> server :Ethernet
-ups --> server :Ethernet
+kvm -- server01 : out-of-band
+kvm -- admin01 : out-of-band
+ups .$PLANNED_LINK. desktop :power
+ups .$PLANNED_LINK. sw : power
+ups .$PLANNED_LINK. server01 : power
+ups .$PLANNED_LINK. admin01 : power
 
+legend bottom
+  <color:#C0392B>dashed red</color> = planned, not yet built
+endlegend
 @enduml

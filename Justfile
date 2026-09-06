@@ -113,3 +113,8 @@ gc-home:
   nix-collect-garbage --delete-older-than 7d
 
 
+[group('diagrams')]
+create:
+	# create png files for all plantuml diagrams in diagrams/ folder
+	plantuml --png --check-before-run --no-error-image --stop-on-error diagrams/
+
