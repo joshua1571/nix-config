@@ -8,7 +8,7 @@ set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
 flake_check() {
-  nix flake check --no-build --show-trace
+  nix flake check --show-trace
 }
 
 fmt_check() {
