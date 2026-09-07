@@ -11,4 +11,5 @@ pkgs.mkShellNoCC {
     deadnix
     statix
   ];
+  shellHook = "git config core.hooksPath .githooks";
 }
