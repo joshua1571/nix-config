@@ -22,31 +22,34 @@ FA6_GLOBE(internet, "Internet\nGoogle Fiber")
 FA6_WIFI(router, "Router\nHW: Flint 2 (GL-MT6000)")
 FA6_NETWORK_WIRED(sw, "Switch\nHW: UGREEN 35372US")
 
-FA6_SERVER(server01, "server01\nHW: Custom\nOS: NixOS\nRole: Production Env")
+FA6_SERVER(server01, "server01\nHW: Custom\nOS: NixOS\nRole: Main Server")
 FA6_SERVER(monitor01, "monitor01\nHW: Rasbperry Pi 4 (4GB)\nOS: Raspberry Pi OS\nRole: Monitoring") $PLANNED
-FA6_LAPTOP(admin01, "admin01\nHW: Old Dell Laptop\nOS: NixOS\nRole: Dev Server") $PLANNED
-FA6_COMPUTER(desktop, "desktop01\nHW: Custom\nOS: NixOS\nRole: Test Env")
-FA6_LAPTOP(laptop, "laptop01\nHW: Asus Vivobook S M5406W\nOS: NixOS\nRole: Dev Client")
-FA6_MOBILE(phone, "JRH iPhone\nHW: iPhone 15 Pro\nOS: iOS")
+FA6_SERVER(ai01, "ai01\nHW: AMD Ryzen Halo\nOS: Ubuntu\nRole: Local AI") $PLANNED
+FA6_LAPTOP(admin01, "admin01\nHW: Old Dell Laptop\nOS: NixOS\nRole: Deployment Server") $PLANNED
+FA6_COMPUTER(desktop01, "desktop01\nHW: Custom\nOS: NixOS\nRole: Gaming")
+FA6_LAPTOP(laptop01, "laptop01\nHW: Asus Vivobook S M5406W\nOS: NixOS\nRole: Dev Client")
+FA6_MOBILE(phone01, "JRH iPhone\nHW: iPhone 15 Pro\nOS: iOS")
 
-FA6_KEYBOARD(kvm, "KVM01\nHW: Comet PoE (GL-RM1PE)")
-FA6_PLUG_CIRCLE_BOLT(ups, "UPS01\n HW: TBD") $PLANNED
+FA6_KEYBOARD(kvm01, "kvm01\nHW: Comet PoE (GL-RM1PE)")
+FA6_PLUG_CIRCLE_BOLT(ups, "ups01\n HW: TBD") $PLANNED
 
 internet -- router : 1 Gb
-router .. laptop : WiFi
-router .. phone : WiFi
-router -- sw
-sw -- server01
-sw -- admin01
-sw -- monitor01
-sw -- desktop
+router .. laptop01 : WiFi
+router .. phone01 : WiFi
+router -- sw : Ethernet
+sw -- server01 : Ethernet
+sw -- admin01 : Ethernet
+sw -- monitor01 : Ethernet
+sw -- desktop01 : Ethernet
+sw .$PLANNED_LINK. ai01 : Ethernet
 
-kvm -- server01 : out-of-band
-kvm -- admin01 : out-of-band
-ups .$PLANNED_LINK. desktop :power
+kvm01 -- server01 : out-of-band
 ups .$PLANNED_LINK. sw : power
+ups .$PLANNED_LINK. desktop01 :power
 ups .$PLANNED_LINK. server01 : power
 ups .$PLANNED_LINK. admin01 : power
+ups .$PLANNED_LINK. ai01 : power
+ups .$PLANNED_LINK. monitor01 : power
 
 legend bottom
   <color:#C0392B>dashed red</color> = planned, not yet built

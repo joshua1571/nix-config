@@ -1,8 +1,11 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
+    # Anthropic
     claude-code
+    # ChatGPT
     codex
+    #MCP Servers
     mcp-nixos
 
     #nodejs

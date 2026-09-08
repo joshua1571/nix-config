@@ -1,0 +1,78 @@
+@startuml
+hide stereotype
+skinparam shadowing false
+
+title server01 — Services & Storage
+
+' ─── Media requests & automation ──────────────────────────────────────────────
+rectangle "Media automation" {
+  component "Prowlarr\n(indexers)" as prowlarr
+  component "Radarr\n(movies)" as radarr
+  component "Sonarr\n(TV)" as sonarr
+  component "Lidarr\n(music)" as lidarr
+  component "Jellyseerr\n(requests)" as jellyseerr
+  component "qBittorrent\n(downloads)" as qbt
+
+  jellyseerr --> radarr  : movie request
+  jellyseerr --> sonarr  : TV request
+  prowlarr   --> radarr  : indexer feed
+  prowlarr   --> sonarr  : indexer feed
+  prowlarr   --> lidarr  : indexer feed
+  radarr     --> qbt     : grab
+  sonarr     --> qbt     : grab
+  lidarr     --> qbt     : grab
+}
+
+' ─── Storage ──────────────────────────────────────────────────────────────────
+database "tank/media\n(movies / tv / music / books)" as media_store
+database "tank/personal\n(photos / documents / downloads)" as personal_store
+database "tank/backups\n(desktop / laptop / macbook)" as backups_store
+database "fasttank/containers\n(Docker data root)" as containers_store
+
+qbt --> media_store : completed downloads
+
+' ─── Media consumption ────────────────────────────────────────────────────────
+rectangle "Media consumption" {
+  component "Jellyfin\n(video / music)" as jellyfin
+  component "Navidrome\n(music)" as navidrome
+  component "Immich\n(photos)" as immich
+}
+
+media_store    --> jellyfin
+media_store    --> navidrome
+personal_store --> immich    : photos
+
+' ─── Productivity ─────────────────────────────────────────────────────────────
+rectangle "Productivity" {
+  component "Nextcloud\n(files / calendar / contacts)" as nextcloud
+  component "FreshRSS\n(RSS)" as freshrss
+  component "Home Assistant\n(home automation)" as ha
+}
+
+personal_store --> nextcloud : files
+
+' ─── Monitoring ───────────────────────────────────────────────────────────────
+rectangle "Monitoring" {
+  component "Prometheus\n(metrics)" as prom
+  component "Grafana\n(dashboards)" as grafana
+  component "Alertmanager\n(routing)" as alertmgr
+  component "Gatus\n(uptime)" as gatus
+  component "Ntfy\n(push)" as ntfy
+
+  prom     --> grafana
+  prom     --> alertmgr
+  alertmgr --> ntfy
+  gatus    --> ntfy
+}
+
+' ─── Auth ─────────────────────────────────────────────────────────────────────
+rectangle "Auth" {
+  component "Authelia\n(SSO / OIDC)" as authelia
+  component "LLDAP\n(users / groups)" as lldap
+  authelia --> lldap : LDAP
+}
+
+containers_store --> immich   : app data
+containers_store --> nextcloud : app data
+
+@enduml

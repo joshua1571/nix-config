@@ -1,0 +1,119 @@
+@startuml
+hide stereotype
+skinparam shadowing false
+
+skinparam rectangle {
+  BackgroundColor<<ts>>       FFF9F0
+  BorderColor<<ts>>           E67E22
+  BackgroundColor<<open>>     F0FFF4
+  BorderColor<<open>>         27AE60
+  BackgroundColor<<loopback>> F0F4FF
+  BorderColor<<loopback>>     5B8DEF
+  BackgroundColor<<vpn>>      FFF0F0
+  BorderColor<<vpn>>          C0392B
+}
+
+title server01 — Network Connectivity
+
+' ─── External actors ──────────────────────────────────────────────────────────
+actor "Tailscale clients\nlaptop / desktop / iPhone" as ts_clients
+actor "LAN clients\n10.0.0.x" as lan_clients
+
+' ─── server01 ─────────────────────────────────────────────────────────────────
+node "server01" {
+
+  rectangle "Tailscale ingress (tailscale0 only)" <<ts>> {
+    component "nginx :443" as nginx
+    component "nginx :2443\n(Immich)" as nginx2443
+  }
+
+  rectangle "Auth layer (loopback)" <<loopback>> {
+    component "Authelia :9091" as authelia
+    component "LLDAP :3890" as lldap
+    authelia -right-> lldap : LDAP
+  }
+
+  rectangle "All interfaces (openFirewall = true)" <<open>> {
+    component "Jellyfin :8096" as jellyfin
+    component "Navidrome :4533" as navidrome
+    component "Jellyseerr :5055" as jellyseerr
+    component "Radarr :7878" as radarr
+    component "Sonarr :8989" as sonarr
+    component "Lidarr :8686" as lidarr
+    component "Prowlarr :9696" as prowlarr
+    component "Homepage :8082" as homepage
+    component "Home Assistant :8123" as ha
+    component "Gatus :8084" as gatus
+    component "Ntfy :8085" as ntfy
+  }
+
+  rectangle "Loopback only (127.0.0.1)" <<loopback>> {
+    component "qBittorrent :8080" as qbt
+    component "Immich :2283" as immich
+    component "Prometheus :9090" as prom
+    component "Alertmanager :9093" as alertmgr
+    component "Grafana :3000" as grafana
+    component "FreshRSS :8083" as freshrss
+    component "Nextcloud :80" as nextcloud
+  }
+
+  rectangle "VPN egress" <<vpn>> {
+    component "Mullvad VPN (mullvad0)" as mullvad
+  }
+
+  ' nginx → services — no auth gate (proxyHeaders only)
+  nginx --> jellyfin
+  nginx --> navidrome
+
+  ' nginx → services — Authelia forward-auth
+  nginx -[#E67E22,dashed]-> homepage   : Authelia
+  nginx -[#E67E22,dashed]-> radarr     : Authelia
+  nginx -[#E67E22,dashed]-> sonarr     : Authelia
+  nginx -[#E67E22,dashed]-> lidarr     : Authelia
+  nginx -[#E67E22,dashed]-> prowlarr   : Authelia
+  nginx -[#E67E22,dashed]-> qbt        : Authelia
+  nginx -[#E67E22,dashed]-> prom       : Authelia
+  nginx -[#E67E22,dashed]-> alertmgr   : Authelia
+  nginx -[#E67E22,dashed]-> freshrss   : Authelia + REMOTE_USER
+
+  ' nginx → services — OIDC via Authelia
+  nginx --> grafana   : OIDC
+  nginx --> nextcloud : OIDC
+  nginx2443 --> immich : OIDC
+
+  nginx --> authelia : auth_request
+
+  ' Kill-switch: qBittorrent only exits via Mullvad
+  qbt -[#C0392B]-> mullvad : nftables kill-switch
+
+  ' Alerting
+  alertmgr --> ntfy : push
+}
+
+' ─── Internet ─────────────────────────────────────────────────────────────────
+cloud "Internet" as internet
+mullvad -[#C0392B]-> internet : BitTorrent egress
+
+' ─── Client connections ───────────────────────────────────────────────────────
+ts_clients -[#E67E22]-> nginx     : HTTPS :443
+ts_clients -[#E67E22]-> nginx2443 : HTTPS :2443
+lan_clients --> jellyfin
+lan_clients --> navidrome
+lan_clients --> jellyseerr
+lan_clients --> radarr
+lan_clients --> sonarr
+lan_clients --> lidarr
+lan_clients --> prowlarr
+lan_clients --> homepage
+lan_clients --> ha
+lan_clients --> gatus
+
+legend bottom
+  <back:#FFF9F0><color:#E67E22>■</color></back> Tailscale only (tailscale0 firewall)
+  <back:#F0FFF4><color:#27AE60>■</color></back> All interfaces (openFirewall = true)
+  <back:#F0F4FF><color:#5B8DEF>■</color></back> Loopback only (127.0.0.1)
+  <back:#FFF0F0><color:#C0392B>■</color></back> VPN egress
+  <color:#E67E22>── dashed ──</color> Authelia forward-auth required
+endlegend
+
+@enduml

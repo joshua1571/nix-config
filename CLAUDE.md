@@ -80,7 +80,3 @@ Do **not** add ZFS datasets to `hardware-configuration.nix` — they are managed
 ### Nixvim
 
 See `docs/nixvim_documentation.md` for file layout and keymap conventions.
-
-### TODOs
-
-All outstanding work lives in `docs/TODO.md` — a single, central list. Do not scatter `TODO` comments in `.nix`/`.md` files; if something new comes up, add it to `docs/TODO.md` (or extend an existing entry) and keep the code clean.

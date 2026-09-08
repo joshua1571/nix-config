@@ -114,7 +114,7 @@ gc-home:
 
 
 [group('diagrams')]
-create:
+png:
 	# create png files for all plantuml diagrams in diagrams/ folder
 	plantuml --png --check-before-run --no-error-image --stop-on-error diagrams/
 

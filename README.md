@@ -59,7 +59,6 @@ See [`docs/nixvim_documentation.md`](./docs/nixvim_documentation.md).
 
 ## Docs
 
-- [`docs/TODO.md`](./docs/TODO.md) — single source of truth for outstanding work across the flake, hosts, and modules.
 - [`docs/nixvim_documentation.md`](./docs/nixvim_documentation.md) — nixvim layout and keymap conventions.
 - [`docs/freshrss_recovery.md`](./docs/freshrss_recovery.md) — how to unstick FreshRSS if the SSO HTTP-auth path locks you out.
 - [`docs/troubleshooting/`](./docs/troubleshooting) — dated incident writeups.
