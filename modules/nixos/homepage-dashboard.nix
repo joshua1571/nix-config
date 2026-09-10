@@ -525,14 +525,20 @@
               icon = "sh-nextcloud";
               description = "Files, calendar, contacts";
               href = "https://server.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}/nextcloud/";
-              # overwritecondaddr in nextcloud.nix matches homepage's own
-              # loopback connection, so / redirects to an https URL — which
-              # homepage's http-only redirect follower rejects. status.php
-              # answers 200 directly with no redirect.
-              siteMonitor = "http://127.0.0.1/status.php";
+              # Homepage's widget backend calls hit 127.0.0.1 server-side, so
+              # nginx sees Host: 127.0.0.1. Neither :80 server_name matches
+              # that ("localhost" for the nixpkgs statusPage block, "server"
+              # for the Nextcloud vhost), so nginx falls back to whichever
+              # :80 block nixpkgs emits first for the default server — the
+              # statusPage block, which only serves /nginx_status and 404s
+              # on everything else (the request never reaches PHP). Use
+              # "server" (Nextcloud's vhost name, already in trusted_domains
+              # and resolved locally via /etc/hosts) so the Host header
+              # matches — same fix already used in gatus.nix.
+              siteMonitor = "http://server/status.php";
               widget = {
                 type = "nextcloud";
-                url = "http://127.0.0.1";
+                url = "http://server";
                 username = "admin";
                 password = "{{HOMEPAGE_VAR_NEXTCLOUD_PASSWORD}}";
               };
