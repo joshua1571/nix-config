@@ -26,23 +26,28 @@ _: {
     maxmemory-policy = "noeviction";
   };
 
-  # Hard memory ceilings on the two Immich systemd units. MemoryHigh
-  # triggers throttling; MemoryMax kills the service before the kernel OOM
-  # killer takes down an unrelated process.
-  systemd.services.immich-server.serviceConfig = {
-    MemoryHigh = "3G";
-    MemoryMax = "4G";
+  systemd.services = {
+    immich-server = {
+      # Hard memory ceilings on the two Immich systemd units. MemoryHigh
+      # triggers throttling; MemoryMax kills the service before the kernel OOM
+      # killer takes down an unrelated process.
+      serviceConfig = {
+        MemoryHigh = "3G";
+        MemoryMax = "4G";
+      };
+      # Without an explicit V8 heap limit, V8 grows until it hits MemoryHigh,
+      # at which point the cgroup throttles and pushes pages to swap. GC then
+      # traverses swap-backed pages, becomes "ineffective", and V8 aborts the
+      # process via FatalProcessOutOfMemory. Telling V8 its budget upfront causes
+      # it to GC aggressively before reaching the cgroup wall.
+      environment = {
+        NODE_OPTIONS = "--max-old-space-size=2048";
+      };
+    };
+    immich-machine-learning.serviceConfig = {
+      MemoryHigh = "2G";
+      MemoryMax = "2500M";
+    };
   };
-  # Without an explicit V8 heap limit, V8 grows until it hits MemoryHigh,
-  # at which point the cgroup throttles and pushes pages to swap. GC then
-  # traverses swap-backed pages, becomes "ineffective", and V8 aborts the
-  # process via FatalProcessOutOfMemory. Telling V8 its budget upfront causes
-  # it to GC aggressively before reaching the cgroup wall.
-  systemd.services.immich-server.environment = {
-    NODE_OPTIONS = "--max-old-space-size=2048";
-  };
-  systemd.services.immich-machine-learning.serviceConfig = {
-    MemoryHigh = "2G";
-    MemoryMax = "2500M";
-  };
+
 }
