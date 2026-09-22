@@ -60,6 +60,15 @@
     networkmanager.enable = true;
   };
 
+  # 8 GiB swap file on the root ext4 partition. Prevents hard OOM crashes
+  # by giving the kernel room to page out idle services under memory pressure.
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 8192;
+    }
+  ];
+
   hardware.graphics.enable = true;
 
   # This value determines the NixOS release from which the default

@@ -231,18 +231,22 @@ in
         # nginx preserves the prefix when forwarding.
         "/radarr/" = {
           proxyPass = "http://127.0.0.1:7878";
+          proxyWebsockets = true;
           extraConfig = autheliaSnippet;
         };
         "/sonarr/" = {
           proxyPass = "http://127.0.0.1:8989";
+          proxyWebsockets = true;
           extraConfig = autheliaSnippet;
         };
         "/lidarr/" = {
           proxyPass = "http://127.0.0.1:8686";
+          proxyWebsockets = true;
           extraConfig = autheliaSnippet;
         };
         "/prowlarr/" = {
           proxyPass = "http://127.0.0.1:9696";
+          proxyWebsockets = true;
           extraConfig = autheliaSnippet;
         };
 
@@ -313,6 +317,10 @@ in
         # autheliaSnippet gates access AND forwards Remote-User to the
         # loopback vhost, which passes it to PHP-FPM as REMOTE_USER (see
         # freshrss.nix); FreshRSS's HTTP-auth mode consumes it for SSO.
+        "/freshrss/api/" = {
+          proxyPass = "http://127.0.0.1:8083/api/";
+          extraConfig = proxyHeaders;
+        };
         "/freshrss/" = {
           proxyPass = "http://127.0.0.1:8083/";
           extraConfig = autheliaSnippet + ''

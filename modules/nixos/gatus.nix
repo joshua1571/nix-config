@@ -67,9 +67,9 @@ in
         (http "qbittorrent" "arr" "http://127.0.0.1:8080")
 
         # Personal
-        # freshrss serves the app at /i/ on port 8083; root 302s to a path
-        # that only resolves behind the nginx prefix-stripping proxy.
-        (http "freshrss" "personal" "http://127.0.0.1:8083/i/")
+        # robots.txt is a static file served by nginx directly — bypasses PHP
+        # and auth, so it's valid in both form and http_auth modes.
+        (http "freshrss" "personal" "http://127.0.0.1:8083/robots.txt")
         # nextcloud vhost lives on :80 with server_name = "server"
         # (services.nextcloud.hostName). Use the "server" hostname (resolved
         # locally via /etc/hosts) so the Host header matches — hitting

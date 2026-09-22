@@ -1,7 +1,7 @@
 {
   config,
+  lib,
   pkgs,
-  username,
   ...
 }:
 {
@@ -24,9 +24,10 @@
       # If absolute-URL correctness matters later, inject the tailscale
       # hostname at runtime via an oneshot (see nextcloud.nix for the pattern).
       baseUrl = "https://server/freshrss";
-      defaultUser = "${username}";
+      defaultUser = "josh";
       passwordFile = config.age.secrets.freshrss-password.path;
 
+      authType = "http_auth";
       webserver = "nginx";
       database = {
         type = "pgsql";
@@ -46,11 +47,11 @@
           port = 8083;
         }
       ];
-      # Pass the Remote-User header (set by Authelia and forwarded through
-      # the catch-all's autheliaSnippet) to PHP-FPM as REMOTE_USER. That's
-      # what FreshRSS's HTTP-auth mode consumes for SSO. Set at server
-      # scope so the PHP location's fastcgi_pass picks it up automatically.
-      extraConfig = ''
+      # Inject REMOTE_USER into the PHP location that the freshrss module
+      # generates. Must live inside the PHP location block: nginx does not
+      # inherit server-level fastcgi_param directives into a location that
+      # already sets its own (via `include fastcgi_params`).
+      locations."~ ^.+?\\.php(/.*)?$".extraConfig = lib.mkAfter ''
         fastcgi_param REMOTE_USER $http_remote_user;
       '';
     };

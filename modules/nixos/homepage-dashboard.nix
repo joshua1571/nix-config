@@ -402,7 +402,7 @@
               {
                 icon = "mdi-monitor-dashboard";
                 abbr = "KV";
-                href = "http://10.0.0.209";
+                href = "http://10.0.0.101";
               }
             ];
           }
@@ -448,7 +448,7 @@
               siteMonitor = "http://127.0.0.1:8096";
               widget = {
                 type = "jellyfin";
-                url = "http://127.0.0.1:8096";
+                url = "http://127.0.0.1:8096/jellyfin";
                 key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
                 enableBlocks = true;
                 enableNowPlaying = true;
