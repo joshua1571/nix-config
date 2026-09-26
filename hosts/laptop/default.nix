@@ -13,6 +13,7 @@
     ../../modules/nixos/gnupg.nix
     ../../modules/nixos/email.nix
     ../../modules/nixos/openssh_server.nix
+    ../../modules/nixos/password_manager.nix
     ../../modules/nixos/keychron.nix
     #../../modules/nixos/mullvad_client.nix
     ../../modules/nixos/development_environment.nix
