@@ -548,11 +548,11 @@
             "Home Assistant" = {
               icon = "sh-home-assistant";
               description = "Home Automation";
-              href = "http://10.0.0.155:8123/home/overview";
-              siteMonitor = "http://10.0.0.155:8123";
+              href = "http://homeassistant.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:8123/home/overview";
+              siteMonitor = "http://homeassistant.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:8123";
               widget = {
                 type = "homeassistant";
-                url = "http://10.0.0.155:8123";
+                url = "http://homeassistant.{{HOMEPAGE_VAR_TAILSCALE_DOMAIN}}:8123";
                 key = "{{HOMEPAGE_VAR_HOMEASSISTANT_KEY}}";
               };
             };
