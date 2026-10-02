@@ -9,7 +9,37 @@ _: {
       installBatSyntax = true;
       installVimSyntax = true;
       settings = {
-        font-size = 10;
+        theme = "Gruvbox Dark";
+        background-opacity = 0.8;
+        background-blur = 0;
+        gtk-single-instance = "desktop";
+        title-report = false;
+        quit-after-last-window-closed-delay = "100ms";
+
+        scrollback-limit = 100000000;
+        scrollbar = "never";
+
+        shell-integration = "detect";
+        shell-integration-features = "cursor,sudo,title,ssh-env,ssh-terminfo";
+
+        quick-terminal-position = "top";
+        quick-terminal-screen = "main";
+        quick-terminal-animation-duration = 0;
+        quick-terminal-autohide = false;
+
+        clipboard-read = "ask"; # prompts before programs read clipboard
+        clipboard-write = "allow"; # allows writing to clipboard
+        clipboard-paste-protection = true; # warns about dangerous pastes (e.g., commands with newlines)
+        copy-on-select = true; # auto-copy selection
+
+        bell-audio-volume = 0;
+        bell-features = "system,border";
+        notify-on-command-finish-action = "notify";
+
+        window-padding-balance = true;
+        window-padding-x = 5;
+        window-padding-y = 5;
+
         keybind = [
           "ctrl+h=goto_split:left"
           "ctrl+l=goto_split:right"
@@ -48,26 +78,7 @@ _: {
           ## tab movement
           #"ctrl+shift+alt+left=move_tab:-1"
           #"ctrl+shift+alt+right=move_tab:1"
-
         ];
-        theme = "Gruvbox Dark";
-        background-opacity = 0.8;
-        background-blur = 0;
-        gtk-single-instance = "desktop";
-        scrollback-limit = 100000000;
-        scrollbar = "never";
-        shell-integration = "detect";
-        shell-integration-features = "cursor, sudo, title";
-        quick-terminal-position = "top";
-        quick-terminal-screen = "main";
-        quick-terminal-animation-duration = 0.2;
-        quick-terminal-autohide = true;
-        clipboard-read = "ask"; # prompts before programs read clipboard
-        clipboard-write = "allow"; # allows writing to clipboard
-        clipboard-paste-protection = true; # warns about dangerous pastes (e.g., commands with newlines)
-        copy-on-select = true; # auto-copy selection
-        title-report = false;
-
       };
     };
 
