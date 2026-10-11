@@ -8,7 +8,6 @@
     # Secrets
     ../../modules/nixos/agenix.nix
     ../../modules/nixos/common.nix
-    ../../modules/nixos/gnupg.nix
     ../../modules/nixos/openssh_server.nix
     ../../modules/nixos/password_manager.nix
     #../../modules/nixos/mullvad_client.nix #This uses options that are unavailable in nixpkgs stable

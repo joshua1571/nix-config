@@ -10,7 +10,6 @@
 
     # Common
     ../../modules/nixos/common.nix
-    ../../modules/nixos/gnupg.nix
     ../../modules/nixos/email.nix
     ../../modules/nixos/openssh_server.nix
     ../../modules/nixos/password_manager.nix
@@ -18,6 +17,7 @@
     #../../modules/nixos/mullvad_client.nix
     ../../modules/nixos/development_environment.nix
     ../../modules/nixos/podman.nix
+    ../../modules/nixos/virtualization_client.nix
     ../../modules/nixos/deskflow.nix
     ../../modules/nixos/kde.nix
     ../../modules/nixos/obs-studio.nix

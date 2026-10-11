@@ -9,7 +9,6 @@
 
     # Common
     ../../modules/nixos/common.nix
-    ../../modules/nixos/gnupg.nix
     ../../modules/nixos/openssh_server.nix
 
     # Server

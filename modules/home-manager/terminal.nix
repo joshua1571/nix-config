@@ -41,18 +41,17 @@ _: {
         window-padding-y = 5;
 
         keybind = [
-          "ctrl+h=goto_split:left"
-          "ctrl+l=goto_split:right"
-
           ## create splits
-          "ctrl+shift+5=new_split:right"
-          "ctrl+shift+semicolon=new_split:down"
+          "alt+shift+backslash=new_split:right"
+          "alt+shift+minus=new_split:down"
+          #"alt+shift+5=new_split:right"
+          #"alt+shift+semicolon=new_split:down"
 
           ## navigate with vim keys (ctrl+shift+k removed to avoid conflict with clear_screen)
-          "ctrl+shift+h=goto_split:left"
-          "ctrl+shift+j=goto_split:bottom"
-          "ctrl+shift+l=goto_split:right"
-          ## Note: Use Alt+Up for top split navigation instead
+          "alt+h=goto_split:left"
+          "alt+j=goto_split:bottom"
+          "alt+k=goto_split:up"
+          "alt+l=goto_split:right"
 
           ## or arrow keys
           "alt+left=goto_split:left"
@@ -61,11 +60,11 @@ _: {
           "alt+down=goto_split:bottom"
 
           ## split management
-          "ctrl+shift+z=toggle_split_zoom" # maximize current split
-          "ctrl+shift+equal=equalize_splits" # balance split sizes
+          "alt+z=toggle_split_zoom" # maximize current split
+          "alt+equal=equalize_splits" # balance split sizes
 
           ## quick terminal
-          "ctrl+backquote=toggle_quick_terminal"
+          "alt+backquote=toggle_quick_terminal"
 
           ## tab creation/navigation
           "ctrl+shift+t=new_tab"
@@ -79,6 +78,24 @@ _: {
           #"ctrl+shift+alt+left=move_tab:-1"
           #"ctrl+shift+alt+right=move_tab:1"
         ];
+        theme = "Gruvbox Dark";
+        background-opacity = 0.8;
+        background-blur = 0;
+        gtk-single-instance = "desktop";
+        scrollback-limit = 100000000;
+        scrollbar = "never";
+        shell-integration = "detect";
+        shell-integration-features = "ssh-env,ssh-terminfo, cursor, sudo, title";
+        quick-terminal-position = "top";
+        quick-terminal-screen = "main";
+        quick-terminal-animation-duration = 0.2;
+        quick-terminal-autohide = true;
+        clipboard-read = "ask"; # prompts before programs read clipboard
+        clipboard-write = "allow"; # allows writing to clipboard
+        clipboard-paste-protection = true; # warns about dangerous pastes (e.g., commands with newlines)
+        copy-on-select = true; # auto-copy selection
+        title-report = false;
+
       };
     };
 
@@ -147,11 +164,15 @@ _: {
           color = "00282828";
           hide-when-maximized = "yes";
         };
-        colors-dark = {
-          alpha = "0.8";
-          #background = "282828";
-          background = "000000";
+        # colors-dark
+        colors = {
+          alpha = 0.85;
+
+          # Default colors
+          background = "282828";
           foreground = "ebdbb2";
+
+          # Normal colors
           regular0 = "282828";
           regular1 = "cc241d";
           regular2 = "98971a";
@@ -160,6 +181,8 @@ _: {
           regular5 = "b16286";
           regular6 = "689d6a";
           regular7 = "a89984";
+
+          # Bright colors
           bright0 = "928374";
           bright1 = "fb4934";
           bright2 = "b8bb26";
@@ -168,6 +191,13 @@ _: {
           bright5 = "d3869b";
           bright6 = "8ec07c";
           bright7 = "ebdbb2";
+
+          # Cursor
+          cursor = "282828 ebdbb2";
+
+          # Selection
+          selection-foreground = "282828";
+          selection-background = "ebdbb2";
         };
       };
     };
