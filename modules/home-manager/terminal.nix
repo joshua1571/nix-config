@@ -78,24 +78,6 @@ _: {
           #"ctrl+shift+alt+left=move_tab:-1"
           #"ctrl+shift+alt+right=move_tab:1"
         ];
-        theme = "Gruvbox Dark";
-        background-opacity = 0.8;
-        background-blur = 0;
-        gtk-single-instance = "desktop";
-        scrollback-limit = 100000000;
-        scrollbar = "never";
-        shell-integration = "detect";
-        shell-integration-features = "ssh-env,ssh-terminfo, cursor, sudo, title";
-        quick-terminal-position = "top";
-        quick-terminal-screen = "main";
-        quick-terminal-animation-duration = 0.2;
-        quick-terminal-autohide = true;
-        clipboard-read = "ask"; # prompts before programs read clipboard
-        clipboard-write = "allow"; # allows writing to clipboard
-        clipboard-paste-protection = true; # warns about dangerous pastes (e.g., commands with newlines)
-        copy-on-select = true; # auto-copy selection
-        title-report = false;
-
       };
     };
 
