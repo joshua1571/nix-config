@@ -10,6 +10,7 @@ _: {
       installVimSyntax = true;
       settings = {
         theme = "Gruvbox Dark";
+				font-size = 10;
         background-opacity = 0.8;
         background-blur = 0;
         gtk-single-instance = "desktop";
