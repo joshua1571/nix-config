@@ -45,12 +45,12 @@ deploy-dry HOST:
     --build-host jrh@{{HOST}} \
     --sudo
 
-# Deploy to all remote hosts sequentially
+# Deploy to all remote hosts sequentially, building on each target (the laptop is local: use `just build`)
 [group ('build')]
 deploy-all:
-  just deploy laptop
   just deploy desktop
   just deploy server
+  just deploy htpc
 
 # Attempt to build flake for all configurations
 [group('checks')]

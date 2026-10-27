@@ -9,21 +9,29 @@ in
     enableDefaultConfig = false;
   }
   // lib.optionalAttrs hasSettings {
-    settings."*" = {
-      # Previous home-manager defaults, kept explicitly.
-      ForwardAgent = false;
-      AddKeysToAgent = "no";
-      Compression = false;
-      ServerAliveInterval = 0;
-      ServerAliveCountMax = 3;
-      HashKnownHosts = false;
-      UserKnownHostsFile = "~/.ssh/known_hosts";
-      ControlMaster = "no";
-      ControlPath = "~/.ssh/master-%r@%n:%p";
-      ControlPersist = "no";
+    settings = {
+      "*" = {
+        # Previous home-manager defaults, kept explicitly.
+        ForwardAgent = false;
+        AddKeysToAgent = "no";
+        Compression = false;
+        ServerAliveInterval = 0;
+        ServerAliveCountMax = 3;
+        HashKnownHosts = false;
+        UserKnownHostsFile = "~/.ssh/known_hosts";
+        ControlMaster = "no";
+        ControlPath = "~/.ssh/master-%r@%n:%p";
+        ControlPersist = "no";
 
-      IdentityAgent = "~/.1password/agent.sock";
-      StrictHostKeyChecking = "accept-new";
+        StrictHostKeyChecking = "accept-new";
+      };
+
+      # Only use the 1Password agent where it exists; elsewhere fall back to
+      # SSH_AUTH_SOCK (e.g. an agent forwarded from the laptop).
+      "Match exec \"test -S ~/.1password/agent.sock\"".IdentityAgent = "~/.1password/agent.sock";
+
+      # Forward the laptop's 1Password agent so git works on hosts without it.
+      "Host desktop server htpc".ForwardAgent = true;
     };
   }
   // lib.optionalAttrs (!hasSettings) {
@@ -40,8 +48,16 @@ in
       controlPersist = "no";
     };
     extraConfig = ''
-      IdentityAgent ~/.1password/agent.sock
       StrictHostKeyChecking accept-new
+
+      # Only use the 1Password agent where it exists; elsewhere fall back to
+      # SSH_AUTH_SOCK (e.g. an agent forwarded from the laptop).
+      Match exec "test -S ~/.1password/agent.sock"
+        IdentityAgent ~/.1password/agent.sock
+
+      # Forward the laptop's 1Password agent so git works on hosts without it.
+      Host desktop server htpc
+        ForwardAgent yes
     '';
   };
 }
