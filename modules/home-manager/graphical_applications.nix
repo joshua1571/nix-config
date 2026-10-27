@@ -14,7 +14,7 @@
     localsend
     ktailctl
     easyeffects
-    activitywatch
+    #activitywatch # broken in nixpkgs-unstable: aw-core requires peewee==3.* but unstable has 4.x
     jellyfin-desktop
     strawberry
     nextcloud-client

@@ -14,6 +14,8 @@
 
     treesitter-context.enable = true;
 
-    hmts.enable = true;
+    # hmts.nvim is unmaintained and breaks with newer Neovim treesitter APIs
+    # (languagetree parse -> "attempt to call method 'parent' (a nil value)").
+    hmts.enable = false;
   };
 }

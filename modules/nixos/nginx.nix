@@ -88,6 +88,7 @@ in
         "network-online.target"
         "agenix.service"
       ];
+      wants = [ "network-online.target" ];
       before = [ "nginx.service" ];
       wantedBy = [ "nginx.service" ];
       serviceConfig = {

@@ -5,8 +5,6 @@
     claude-code
     # ChatGPT
     codex
-    #MCP Servers
-    mcp-nixos
 
     #nodejs
 

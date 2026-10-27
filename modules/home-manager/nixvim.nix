@@ -1,4 +1,4 @@
-{ nixvim, ... }:
+{ nixvim, pkgs, ... }:
 {
   imports = [
     nixvim.homeModules.nixvim
@@ -17,6 +17,9 @@
     enable = true;
     viAlias = true;
     defaultEditor = true;
+
+    # Use the system nixpkgs rather than the one pinned by nixvim.
+    nixpkgs.source = pkgs.path;
 
     colorschemes.gruvbox.enable = true;
     highlightOverride = {

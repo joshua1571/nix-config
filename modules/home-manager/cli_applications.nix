@@ -10,6 +10,7 @@
     glow
     plantuml
     graphviz
+    glab
   ];
 
   programs = {
